@@ -1,0 +1,66 @@
+package simulator.model;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.json.JSONObject;
+
+public class Vehicle extends SimulatedObject{
+	List<Junction> itinerary;
+	int maximum_speed;
+	int current_speed;
+	VehicleStatus status;
+	Road road;
+	int location;
+	int contamination_class;
+	int total_contamination;
+	int total_travel_distance;
+	
+	Vehicle(String id, int maxSpeed, int contClass, List<Junction> itinerary) { //What do I have to do with the road? And with the ID?
+		  super(id);
+		  maximum_speed = maxSpeed;
+		  current_speed = 0;
+		  contamination_class = contClass;
+		  total_contamination = 0;
+		  total_travel_distance = 0;
+		  status = VehicleStatus.WAITING;
+		  this.itinerary = Collections.unmodifiableList(new ArrayList<>(itinerary));
+	}
+	public int getLocation() {
+		return location;
+	}
+	public int getSpeed(){
+		return current_speed;
+	}
+	public int getMaxSpeed(){
+		return maximum_speed;
+	}
+	public int getContClass(){
+		return contamination_class;
+	}
+	public VehicleStatus getStatus(){
+		return status;
+	}
+	public int getTotalCO2(){
+		return total_contamination;
+	}
+	public List<Junction> getItinerary(){
+		return itinerary;
+	}
+	public Road getRoad(){
+		return road;
+	}
+	@Override
+	void advance(int time) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public JSONObject report() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
