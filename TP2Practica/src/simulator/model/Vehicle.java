@@ -7,7 +7,6 @@ import java.util.List;
 import org.json.JSONObject;
 
 public class Vehicle extends SimulatedObject{
-	String id;
 	List<Junction> itinerary;
 	int maximum_speed;
 	int current_speed;
@@ -20,13 +19,13 @@ public class Vehicle extends SimulatedObject{
 	
 	Vehicle(String id, int maxSpeed, int contClass, List<Junction> itinerary) { //What do I have to do with the road? And with the ID?
 		  super(id);
-		  this.id = id;
+		  this._id = id;
 		  this.maximum_speed = maxSpeed;
 		  this.current_speed = 0;
 		  this.contamination_class = contClass;
 		  this.total_contamination = 0;
 		  this.total_travel_distance = 0;
-		  this.status = VehicleStatus.WAITING;
+		  this.status = VehicleStatus.TRAVELING;
 		  this.itinerary = Collections.unmodifiableList(new ArrayList<>(itinerary));
 	}
 	public int getLocation() {
@@ -66,16 +65,39 @@ public class Vehicle extends SimulatedObject{
 	}
 	@Override
 	void advance(int time) {
-		// TODO Auto-generated method stub
-		
+		int pastLocation = this.location;
+		this.location = minimum(this.location+this.current_speed, this.road.getLength()); //Update of the location
+		int l = this.location - pastLocation;
+		int c = this.contamination_class * l;
+		this.total_contamination += c;  //Update of the contamination
+		if(this.location == this.road.getLength()) { //If it's on a junction, checks if it's the last one
+			if(itinerary.indexOf(this.road)+1 != itinerary.size()) { //If it's not the last one, it's status is Pending
+				this.status = VehicleStatus.PENDING; 
+			}
+			else { //If it is the last one, it sets the status to arrived
+				this.status = VehicleStatus.ARRIVED; 
+			}
+			
+		}
+		else { //If it's not a junction, the car is traveling
+			this.status = VehicleStatus.TRAVELING; 
+		}
 	}
-	void moveToNextRoad() {
-		this.road = itinerary.get(itinerary.indexOf(this.road)+1);
+	void moveToNextRoad() {//Catches the current junction and the next one and uses roadTo() to calculate which road we should use
+		this.road = itinerary.get(itinerary.indexOf(this.road)).roadTo(itinerary.get(itinerary.indexOf(this.road)+1));
 	}
 	@Override
 	public JSONObject report() {
-		// TODO Auto-generated method stub
-		return null;
+		JSONObject car = new JSONObject();
+		car.put("id", this._id);
+	    car.put("speed", this.current_speed);
+	    car.put("distance", this.total_travel_distance);
+	    car.put("co2", this.total_contamination);
+	    car.put("class", this.contamination_class);
+	    car.put("status", this.status);
+	    car.put("road", this.road._id);
+	    car.put("location", this.location);
+	    System.out.println(car.toString(4));
+	    return null;
 	}
-
 }
