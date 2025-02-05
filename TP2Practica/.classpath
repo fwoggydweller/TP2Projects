@@ -6,7 +6,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Arturo carrera/SEGUNDO/APUNTES/TP2/workspace/TP2Projects/TP2Practica/lib/commons-cli-1.4.jar"/>
-	<classpathentry kind="lib" path="C:/Arturo carrera/SEGUNDO/APUNTES/TP2/workspace/TP2Projects/TP2Practica/lib/json.jar"/>
+	<classpathentry kind="lib" path="lib/commons-cli-1.4.jar"/>
+	<classpathentry kind="lib" path="lib/json.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
