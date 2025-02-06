@@ -67,17 +67,13 @@ public abstract class Road extends SimulatedObject {
 	}
 	
 	public JSONObject report() {
-		JSONObject car = new JSONObject();
-		car.put("id", this._id);
-	    car.put("speedLimit", this.speedL);
-	    car.put("weather", this.weather);
-	    car.put("co2", this.cont);
-	    car.put("vehicles", this.vehicles);
-	    System.out.println(car.toString(4));
-	    return null;
+		JSONObject road = new JSONObject();
+		road.put("id", this._id);
+	    road.put("speedLimit", this.speedL);
+	    road.put("weather", this.weather);
+	    road.put("co2", this.cont);
+	    road.put("vehicles", this.vehicles);
+	    return road;
 	}
-	//TODO
-	//public JSONObject report() // and learn JSON
-	// subclases
 	
 }

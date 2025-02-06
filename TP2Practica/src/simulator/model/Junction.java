@@ -28,7 +28,6 @@ public class Junction extends SimulatedObject{
 		this.roadsOut = new HashMap<Junction,Road>();
 		if(xCoor >= 0) x = xCoor;
 		if(yCoor >= 0) y = yCoor;
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -50,8 +49,11 @@ public class Junction extends SimulatedObject{
 
 	@Override
 	public JSONObject report() {
-		// TODO Auto-generated method stub
-		return null;
+		JSONObject junct = new JSONObject();
+		junct.put("id", this._id);
+	    junct.put("green" , "r"+this.currGreen);
+	    junct.put("queues" , this.qs);
+	    return junct;
 	}
 	void addIncomingRoad(Road r){
 		roadsIn.add(r);

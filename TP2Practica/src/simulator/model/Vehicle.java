@@ -97,7 +97,6 @@ public class Vehicle extends SimulatedObject{
 	    car.put("status", this.status);
 	    car.put("road", this.road._id);
 	    car.put("location", this.location);
-	    System.out.println(car.toString(4));
-	    return null;
+	    return car;
 	}
 }
