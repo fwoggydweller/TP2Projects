@@ -33,10 +33,13 @@ public abstract class Road extends SimulatedObject {
 		this.vehicles.remove(v);// see if it uses equals (must implement a correct equals)
 	}
 	void setWeather(Weather w){
-		if(w != null) this.weather = weather;
+		if(w != null) this.weather = w;
 		else {
 			throw new IllegalArgumentException("Can't set the road's weather,as it's null.");
 		}
+	}
+	void setContamination(int c) {
+		this.cont = c;
 	}
 	void addContamination(int c){
 		if(c > -1) {
@@ -67,7 +70,18 @@ public abstract class Road extends SimulatedObject {
 	public Junction getSource() {
 		return this.jSrc;
 	}
-	
+	public Weather getWeather() {
+		return this.weather;
+	}
+	void setMaxCont(int c) {
+		this.maxCont = c;
+	}
+	void setCurrCont(int c) {
+		this.cont = c;
+	}
+	void setMaxSpeed(int s) {
+		this.maxSpeedL = s;
+	}
 	abstract void reduceTotalContamination();
 	abstract void updateSpeedLimit();
 	abstract int calculateVehicleSpeed(Vehicle v);

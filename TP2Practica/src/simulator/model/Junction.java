@@ -57,9 +57,9 @@ public class Junction extends SimulatedObject{
 	}
 	void addIncomingRoad(Road r){
 		roadsIn.add(r);
-		List queue = new ArrayList<Vehicle>();
+		List<Vehicle> queue = new ArrayList<Vehicle>();
 		qs.add(queue);
-		addOutGoingRoad(r);
+		addOutGoingRoad(r); //Ask about this, I thing it should be okay
 	}
 	void addOutGoingRoad(Road r){
 		if(!roadsOut.containsKey(r.getDestination()) && r.getSource().equals(this)) roadsOut.put(r.getDestination(), r);
