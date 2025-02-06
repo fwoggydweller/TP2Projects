@@ -52,8 +52,21 @@ public class Vehicle extends SimulatedObject{
 	public Road getRoad(){
 		return road;
 	}
-	void setSpeed(int s) {
-		this.current_speed = minimum(s, this.maximum_speed);
+	void setSpeed(int s) throws IllegalArgumentException {
+		if(s>-1) {
+			this.current_speed = minimum(s, this.maximum_speed);
+		}
+		else {
+			throw new IllegalArgumentException("Speed can't be a negative number.");
+		}
+	}
+	void setContaminationClass(int c) throws IllegalArgumentException {
+		if(c>-1 && c<11) {
+			this.contamination_class = c;
+		}
+		else {
+			throw new IllegalArgumentException("Contamination class needs to be in between 10 and 0.");
+		}
 	}
 	private int minimum(int a, int b) {
 		if(a>b) {
@@ -73,9 +86,11 @@ public class Vehicle extends SimulatedObject{
 		if(this.location == this.road.getLength()) { //If it's on a junction, checks if it's the last one
 			if(itinerary.indexOf(this.road)+1 != itinerary.size()) { //If it's not the last one, it's status is Pending
 				this.status = VehicleStatus.PENDING; 
+				this.current_speed = 0;
 			}
 			else { //If it is the last one, it sets the status to arrived
 				this.status = VehicleStatus.ARRIVED; 
+				this.current_speed = 0;
 			}
 			
 		}

@@ -22,16 +22,29 @@ public abstract class Road extends SimulatedObject {
 	}
 	
 	void enter(Vehicle v) {
-		this.vehicles.add(v);
+		if(v.getLocation()==0 && v.getSpeed() == 0) {
+			this.vehicles.add(v);
+		}
+		else {
+			throw new IllegalArgumentException("The vehicle can not be added, as it does not suit the requirements (current speed or location).");
+		}
 	}
 	void exit(Vehicle v) {
 		this.vehicles.remove(v);// see if it uses equals (must implement a correct equals)
 	}
 	void setWeather(Weather w){
 		if(w != null) this.weather = weather;
+		else {
+			throw new IllegalArgumentException("Can't set the road's weather,as it's null.");
+		}
 	}
 	void addContamination(int c){
-		this.cont += c;
+		if(c > -1) {
+			this.cont += c;
+		}
+		else {
+			throw new IllegalArgumentException("Can't add a contamination that is a negative number to the road.");
+		}
 	}
 	public int getLength() {
 		return this.leng;
