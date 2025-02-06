@@ -99,7 +99,16 @@ public class Vehicle extends SimulatedObject{
 		}
 	}
 	void moveToNextRoad() {//Catches the current junction and the next one and uses roadTo() to calculate which road we should use
-		this.road = itinerary.get(itinerary.indexOf(this.road)).roadTo(itinerary.get(itinerary.indexOf(this.road)+1));
+		int index = itinerary.indexOf(this.road);
+		this.road.exit(this);
+		this.location = 0;
+		if(this.status == VehicleStatus.PENDING) {
+			this.road = itinerary.get(0).roadTo(itinerary.get(1));
+		}
+		else {
+			this.road = itinerary.get(index).roadTo(itinerary.get(index+1));
+		}
+		this.road.enter(this);
 	}
 	@Override
 	public JSONObject report() {
