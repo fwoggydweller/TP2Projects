@@ -8,7 +8,7 @@ public class CityRoad extends Road{
 
 	@Override
 	void reduceTotalContamination() {
-		int aux = getCurrCont();
+		int aux = getContLimit();
 		int curr = 100 - aux;
 		if(getWeather()==Weather.SUNNY) {
 			setContamination(curr*2);
@@ -29,20 +29,20 @@ public class CityRoad extends Road{
 	
 	@Override
 	void updateSpeedLimit() {
-		if(getMaxCont() < getCurrCont()) {
-			setMaxSpeed(getMaxSpeedLim()/2);
+		if(getTotalCO2() < getContLimit()) {
+			setMaxSpeed(getMaxSpeed()/2);
 		}
 		else {
-			setMaxSpeed(getMaxSpeedLim()/2 + getMaxSpeedLim());
+			setMaxSpeed(getMaxSpeed()/2 + getMaxSpeed());
 		}
 	}
 	
 	@Override
 	int calculateVehicleSpeed(Vehicle v) {
 		if(getWeather().equals(Weather.STORM)) {
-			return (getCurrSpeedLim()*8)/10;
+			return (getSpeedLimit()*8)/10;
 		}
-		return getCurrSpeedLim();
+		return getSpeedLimit();
 	}
 
 }

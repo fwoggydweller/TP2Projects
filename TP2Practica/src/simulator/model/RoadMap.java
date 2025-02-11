@@ -12,16 +12,31 @@ public class RoadMap {
 	Map<String, Road> _roadsMap;
 	Map<String, Junction> _junctionsMap;
 	
-	void addJunction(Junction j) {
-		
+	void addJunction(Junction j) throws IllegalArgumentException{
+		if(_junctionsMap.containsKey(j._id)) 
+			throw new IllegalArgumentException ();
+		else {
+			_junctionsMap.put(j._id, j);
+			_junctions.add(j);
+		}
 	}
 
 	void addRoad(Road r) {
-		
+		if(_roadsMap.containsKey(r._id)) 
+			throw new IllegalArgumentException ();
+		else {
+			_roadsMap.put(r._id, r);
+			_roads.add(r);
+		}
 	}
 
 	void addVehicle(Vehicle v) {
-		
+		if(_vehiclesMap.containsKey(v._id)) 
+			throw new IllegalArgumentException ();
+		else {
+			_vehiclesMap.put(v._id, v);
+			_vehicles.add(v);
+		}
 	}
 
 	Vehicle getVehicle(String id) {
