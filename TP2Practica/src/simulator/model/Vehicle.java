@@ -60,7 +60,7 @@ public class Vehicle extends SimulatedObject{
 			throw new IllegalArgumentException("Speed can't be a negative number.");
 		}
 	}
-	void setContaminationClass(int c) throws IllegalArgumentException {
+	void setContClass(int c) throws IllegalArgumentException {
 		if(c>-1 && c<11) {
 			this.contamination_class = c;
 		}

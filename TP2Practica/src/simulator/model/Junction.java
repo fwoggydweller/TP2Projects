@@ -62,7 +62,7 @@ public class Junction extends SimulatedObject{
 		addOutGoingRoad(r); //Ask about this, I thing it should be okay
 	}
 	void addOutGoingRoad(Road r){
-		if(!roadsOut.containsKey(r.getDestination()) && r.getSource().equals(this)) roadsOut.put(r.getDestination(), r);
+		if(!roadsOut.containsKey(r.getDest()) && r.getSrc().equals(this)) roadsOut.put(r.getDest(), r);
 		else {
 			throw new IllegalArgumentException("Can't add road " + r._id + " to the outgoing road lists (Another road goes to the junction or the road is not an outgoing road)");
 		}
