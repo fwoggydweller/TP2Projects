@@ -52,26 +52,29 @@ public abstract class Road extends SimulatedObject {
 	public int getLength() {
 		return this.leng;
 	}
-	public int getCurrSpeedLim() {
+	public int getSpeedLimit() {
 		return this.speedL;
 	}
-	public int getMaxSpeedLim() {
+	public int getMaxSpeed() {
 		return this.maxSpeedL;
 	}
-	public int getCurrCont() {
+	public int getContLimit() {
 		return this.cont;
 	}
-	public int getMaxCont() {
+	public int getTotalCO2() {
 		return this.maxCont;
 	}
-	public Junction getDestination() {
+	public Junction getDest() {
 		return this.jDest;
 	}
-	public Junction getSource() {
+	public Junction getSrc() {
 		return this.jSrc;
 	}
 	public Weather getWeather() {
 		return this.weather;
+	}
+	public List<Vehicle> getVehicles(){
+		return this.vehicles;
 	}
 	void setMaxCont(int c) {
 		this.maxCont = c;
