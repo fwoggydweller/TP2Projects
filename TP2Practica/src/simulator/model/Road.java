@@ -5,10 +5,10 @@ import java.util.List;
 import org.json.JSONObject;
 
 public abstract class Road extends SimulatedObject {
-	private Junction jSrc, jDest;
-	private int leng, speedL, maxSpeedL, cont, maxCont;
-	private List<Vehicle> vehicles;
-	private Weather weather;
+	Junction jSrc, jDest;
+	int leng, speedL, maxSpeedL, cont, maxCont;
+	List<Vehicle> vehicles;
+	Weather weather;
 	
 	Road(String id, Junction srcJunc, Junction destJunc, int maxSpeed, int contLimit, int length, Weather weather){
 		super(id);
