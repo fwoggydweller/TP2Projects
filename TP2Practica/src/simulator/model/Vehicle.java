@@ -16,17 +16,37 @@ public class Vehicle extends SimulatedObject{
 	int contamination_class;
 	int total_contamination;
 	int total_travel_distance;
+	int indexOfLastJunct;
 	
-	Vehicle(String id, int maxSpeed, int contClass, List<Junction> itinerary) { //What do I have to do with the road? And with the ID?
+	Vehicle(String id, int maxSpeed, int contClass, List<Junction> itinerary) { //Finished
 		  super(id);
 		  this._id = id;
+		  if(this._id == null) {
+			  throw new IllegalArgumentException("Id must have a value different than null.");
+		  }
 		  this.maximum_speed = maxSpeed;
+		  if(this.maximum_speed < 1) {
+			  if(this.maximum_speed < 0) {
+				  throw new IllegalArgumentException("Maximum speed cannot be negative");
+			  }
+			  else {
+				  throw new IllegalArgumentException("Maximum speed cannotbe zero.");
+			  }
+		  }
 		  this.current_speed = 0;
 		  this.contamination_class = contClass;
+		  if(this.contamination_class > 10 || this.contamination_class < 0) {
+			  throw new IllegalArgumentException("Contamination class must be between zero and ten.");
+		  }
 		  this.total_contamination = 0;
 		  this.total_travel_distance = 0;
 		  this.status = VehicleStatus.PENDING;
+		  if(itinerary.size() < 2) {
+			  throw new IllegalArgumentException("Itinerary's size must be of size 2 or more.");
+		  }
 		  this.itinerary = Collections.unmodifiableList(new ArrayList<>(itinerary));
+		  this.road = null;
+		  this.indexOfLastJunct = 0;
 	}
 	public int getLocation() {
 		return location;
@@ -52,7 +72,7 @@ public class Vehicle extends SimulatedObject{
 	public Road getRoad(){
 		return road;
 	}
-	void setSpeed(int s) throws IllegalArgumentException {
+	void setSpeed(int s) throws IllegalArgumentException { //Checked
 		if(s>-1) {
 			this.current_speed = minimum(s, this.maximum_speed);
 		}
@@ -60,7 +80,7 @@ public class Vehicle extends SimulatedObject{
 			throw new IllegalArgumentException("Speed can't be a negative number.");
 		}
 	}
-	void setContClass(int c) throws IllegalArgumentException {
+	void setContClass(int c) throws IllegalArgumentException { //Checked
 		if(c>-1 && c<11) {
 			this.contamination_class = c;
 		}
@@ -76,52 +96,69 @@ public class Vehicle extends SimulatedObject{
 			return a;
 		}
 	}
+	
 	@Override
-	void advance(int time) {
-		int pastLocation = this.location;
-		this.location = minimum(this.location+this.current_speed, this.road.getLength()); //Update of the location
-		int l = this.location - pastLocation;
-		int c = this.contamination_class * l;
-		this.total_contamination += c;  //Update of the contamination
-		if(this.location == this.road.getLength()) { //If it's on a junction, checks if it's the last one
-			if(itinerary.indexOf(this.road)+1 != itinerary.size()) { //If it's not the last one, it's status is Pending
-				this.status = VehicleStatus.PENDING; 
-				this.current_speed = 0;
+	void advance(int time) { //Checked
+		if(this.status.equals(VehicleStatus.TRAVELING)) {
+			int oldLocation = this.location;
+			this.location = this.location+this.current_speed; //Location update
+			if(this.location > road.leng) { //If it exceeds, it updates it to the road's length
+				this.location = road.getLength();
 			}
-			else { //If it is the last one, it sets the status to arrived
-				this.status = VehicleStatus.ARRIVED; 
-				this.current_speed = 0;
+			int d = this.location-oldLocation; //Calculate the advanced distance
+			this.total_travel_distance = this.total_travel_distance + d; //We update the total travel distance
+			int c = d *this.contamination_class; //Calculate the contamination produced
+			this.total_contamination = this.total_contamination+c; //Add it to the total contamination of the vehicle
+			this.road.addContamination(c); //Add it to the road's contamination
+			if(this.location == road.getLength()) { //If it's at the end of the road, we enter the junction
+				road.getDest().enter(this); //We enter in the junction queue
+				this.status = VehicleStatus.WAITING; //We change the status
+				this.current_speed = 0; //We reduce to zero the current speed
+				this.indexOfLastJunct++; //We update the index (If we were in the junction zero, we will now be on the junction one
 			}
 			
 		}
-		else { //If it's not a junction, the car is traveling
-			this.status = VehicleStatus.TRAVELING; 
+		else { //If it's not traveling, we do not advance
+			return;
 		}
 	}
 	void moveToNextRoad() {//Catches the current junction and the next one and uses roadTo() to calculate which road we should use
-		this.location = 0;
-		this.current_speed = 0;
-		if(this.road == null) {
-			this.road = itinerary.get(0).roadTo(itinerary.get(1));
+		if(this.status == VehicleStatus.PENDING || this.status == VehicleStatus.WAITING) {
+			if(this.road != null || this.indexOfLastJunct > 0) { //If we are 
+				this.road.exit(this);
+				if(this.indexOfLastJunct == (this.itinerary.size()-1)) { //If it's the last road, update things
+					this.status = VehicleStatus.ARRIVED;
+					this.current_speed = 0;
+					this.road = null;
+				}
+				else { //If it's not, we update everything
+					this.road = this.itinerary.get(indexOfLastJunct).roadTo(this.itinerary.get(indexOfLastJunct+1)); //We update the road
+					this.road.enter(this);
+					this.status = VehicleStatus.TRAVELING;
+					this.location = 0;
+				}
+			}
+			else {
+				
+			}
 		}
 		else {
-			int index = itinerary.indexOf(this.road);
-			this.road.exit(this);
-			this.road = itinerary.get(index).roadTo(itinerary.get(index+1));
+			throw new IllegalArgumentException("Cannot move a vehicle that is not in a junction.");
 		}
-		this.road.enter(this);
 	}
 	@Override
-	public JSONObject report() {
+	public JSONObject report() { //Tested correctly
 		JSONObject car = new JSONObject();
+		car.put("distance", this.total_travel_distance);
+		car.put("co2", this.total_contamination);
 		car.put("id", this._id);
+		car.put("class", this.contamination_class);
 	    car.put("speed", this.current_speed);
-	    car.put("distance", this.total_travel_distance);
-	    car.put("co2", this.total_contamination);
-	    car.put("class", this.contamination_class);
-	    car.put("status", this.status);
-	    car.put("road", this.road._id);
-	    car.put("location", this.location);
+	    car.put("status", this.status.toString());
+	    if(this.road != null) {
+	    	car.put("road", this.road._id);
+		    car.put("location", this.location);
+	    }
 	    return car;
 	}
 }
