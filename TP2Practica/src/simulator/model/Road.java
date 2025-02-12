@@ -13,11 +13,40 @@ public abstract class Road extends SimulatedObject {
 	Road(String id, Junction srcJunc, Junction destJunc, int maxSpeed, int contLimit, int length, Weather weather){
 		super(id);
 		this.jSrc = srcJunc;
+		this.jSrc.addOutGoingRoad(this);
 		this.jDest = destJunc;
-		int maxSpeedL = maxSpeed;
-		int maxCont = contLimit;
-		int leng = length;
+		this.jDest.addIncomingRoad(this);
+		this.maxSpeedL = maxSpeed;
+		if(this.maxSpeedL < 1) {
+			if(this.maxSpeedL < 0) {
+				throw new IllegalArgumentException("Maximum speed cannot be negative");
+			}
+			else {
+				throw new IllegalArgumentException("Maximum speed must be positive");
+			}
+		}
+		this.maxCont = contLimit;
+		if(this.maxCont < 1) {
+			if(this.maxCont < 0) {
+				throw new IllegalArgumentException("Maximum contamination cannot be negative");
+			}
+			else {
+				throw new IllegalArgumentException("Maximum contamination must be positive");
+			}
+		}
+		this.leng = length;
+		if(this.leng < 1) {
+			if(this.leng < 0) {
+				throw new IllegalArgumentException("Road length cannot be negative");
+			}
+			else {
+				throw new IllegalArgumentException("Road length must be positive");
+			}
+		}
 		this.weather = weather;
+		if(this.weather == null) {
+			throw new IllegalArgumentException("Weather cannot be null");
+		}
 		this.vehicles = new ArrayList<Vehicle>();
 	}
 	
@@ -37,9 +66,6 @@ public abstract class Road extends SimulatedObject {
 		else {
 			throw new IllegalArgumentException("Can't set the road's weather,as it's null.");
 		}
-	}
-	void setContamination(int c) {
-		this.cont = c;
 	}
 	void addContamination(int c){
 		if(c > -1) {
@@ -77,12 +103,36 @@ public abstract class Road extends SimulatedObject {
 		return this.vehicles;
 	}
 	void setMaxCont(int c) {
+		if(c < 1) {
+			if(c < 0) {
+				throw new IllegalArgumentException("Maximum contamination cannot be negative");
+			}
+			else {
+				throw new IllegalArgumentException("Maximum contamination must be positive");
+			}
+		}
 		this.maxCont = c;
 	}
 	void setCurrCont(int c) {
+		if(this.leng < 1) {
+			if(this.leng < 0) {
+				throw new IllegalArgumentException("Current contamination cannot be negative");
+			}
+			else {
+				throw new IllegalArgumentException("Current contamination must be positive");
+			}
+		}
 		this.cont = c;
 	}
 	void setMaxSpeed(int s) {
+		if(s < 1) {
+			if(s < 0) {
+				throw new IllegalArgumentException("Max speed cannot be negative");
+			}
+			else {
+				throw new IllegalArgumentException("Max speed must be positive");
+			}
+		}
 		this.maxSpeedL = s;
 	}
 	abstract void reduceTotalContamination();

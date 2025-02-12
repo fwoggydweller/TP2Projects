@@ -8,41 +8,41 @@ public class CityRoad extends Road{
 
 	@Override
 	void reduceTotalContamination() {
-		int aux = getCurrCont();
+		int aux = this.cont;
 		int curr = 100 - aux;
-		if(getWeather()==Weather.SUNNY) {
-			setContamination(curr*2);
+		if(this.weather.equals(Weather.SUNNY)) {
+			setCurrCont(curr*2);
 		}
-		else if(getWeather().equals(Weather.RAINY)) {
-			setContamination(curr*3);
+		else if(this.weather.equals(Weather.RAINY)) {
+			setCurrCont(curr*3);
 		}
-		else if(getWeather().equals(Weather.STORM)) {
-			setContamination(curr*10);
+		else if(this.weather.equals(Weather.STORM)) {
+			setCurrCont(curr*10);
 		}
-		else if(getWeather().equals(Weather.CLOUDY)) {
-			setContamination(curr*15);
+		else if(this.weather.equals(Weather.CLOUDY)) {
+			setCurrCont(curr*15);
 		}
 		else{
-			setContamination(curr*20);
+			setCurrCont(curr*20);
 		}
 	}
 	
 	@Override
 	void updateSpeedLimit() {
-		if(getMaxCont() < getCurrCont()) {
-			setMaxSpeed(getMaxSpeedLim()/2);
+		if(this.maxCont < this.cont) {
+			setMaxSpeed(this.maxSpeedL/2);
 		}
 		else {
-			setMaxSpeed(getMaxSpeedLim()/2 + getMaxSpeedLim());
+			setMaxSpeed(this.maxSpeedL/2 + this.maxSpeedL);
 		}
 	}
 	
 	@Override
 	int calculateVehicleSpeed(Vehicle v) {
 		if(getWeather().equals(Weather.STORM)) {
-			return (getCurrSpeedLim()*8)/10;
+			return (this.speedL*8)/10;
 		}
-		return getCurrSpeedLim();
+		return this.speedL;
 	}
 
 }

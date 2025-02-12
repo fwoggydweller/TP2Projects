@@ -25,7 +25,7 @@ public class Vehicle extends SimulatedObject{
 		  this.contamination_class = contClass;
 		  this.total_contamination = 0;
 		  this.total_travel_distance = 0;
-		  this.status = VehicleStatus.TRAVELING;
+		  this.status = VehicleStatus.PENDING;
 		  this.itinerary = Collections.unmodifiableList(new ArrayList<>(itinerary));
 	}
 	public int getLocation() {
@@ -99,13 +99,14 @@ public class Vehicle extends SimulatedObject{
 		}
 	}
 	void moveToNextRoad() {//Catches the current junction and the next one and uses roadTo() to calculate which road we should use
-		int index = itinerary.indexOf(this.road);
-		this.road.exit(this);
 		this.location = 0;
-		if(this.status == VehicleStatus.PENDING) {
+		this.current_speed = 0;
+		if(this.road == null) {
 			this.road = itinerary.get(0).roadTo(itinerary.get(1));
 		}
 		else {
+			int index = itinerary.indexOf(this.road);
+			this.road.exit(this);
 			this.road = itinerary.get(index).roadTo(itinerary.get(index+1));
 		}
 		this.road.enter(this);

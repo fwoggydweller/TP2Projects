@@ -8,24 +8,33 @@ import java.util.Map;
 import org.json.JSONObject;
 
 public class Junction extends SimulatedObject{
-	List<Road> roadsIn;
-	Map<Junction,Road> roadsOut;
-	List<List<Vehicle>> qs;
-	int currGreen;
-	int lastSwitchingTime;
-	int currTime;
-	LightSwitchingStrategy lStrat;
-	DequeuingStrategy dQStrat;
-	int x , y;
+	List<Road> _inRoads;
+
+	List<List<Vehicle>> _queues; // the i-th queue corresponds to the i-th road in _inRoads
+
+	Map<Road, List<Vehicle>> _queueByRoad; // for efficient lookup of queues
+
+	Map<Junction, Road> _outRoadByJunction; // indicates the road to take to reach a given junction
+
+	int _greenLightIndex; // the index of the road in _inRoads that has a green light (-1 if all lights are red)
+
+	int _lastSwitchingTime; // the last time the green light was switched from one road to another
+
+	LightSwitchingStrategy _lss;
+
+	DequeuingStrategy _dqs;
+	
+	int x, y;
 	
 	Junction(String id, LightSwitchingStrategy lsStrategy, DequeuingStrategy dqStrategy, int xCoor, int yCoor) {
 		super(id);
-		if(lsStrategy != null)this.lStrat = lsStrategy; // meter exceptons
-		if(dqStrategy != null)this.dQStrat = dqStrategy;
+		if(lsStrategy != null)this._lss = lsStrategy;
+		if(dqStrategy != null)this._dqs = dqStrategy;
 		
-		this.roadsIn = new ArrayList<Road>();
-		this.qs = new ArrayList<>();
-		this.roadsOut = new HashMap<Junction,Road>();
+		this._inRoads = new ArrayList<Road>();
+		this._queues = new ArrayList<>();
+		this._outRoadByJunction= new HashMap<Junction,Road>();
+		this._queueByRoad = new HashMap<Road, List<Vehicle>>();
 		if(xCoor >= 0) x = xCoor;
 		if(yCoor >= 0) y = yCoor;
 	}
@@ -33,7 +42,7 @@ public class Junction extends SimulatedObject{
 	@Override
 	void advance(int time) {
 		
-		List<Vehicle> l = dQStrat.dequeue(qs.get(currGreen));
+		List<Vehicle> l = _dqs.dequeue(_queues.get(_greenLightIndex));
 		
 		for(Vehicle v : l) {
 			v.advance(time);
@@ -56,13 +65,14 @@ public class Junction extends SimulatedObject{
 	    return junct;
 	}
 	void addIncomingRoad(Road r){
-		roadsIn.add(r);
-		List<Vehicle> queue = new ArrayList<Vehicle>();
-		qs.add(queue);
-		addOutGoingRoad(r); //Ask about this, I thing it should be okay
+		if(r.getDest() == this) {
+			roadsIn.add(r);
+			this.qs.add(r.getVehicles());
+			this.
+		}
 	}
 	void addOutGoingRoad(Road r){
-		if(!roadsOut.containsKey(r.getDest()) && r.getSrc().equals(this)) roadsOut.put(r.getDest(), r);
+		if(r.getSrc() == this) roadsOut.put(r.getDest(), r);
 		else {
 			throw new IllegalArgumentException("Can't add road " + r._id + " to the outgoing road lists (Another road goes to the junction or the road is not an outgoing road)");
 		}
