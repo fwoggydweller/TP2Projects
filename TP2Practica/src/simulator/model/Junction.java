@@ -48,10 +48,10 @@ public class Junction extends SimulatedObject{
 			v.advance(time);
 		}
 		
-		int aux = lStrat.chooseNextGreen(roadsIn, qs, currGreen, lastSwitchingTime, currTime);
-		if(aux != currGreen) {
-			currGreen = aux;
-			lastSwitchingTime = time;
+		int aux = _lss.chooseNextGreen(_inRoads, _queues, _greenLightIndex, _lastSwitchingTime, time); // not sure if time is correct here
+		if(aux != _greenLightIndex) {
+			_greenLightIndex = aux;
+			_lastSwitchingTime = time;
 		}
 		
 	}
@@ -60,28 +60,28 @@ public class Junction extends SimulatedObject{
 	public JSONObject report() {
 		JSONObject junct = new JSONObject();
 		junct.put("id", this._id);
-	    junct.put("green" , "r"+this.currGreen);
-	    junct.put("queues" , this.qs);
+	    junct.put("green" , "r"+this._greenLightIndex);
+	    junct.put("queues" , this._queues);
 	    return junct;
 	}
 	void addIncomingRoad(Road r){
 		if(r.getDest() == this) {
-			roadsIn.add(r);
-			this.qs.add(r.getVehicles());
-			this.
+			_inRoads.add(r);
+			this._queues.add(r.getVehicles());
+			this._queueByRoad.put(r, r.getVehicles());
 		}
 	}
 	void addOutGoingRoad(Road r){
-		if(r.getSrc() == this) roadsOut.put(r.getDest(), r);
+		if(r.getSrc() == this) _outRoadByJunction.put(r.getDest(), r);
 		else {
 			throw new IllegalArgumentException("Can't add road " + r._id + " to the outgoing road lists (Another road goes to the junction or the road is not an outgoing road)");
 		}
 	}
 	void enter(Vehicle v){
-		qs.get(roadsIn.indexOf(v.getRoad())).add(v);
+		_queues.get(_inRoads.indexOf(v.getRoad())).add(v);
 	}
 	Road roadTo(Junction j){
-		return roadsOut.get(j); // unique keys
+		return _outRoadByJunction.get(j); // unique keys
 	}
 }
 
