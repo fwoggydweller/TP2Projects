@@ -131,7 +131,7 @@ class VehicleTest {
 		assertEquals(VehicleStatus.TRAVELING, v1.getStatus());
 
 		// the road should be r1
-		assertEquals(v1.getRoad(), r1);
+		assertEquals(r1, v1.getRoad());
 
 		// the list of vehicles on r1 should be [v1]
 		assertEquals(r1.getVehicles().size(), 1);
