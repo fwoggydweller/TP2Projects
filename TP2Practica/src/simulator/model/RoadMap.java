@@ -13,15 +13,18 @@ public class RoadMap {
 	Map<String, Junction> _junctionsMap;
 	
 	void addJunction(Junction j) {
-		
+		this._junctions.add(j);
+		this._junctionsMap.put(j._id, j);
 	}
 
 	void addRoad(Road r) {
-		
+		this._roads.add(r);
+		this._roadsMap.put(r._id, r);
 	}
 
 	void addVehicle(Vehicle v) {
-		
+		this._vehicles.add(v);
+		this._vehiclesMap.put(v._id, v);
 	}
 
 	Vehicle getVehicle(String id) {

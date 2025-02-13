@@ -1,3 +1,5 @@
+package simulator.model;
+
 public abstract class Event implements Comparable<Event> {
 
     private static long _counter = 0;
@@ -22,7 +24,6 @@ public abstract class Event implements Comparable<Event> {
 
     @Override
     public int compareTo(Event o) { //0for different time, 1 for same time this obj first, 2 for this obj second
-    	
     	if(this._time != o.getTime()) return 0;
     	if(this._time_stamp < o.getTimeStamp()) return 1;
     	return 2;

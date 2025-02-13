@@ -2,7 +2,6 @@ package simulator.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import simulator.model.*;
 
 public class NewVehicleEvent extends Event {
 	String id;
@@ -24,8 +23,7 @@ public class NewVehicleEvent extends Event {
 			aux.add(map._junctionsMap.get(s));
 		}	
 		Vehicle v = new Vehicle(id, maxSpeed, contClass, aux);
-		map._vehicles.add(v);
-		map._vehiclesMap.put(id, v);
+		map.addVehicle(v);
 		v.moveToNextRoad();
 	}
 }
