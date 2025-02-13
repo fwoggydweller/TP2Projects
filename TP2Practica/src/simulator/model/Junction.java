@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class Junction extends SimulatedObject{
@@ -65,8 +66,30 @@ public class Junction extends SimulatedObject{
 	public JSONObject report() {
 		JSONObject junct = new JSONObject();
 		junct.put("id", this._id);
-	    junct.put("green" , "r"+this._greenLightIndex);
-	    junct.put("queues" , this._queues);
+		if (this._greenLightIndex < 0) {
+	        junct.put("green", "none");
+	    }
+		else {
+			 junct.put("green" , "r"+this._greenLightIndex);
+		}
+		JSONArray queuesArray = new JSONArray();
+	    // Recorremos el mapa _queueByRoad
+	    for (Map.Entry<Road, List<Vehicle>> entry : this._queueByRoad.entrySet()) {
+	        JSONObject queueObj = new JSONObject();
+	        // Clave "road": usamos el id de la carretera
+	        queueObj.put("road", entry.getKey().getId());
+	        
+	        // Clave "vehicles": array de los identificadores de los vehículos en la cola
+	        JSONArray vehiclesArray = new JSONArray();
+	        for (Vehicle v : entry.getValue()) {
+	            vehiclesArray.put(v.getId());
+	        }
+	        queueObj.put("vehicles", vehiclesArray);
+	        
+	        queuesArray.put(queueObj);
+	    }
+	    
+	    junct.put("queues", queuesArray);
 	    return junct;
 	}
 	void addIncomingRoad(Road r){

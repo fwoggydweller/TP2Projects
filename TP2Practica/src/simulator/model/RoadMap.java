@@ -1,6 +1,8 @@
 package simulator.model;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +16,15 @@ public class RoadMap {
 	Map<String, Vehicle> _vehiclesMap;
 	Map<String, Road> _roadsMap;
 	Map<String, Junction> _junctionsMap;
+	
+	RoadMap() {
+		_vehicles = new ArrayList<Vehicle>();
+		_roads = new ArrayList<Road>();
+		_junctions = new ArrayList<Junction>();
+		_vehiclesMap = new HashMap<String, Vehicle>();
+		_roadsMap = new HashMap<String, Road>();
+		_junctionsMap = new HashMap<String, Junction>();
+	}
 	
 	void addJunction(Junction j) {
 		this._junctions.add(j);
@@ -61,13 +72,13 @@ public class RoadMap {
 	    for (Road r : this._roads) {
 	        roadArray.put(r.report());
 	    }
-	    roadMap.put("road", juncArray);
+	    roadMap.put("roads", roadArray);
 	    JSONArray vehicleArray = new JSONArray();
 	    for (Vehicle v : this._vehicles) {
 	        vehicleArray.put(v.report());
 	    }
-	    roadMap.put("vehicles", juncArray);
+	    roadMap.put("vehicles", vehicleArray);
 	    return roadMap;
 	}
 	
-}
+} 
