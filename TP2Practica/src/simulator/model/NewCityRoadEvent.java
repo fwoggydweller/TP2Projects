@@ -8,8 +8,8 @@ public class NewCityRoadEvent extends Event {
 	String id;
 	int maxSpeed,contLimit,length;
 	Weather weather;
-	Junction srcJunc, destJunc;
-	public NewCityRoadEvent(int time, String id, Junction srcJunc, Junction destJunc, int maxSpeed, int contLimit, int length, Weather weather) {
+	String srcJunc, destJunc;
+	public NewCityRoadEvent(int time, String id, String srcJunc, String destJunc, int maxSpeed, int contLimit, int length, Weather weather) {
 	    super(time);
 	    this.id = id;
 	    this.maxSpeed = maxSpeed;
@@ -22,7 +22,8 @@ public class NewCityRoadEvent extends Event {
 
 	@Override
 	void execute(RoadMap map) {
-		CityRoad r = new CityRoad(id, srcJunc, destJunc, maxSpeed, contLimit, length, weather);
+		
+		CityRoad r = new CityRoad(id, map._junctionsMap.get(srcJunc), map._junctionsMap.get(destJunc), maxSpeed, contLimit, length, weather);
 		map.addRoad(r);
 	}
 }
