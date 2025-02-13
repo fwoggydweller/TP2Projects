@@ -29,14 +29,18 @@ public class Junction extends SimulatedObject{
 	Junction(String id, LightSwitchingStrategy lsStrategy, DequeuingStrategy dqStrategy, int xCoor, int yCoor) {
 		super(id);
 		if(lsStrategy != null)this._lss = lsStrategy;
+		else throw new IllegalArgumentException();
 		if(dqStrategy != null)this._dqs = dqStrategy;
+		else throw new IllegalArgumentException();
 		
 		this._inRoads = new ArrayList<Road>();
 		this._queues = new ArrayList<>();
 		this._outRoadByJunction= new HashMap<Junction,Road>();
 		this._queueByRoad = new HashMap<Road, List<Vehicle>>();
 		if(xCoor >= 0) x = xCoor;
+		else throw new IllegalArgumentException();
 		if(yCoor >= 0) y = yCoor;
+		else throw new IllegalArgumentException();
 	}
 
 	@Override
