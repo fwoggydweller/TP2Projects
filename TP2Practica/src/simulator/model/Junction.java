@@ -66,11 +66,11 @@ public class Junction extends SimulatedObject{
 	public JSONObject report() {
 		JSONObject junct = new JSONObject();
 		junct.put("id", this._id);
-		if (this._greenLightIndex < 0) {
+		if (this._greenLightIndex < 0 || this._inRoads.size() <= this._greenLightIndex) {
 	        junct.put("green", "none");
 	    }
 		else {
-			 junct.put("green" , "r"+this._greenLightIndex);
+			 junct.put("green" , this._inRoads.get(this._greenLightIndex).getId());
 		}
 		JSONArray queuesArray = new JSONArray();
 	    // Recorremos el mapa _queueByRoad
