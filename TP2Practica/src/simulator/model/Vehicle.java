@@ -74,7 +74,12 @@ public class Vehicle extends SimulatedObject{
 	}
 	void setSpeed(int s) throws IllegalArgumentException { //Checked
 		if(s>-1) {
-			this.current_speed = minimum(s, this.maximum_speed);
+			if(this.status == VehicleStatus.TRAVELING) {
+				this.current_speed = minimum(s, this.maximum_speed);
+			}
+			else {
+				this.current_speed = 0;
+			}
 		}
 		else {
 			throw new IllegalArgumentException("Speed can't be a negative number.");
