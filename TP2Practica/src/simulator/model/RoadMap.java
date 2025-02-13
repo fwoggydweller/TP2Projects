@@ -25,6 +25,7 @@ public class RoadMap {
 		_roadsMap = new HashMap<String, Road>();
 		_junctionsMap = new HashMap<String, Junction>();
 	}
+
 	
 	void addJunction(Junction j) {
 		this._junctions.add(j);
