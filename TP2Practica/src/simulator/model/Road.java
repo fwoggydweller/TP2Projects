@@ -25,8 +25,8 @@ public abstract class Road extends SimulatedObject {
 			throw new IllegalArgumentException("The origin/destination junctions must be different than null.");
 		}
 		this.origin = srcJunc;
-		this.origin.addOutGoingRoad(this);
 		this.destination = destJunc;
+		this.origin.addOutGoingRoad(this);
 		this.destination.addIncomingRoad(this);
 		//Check if maximum speed is possitive
 		this.maximumSpeed = maxSpeed;
