@@ -2,6 +2,7 @@ package simulator.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -71,8 +72,9 @@ public class Junction extends SimulatedObject{
 	void addIncomingRoad(Road r){
 		if(r.getDest() == this) {
 			_inRoads.add(r);
-			this._queues.add(r.getVehicles());
-			this._queueByRoad.put(r, r.getVehicles());
+			List<Vehicle> q = new ArrayList<>();
+			this._queues.add(q);
+			this._queueByRoad.put(r, q);
 		}
 	}
 	void addOutGoingRoad(Road r){

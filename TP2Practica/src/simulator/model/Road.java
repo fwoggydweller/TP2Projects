@@ -60,7 +60,7 @@ public abstract class Road extends SimulatedObject {
 		if(this.weatherConditions == null) {
 			throw new IllegalArgumentException("Weather cannot be null");
 		}
-		this.vehicles = Collections.unmodifiableList(new ArrayList<>());
+		this.vehicles = new ArrayList<>();
 	}
 	
 	void enter(Vehicle v) { //Checked
@@ -82,7 +82,7 @@ public abstract class Road extends SimulatedObject {
 	}
 	void addContamination(int c){ //Checked
 		if(c > -1) {
-			this.totalContamination += c;
+			this.totalContamination = this.totalContamination + c;
 		}
 		else {
 			throw new IllegalArgumentException("Can't add a contamination that is a negative number to the road.");
@@ -113,7 +113,7 @@ public abstract class Road extends SimulatedObject {
 		return this.weatherConditions;
 	}
 	public List<Vehicle> getVehicles(){
-		return this.vehicles;
+		return Collections.unmodifiableList(this.vehicles);
 	}
 	void setMaxCont(int c) {
 		if(c < 1) {
@@ -158,7 +158,7 @@ public abstract class Road extends SimulatedObject {
 			v.setSpeed(calculateVehicleSpeed(v));
 			v.advance(time);
 		}
-		vehicles.sort((o1, o2) -> Integer.compare(o1.location, o2.location)); //We short the vehicles list with the location
+		vehicles.sort((o1, o2) -> Integer.compare(o2.location, o1.location)); //We short the vehicles list with the location
 	}
 	
 	public JSONObject report() { //Checked

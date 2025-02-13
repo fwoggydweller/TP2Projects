@@ -9,32 +9,27 @@ public class CityRoad extends Road{
 	@Override
 	void reduceTotalContamination() { //Checked
 		int aux = this.totalContamination;
-		int curr = 100 - aux;
-		if(this.weatherConditions.equals(Weather.SUNNY)) {
-			setCurrCont(curr*2);
-		}
-		else if(this.weatherConditions.equals(Weather.RAINY)) {
-			setCurrCont(curr*3);
-		}
-		else if(this.weatherConditions.equals(Weather.STORM)) {
-			setCurrCont(curr*10);
-		}
-		else if(this.weatherConditions.equals(Weather.CLOUDY)) {
-			setCurrCont(curr*15);
+		if(this.weatherConditions.equals(Weather.WINDY) || this.weatherConditions.equals(Weather.STORM)) {
+			if(aux - 10 > 0) {
+				this.totalContamination = aux-10;
+			}
+			else {
+				this.totalContamination = 0;
+			}
 		}
 		else{
-			setCurrCont(curr*20);
+			if(aux - 2 > 0) {
+				this.totalContamination = aux-2;
+			}
+			else {
+				this.totalContamination = 0;
+			}
 		}
 	}
 	
 	@Override
 	void updateSpeedLimit() { //Checked
-		if(this.contaminationAlarmLimit < this.totalContamination) {
-			setMaxSpeed(this.maximumSpeed/2);
-		}
-		else {
-			setMaxSpeed(this.maximumSpeed/2 + this.maximumSpeed);
-		}
+		setMaxSpeed(this.maximumSpeed);
 	}
 	
 	@Override
