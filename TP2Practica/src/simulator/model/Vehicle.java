@@ -102,7 +102,7 @@ public class Vehicle extends SimulatedObject{
 		if(this.status.equals(VehicleStatus.TRAVELING)) {
 			int oldLocation = this.location;
 			this.location = this.location+this.current_speed; //Location update
-			if(this.location > road.leng) { //If it exceeds, it updates it to the road's length
+			if(this.location > road.length) { //If it exceeds, it updates it to the road's length
 				this.location = road.getLength();
 			}
 			int d = this.location-oldLocation; //Calculate the advanced distance
@@ -124,22 +124,19 @@ public class Vehicle extends SimulatedObject{
 	}
 	void moveToNextRoad() {//Catches the current junction and the next one and uses roadTo() to calculate which road we should use
 		if(this.status == VehicleStatus.PENDING || this.status == VehicleStatus.WAITING) {
-			if(this.road != null || this.indexOfLastJunct > 0) { //If we are 
+			if(this.road == null || this.indexOfLastJunct == 0) { //If we are 
+				this.road = this.itinerary.get(indexOfLastJunct).roadTo(this.itinerary.get(indexOfLastJunct+1)); //We update the road
+				this.road.enter(this);
+				this.status = VehicleStatus.TRAVELING;
+				this.location = 0;
+			}
+			else { //If it's not, we update everything
 				this.road.exit(this);
 				if(this.indexOfLastJunct == (this.itinerary.size()-1)) { //If it's the last road, update things
 					this.status = VehicleStatus.ARRIVED;
 					this.current_speed = 0;
 					this.road = null;
 				}
-				else { //If it's not, we update everything
-					this.road = this.itinerary.get(indexOfLastJunct).roadTo(this.itinerary.get(indexOfLastJunct+1)); //We update the road
-					this.road.enter(this);
-					this.status = VehicleStatus.TRAVELING;
-					this.location = 0;
-				}
-			}
-			else {
-				
 			}
 		}
 		else {

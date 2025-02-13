@@ -9,27 +9,27 @@ public class InterCityRoad extends Road{
 	}
 
 	@Override
-	void reduceTotalContamination() {
+	void reduceTotalContamination() { //Checked
 		int x = 0;
-		if(this.weather == Weather.CLOUDY) x = 3;
-		else if(this.weather == Weather.SUNNY) x = 2;
-		else if(this.weather == Weather.STORM) x = 20;
-		else if(this.weather == Weather.WINDY) x = 15;
-		else if(this.weather == Weather.RAINY) x = 10;
-		this.cont = ((100 - x) * this.cont) / 100;
+		if(this.weatherConditions == Weather.CLOUDY) x = 3;
+		else if(this.weatherConditions == Weather.SUNNY) x = 2;
+		else if(this.weatherConditions == Weather.STORM) x = 20;
+		else if(this.weatherConditions == Weather.WINDY) x = 15;
+		else if(this.weatherConditions == Weather.RAINY) x = 10;
+		this.totalContamination = ((100 - x) * this.totalContamination) / 100;
 	}
 
 	@Override
-	void updateSpeedLimit() {
-		if(this.maxCont < this.cont) {
-			this.speedL = this.maxSpeedL / 2;
+	void updateSpeedLimit() { //Checked
+		if(this.totalContamination > this.contaminationAlarmLimit) {
+			this.currentSpeedLimit = this.maximumSpeed / 2;
 		}
-		else this.speedL = this.maxSpeedL;
+		else this.currentSpeedLimit = this.maximumSpeed;
 	}
 
 	@Override
-	int calculateVehicleSpeed(Vehicle v) {
-		return this.weather == Weather.STORM? (this.speedL * 8)/10 : this.speedL;
+	int calculateVehicleSpeed(Vehicle v) { //Checked
+		return this.weatherConditions == Weather.STORM? (this.currentSpeedLimit * 8)/10 : this.currentSpeedLimit;
 	}
 
 }
