@@ -34,7 +34,7 @@ public class Junction extends SimulatedObject{
 		else throw new IllegalArgumentException();
 		if(dqStrategy != null)this._dqs = dqStrategy;
 		else throw new IllegalArgumentException();
-		
+		this._greenLightIndex = -1;
 		this._inRoads = new ArrayList<Road>();
 		this._queues = new ArrayList<>();
 		this._outRoadByJunction= new HashMap<Junction,Road>();
@@ -44,16 +44,18 @@ public class Junction extends SimulatedObject{
 		if(yCoor >= 0) y = yCoor;
 		else throw new IllegalArgumentException();
 	}
-
+	
 	@Override
 	void advance(int time) {
-		
-		List<Vehicle> l = _dqs.dequeue(_queues.get(_greenLightIndex));
-		
-		for(Vehicle v : l) {
-			v.advance(time);
+		if(this._greenLightIndex > -1 && !this._queues.isEmpty()) {
+			List<Vehicle> l = _queues.get(_greenLightIndex);
+			this._dqs.dequeue(l);
+			
+			for(Vehicle v : l) {
+				v.moveToNextRoad();
+				l.remove(v);
+			}
 		}
-		
 		int aux = _lss.chooseNextGreen(_inRoads, _queues, _greenLightIndex, _lastSwitchingTime, time); // not sure if time is correct here
 		if(aux != _greenLightIndex) {
 			_greenLightIndex = aux;

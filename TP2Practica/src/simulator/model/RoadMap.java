@@ -38,8 +38,13 @@ public class RoadMap {
 	}
 
 	void addVehicle(Vehicle v) {
-		this._vehicles.add(v);
-		this._vehiclesMap.put(v._id, v);
+		if(this._vehiclesMap.containsKey(v.getId()) || !this._junctions.containsAll(v.getItinerary())) { //Hay que mirar si las carreteras que conducen a los junctions existen también
+			throw new IllegalArgumentException("We cannot add the vehicle to the roadmap.");
+		}
+		else {
+			this._vehicles.add(v);
+			this._vehiclesMap.put(v._id, v);
+		}
 	}
 
 	Vehicle getVehicle(String id) {
@@ -65,10 +70,6 @@ public class RoadMap {
 	public JSONObject report() { //Checked
 		JSONObject roadMap = new JSONObject();
 	    JSONArray juncArray = new JSONArray();
-	    for (Junction j : this._junctions) {
-	        juncArray.put(j.report());
-	    }
-	    roadMap.put("junctions", juncArray);
 	    JSONArray roadArray = new JSONArray();
 	    for (Road r : this._roads) {
 	        roadArray.put(r.report());
@@ -79,6 +80,11 @@ public class RoadMap {
 	        vehicleArray.put(v.report());
 	    }
 	    roadMap.put("vehicles", vehicleArray);
+	    for (Junction j : this._junctions) {
+	        juncArray.put(j.report());
+	    }
+	    roadMap.put("junctions", juncArray);
+	    System.out.println(roadMap.toString());
 	    return roadMap;
 	}
 	
