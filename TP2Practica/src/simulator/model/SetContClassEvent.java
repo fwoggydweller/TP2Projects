@@ -11,7 +11,7 @@ public class SetContClassEvent extends Event{
 		super(time);
 		this.cs = cs;
 	}
-	
+
 	@Override
 	void execute(RoadMap map) {
 		for(Pair<String, Integer> e : this.cs) {
