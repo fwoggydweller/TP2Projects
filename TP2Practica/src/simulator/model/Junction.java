@@ -47,7 +47,6 @@ public class Junction extends SimulatedObject{
 	
 	@Override
 	void advance(int time) {
-		System.out.println(this._greenLightIndex);
 		if(this._greenLightIndex > -1 && !this._queues.isEmpty()) {
 			List<Vehicle> l = _queues.get(_greenLightIndex);
 			if(!l.isEmpty()) {
