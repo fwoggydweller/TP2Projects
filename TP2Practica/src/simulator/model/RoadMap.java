@@ -28,17 +28,32 @@ public class RoadMap {
 
 	
 	void addJunction(Junction j) {
+		if(this._junctionsMap.containsKey(j.getId())) {
+			throw new IllegalArgumentException("We cannot add the junction to the roadmap.");
+		}
 		this._junctions.add(j);
 		this._junctionsMap.put(j._id, j);
 	}
 
 	void addRoad(Road r) {
+		if(this._roadsMap.containsKey(r.getId())) {
+			throw new IllegalArgumentException("We cannot add the road to the roadmap.");
+		}
 		this._roads.add(r);
 		this._roadsMap.put(r._id, r);
 	}
 
 	void addVehicle(Vehicle v) {
-		if(this._vehiclesMap.containsKey(v.getId()) || !this._junctions.containsAll(v.getItinerary())) { //Hay que mirar si las carreteras que conducen a los junctions existen también
+		int i = 0;
+		while(i < v.getItinerary().size()-1) {
+			if(!_roads.contains(v.getItinerary().get(i).roadTo(v.getItinerary().get(i+1)))){
+				throw new IllegalArgumentException("We cannot add the vehicle to the roadmap."); //Invalid itinerary
+			}
+			else {
+				i = i + 1;
+			}
+		}
+		if(this._vehiclesMap.containsKey(v.getId()) || !this._junctions.containsAll(v.getItinerary())) {
 			throw new IllegalArgumentException("We cannot add the vehicle to the roadmap.");
 		}
 		else {
@@ -84,7 +99,7 @@ public class RoadMap {
 	        juncArray.put(j.report());
 	    }
 	    roadMap.put("junctions", juncArray);
-	    System.out.println(roadMap.toString());
+
 	    return roadMap;
 	}
 	

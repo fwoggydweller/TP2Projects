@@ -30,9 +30,16 @@ public class TrafficSimulator {
     
     public void advance() {
     	this._time = this._time+1;
-    	while (!_events.isEmpty() && _events.peek().getTime() == this._time) {
-            Event event = _events.poll(); // Extrae y elimina el evento
-            event.execute(_roadMap);
+    	Object[] a = _events.toArray();
+    	int i = 0;
+    	int time = this._time;
+    	while (a.length > i && time == this._time) { //I need to remove the event from the _events too
+    		Event event = (Event) a[i];
+    		time = event.getTime();
+    		if(time == this._time) {
+    			event.execute(_roadMap);
+                i = i+1;
+    		}
     	}
     	for(Junction j :this._roadMap._junctions) {
     		j.advance(_time);
@@ -45,6 +52,7 @@ public class TrafficSimulator {
     	JSONObject roadMap = new JSONObject();
     	roadMap.put("time", this._time);
 	    roadMap.put("state", this._roadMap.report());
+	    System.out.println(roadMap.toString());
 	    return roadMap;
     }
 }
