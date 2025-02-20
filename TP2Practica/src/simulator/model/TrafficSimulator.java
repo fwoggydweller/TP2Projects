@@ -35,16 +35,18 @@ public class TrafficSimulator {
     	int time = this._time;
     	while (a.length > i && time == this._time) { //I need to remove the event from the _events too
     		Event event = (Event) a[i];
+    		System.out.println(event.toString());
     		time = event.getTime();
     		if(time == this._time) {
+    			this._events.remove(event);
     			event.execute(_roadMap);
                 i = i+1;
     		}
     	}
-    	for(Junction j :this._roadMap._junctions) {
+    	for(Junction j :this._roadMap.getJunctions()) {
     		j.advance(_time);
     	}
-    	for(Road r: this._roadMap._roads) {
+    	for(Road r: this._roadMap.getRoads()) {
     		r.advance(_time);
     	}
     }

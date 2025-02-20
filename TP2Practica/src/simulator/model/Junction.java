@@ -47,13 +47,15 @@ public class Junction extends SimulatedObject{
 	
 	@Override
 	void advance(int time) {
+		System.out.println(this._greenLightIndex);
 		if(this._greenLightIndex > -1 && !this._queues.isEmpty()) {
 			List<Vehicle> l = _queues.get(_greenLightIndex);
-			this._dqs.dequeue(l);
-			
-			for(Vehicle v : l) {
-				v.moveToNextRoad();
-				l.remove(v);
+			if(!l.isEmpty()) {
+				this._dqs.dequeue(l);
+				for(Vehicle v : l) {
+					v.moveToNextRoad();
+					l.remove(v);
+				}
 			}
 		}
 		int aux = _lss.chooseNextGreen(_inRoads, _queues, _greenLightIndex, _lastSwitchingTime, time); // not sure if time is correct here
