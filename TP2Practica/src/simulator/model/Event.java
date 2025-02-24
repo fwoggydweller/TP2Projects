@@ -23,11 +23,16 @@ public abstract class Event implements Comparable<Event> {
     }
 
     @Override
-    public int compareTo(Event o) { //0for different time, 1 for same time this obj first, 2 for this obj second
-    	if(this._time != o.getTime()) return 0;
-    	if(this._time_stamp < o.getTimeStamp()) return 1;
-    	return 2;
+    public int compareTo(Event o) {
+        // Comparar primero por _time
+        int timeComparison = Integer.compare(this._time, o._time);
         
+        if (timeComparison != 0) {
+            return timeComparison; // Si _time es diferente, devolver la comparación
+        }
+
+        // Si _time es igual, comparar por _time_stamp
+        return Long.compare(this._time_stamp, o._time_stamp);
     }
 
     abstract void execute(RoadMap map);

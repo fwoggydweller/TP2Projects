@@ -1,5 +1,6 @@
 package simulator.model;
 
+import java.util.Iterator;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
@@ -30,18 +31,18 @@ public class TrafficSimulator {
     
     public void advance() {
     	this._time = this._time+1;
-    	Object[] a = _events.toArray();
-    	int i = 0;
-    	int time = this._time;
-    	while (a.length > i) { //I need to remove the event from the _events too
-    		Event event = (Event) a[i];
-    		time = event.getTime();
-    		if(time == this._time) {
-    			this._events.remove(event);
-    			event.execute(_roadMap);
-    		}
-    		i = i+1;
-    	}
+    	Iterator<Event> it = _events.iterator();
+    	while (it.hasNext()) {
+            Event event = it.next();
+            
+            if (event.getTime() == this._time) {
+                it.remove();  // Elimina el evento de manera segura
+                event.execute(_roadMap);
+            }
+            else {
+            	break;
+            }
+        }
     	for(Junction j :this._roadMap.getJunctions()) {
     		j.advance(_time);
     	}
