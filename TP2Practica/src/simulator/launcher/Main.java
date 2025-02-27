@@ -14,8 +14,10 @@ import simulator.model.Event;
 
 public class Main {
 
+	static int _timeLimit;
 	private static String _inFile = null;
 	private static String _outFile = null;
+	private static String _NumOfSteps = null;
 	private static Factory<Event> _eventsFactory = null;
 
 	private static void parseArgs(String[] args) {
@@ -32,6 +34,7 @@ public class Main {
 			parseHelpOption(line, cmdLineOptions);
 			parseInFileOption(line);
 			parseOutFileOption(line);
+			parseNumOfStepsOption(line);
 
 			// if there are some remaining arguments, then something wrong is
 			// provided in the command line!
@@ -58,6 +61,7 @@ public class Main {
 		cmdLineOptions.addOption(
 				Option.builder("o").longOpt("output").hasArg().desc("Output file, where reports are written.").build());
 		cmdLineOptions.addOption(Option.builder("h").longOpt("help").desc("Print this message").build());
+		cmdLineOptions.addOption(Option.builder("t").hasArg().desc("specify the number of steps to simulate").build());
 
 		return cmdLineOptions;
 	}
@@ -80,9 +84,19 @@ public class Main {
 	private static void parseOutFileOption(CommandLine line) throws ParseException {
 		_outFile = line.getOptionValue("o");
 	}
+	private static void parseNumOfStepsOption(CommandLine line) throws ParseException {
+		_NumOfSteps = line.getOptionValue("t");
+		if(_NumOfSteps == null) {
+			_timeLimit = 5;
+		}
+		else {
+			_timeLimit = Integer.parseInt(line.getArgList().get(1));
+		}
+	}
 
-
+	//Fill in the code of the initFactories method to initialize the factories for events, light switching strategies, and queuing strategies. Assign the events factory to the _eventsFactory field.
 	private static void initFactories() {
+		
 	}
 
 	private static void startBatchMode() throws IOException {
