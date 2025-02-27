@@ -39,8 +39,8 @@ class NewVehicleEventBuilderTest {
 				+ "      	 \"dq_strategy\" : { \"type\" : \"move_first_dqs\",  \"data\" : {} }\n" + "   	 }";
 
 		NewJunctionEventBuilder jeb = new NewJunctionEventBuilder(lssFactory, dqsFactory);
-		ts.addEvent(jeb.create_instance(new JSONObject(dataJson1)));
-		ts.addEvent(jeb.create_instance(new JSONObject(dataJson2)));
+		ts.addEvent(jeb.createInstance(new JSONObject(dataJson1)));
+		ts.addEvent(jeb.createInstance(new JSONObject(dataJson2)));
 
 		
 		String dataJson3 = "{\n"
@@ -50,7 +50,7 @@ class NewVehicleEventBuilderTest {
 				+ "           \"maxspeed\" : 120,\n" + "           \"weather\"  : \"SUNNY\"\n" + "   	  }";
 
 		NewCityRoadEventBuilder reb = new NewCityRoadEventBuilder();
-		ts.addEvent(reb.create_instance(new JSONObject(dataJson3)));
+		ts.addEvent(reb.createInstance(new JSONObject(dataJson3)));
 
 		return ts;
 
@@ -71,7 +71,7 @@ class NewVehicleEventBuilderTest {
 		
 		
 		NewVehicleEventBuilder eb = new NewVehicleEventBuilder();
-		Event e = eb.create_instance( new JSONObject(inputJson) );	
+		Event e = eb.createInstance( new JSONObject(inputJson) );	
 		
 		ts.addEvent(e);
 		
@@ -96,7 +96,7 @@ class NewVehicleEventBuilderTest {
 		
 		
 		NewVehicleEventBuilder eb = new NewVehicleEventBuilder();
-		assertThrows(Exception.class, () -> eb.create_instance( new JSONObject(inputJson) ));	
+		assertThrows(Exception.class, () -> eb.createInstance( new JSONObject(inputJson) ));	
 	
 	}
 

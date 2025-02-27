@@ -5,7 +5,7 @@ import java.util.List;
 public class MostCrowdedStrategy implements LightSwitchingStrategy {
 	
 	int timeSlot;
-	MostCrowdedStrategy (int timeSlot){
+	public MostCrowdedStrategy (int timeSlot){
 		this.timeSlot = timeSlot;
 	}
 	@Override

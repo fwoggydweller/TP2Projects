@@ -7,7 +7,7 @@ import simulator.misc.Pair;
 
 public class SetContClassEvent extends Event{
 	List<Pair<String, Integer>> cs = new ArrayList<Pair<String, Integer>>();
-	SetContClassEvent(int time, List<Pair<String, Integer>> cs) {
+	public SetContClassEvent(int time, List<Pair<String, Integer>> cs) {
 		super(time);
 		this.cs = cs;
 	}

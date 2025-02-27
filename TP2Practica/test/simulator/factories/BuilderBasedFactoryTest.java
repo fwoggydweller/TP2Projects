@@ -60,7 +60,7 @@ class BuilderBasedFactoryTest {
 
 		String inputJSon = "{ \"type\" : \"round_robin_lss\", \"data\" : {\"timeslot\" : 5} }";
 
-		assertTrue(lssFactory.create_instance(new JSONObject(inputJSon)) instanceof RoundRobinStrategy);
+		assertTrue(lssFactory.createInstance(new JSONObject(inputJSon)) instanceof RoundRobinStrategy);
 	}
 
 	@Test
@@ -69,7 +69,7 @@ class BuilderBasedFactoryTest {
 
 		String inputJSon = "{ \"type\" : \"round_robin_lss\", \"data\" : {\"timeslot\" : 5} }";
 
-		assertTrue(lssFactory.create_instance(new JSONObject(inputJSon)) instanceof RoundRobinStrategy);
+		assertTrue(lssFactory.createInstance(new JSONObject(inputJSon)) instanceof RoundRobinStrategy);
 	}
 
 	@Test
@@ -78,7 +78,7 @@ class BuilderBasedFactoryTest {
 
 		String inputJSon = "{ \"type\" : \"most_crowded_lss\", \"data\" : {\"timeslot\" : 5} }";
 
-		assertTrue(lssFactory.create_instance(new JSONObject(inputJSon)) instanceof MostCrowdedStrategy);
+		assertTrue(lssFactory.createInstance(new JSONObject(inputJSon)) instanceof MostCrowdedStrategy);
 	}
 
 	@Test
@@ -87,7 +87,7 @@ class BuilderBasedFactoryTest {
 
 		String inputJSon = "{ \"type\" : \"most_crowded_lss\", \"data\" : {\"timeslot\" : 5} }";
 
-		assertTrue(lssFactory.create_instance(new JSONObject(inputJSon)) instanceof MostCrowdedStrategy);
+		assertTrue(lssFactory.createInstance(new JSONObject(inputJSon)) instanceof MostCrowdedStrategy);
 	}
 
 	@Test
@@ -98,7 +98,7 @@ class BuilderBasedFactoryTest {
 
 		// in principle, for invalid input we throw an exception, but returning null is
 		// fine also
-		assertThrows(Exception.class, () -> lssFactory.create_instance(new JSONObject(inputJSon)));
+		assertThrows(Exception.class, () -> lssFactory.createInstance(new JSONObject(inputJSon)));
 	}
 
 	
@@ -108,7 +108,7 @@ class BuilderBasedFactoryTest {
 
 		String inputJSon = "{ \"type\" : \"move_all_dqs\", \"data\" : {\"timeslot\" : 5} }";
 
-		assertTrue(dqsFactory.create_instance(new JSONObject(inputJSon)) instanceof MoveAllStrategy);
+		assertTrue(dqsFactory.createInstance(new JSONObject(inputJSon)) instanceof MoveAllStrategy);
 	}
 
 	@Test
@@ -117,7 +117,7 @@ class BuilderBasedFactoryTest {
 
 		String inputJSon = "{ \"type\" : \"move_all_dqs\", \"data\" : {\"timeslot\" : 5} }";
 
-		assertTrue(dqsFactory.create_instance(new JSONObject(inputJSon)) instanceof MoveAllStrategy);
+		assertTrue(dqsFactory.createInstance(new JSONObject(inputJSon)) instanceof MoveAllStrategy);
 	}
 
 	@Test
@@ -126,7 +126,7 @@ class BuilderBasedFactoryTest {
 
 		String inputJSon = "{ \"type\" : \"move_first_dqs\", \"data\" : {\"timeslot\" : 5} }";
 
-		assertTrue(dqsFactory.create_instance(new JSONObject(inputJSon)) instanceof MoveFirstStrategy);
+		assertTrue(dqsFactory.createInstance(new JSONObject(inputJSon)) instanceof MoveFirstStrategy);
 	}
 
 	@Test
@@ -135,7 +135,7 @@ class BuilderBasedFactoryTest {
 
 		String inputJSon = "{ \"type\" : \"move_first_dqs\", \"data\" : {\"timeslot\" : 5} }";
 
-		assertTrue(dqsFactory.create_instance(new JSONObject(inputJSon)) instanceof MoveFirstStrategy);
+		assertTrue(dqsFactory.createInstance(new JSONObject(inputJSon)) instanceof MoveFirstStrategy);
 	}
 
 	@Test
@@ -146,7 +146,7 @@ class BuilderBasedFactoryTest {
 
 		// in principle, for invalid input we throw an exception, but returning null is
 		// fine also
-		assertThrows(Exception.class, () -> dqsFactory.create_instance(new JSONObject(inputJSon)));
+		assertThrows(Exception.class, () -> dqsFactory.createInstance(new JSONObject(inputJSon)));
 	}
 
 	@Test
@@ -164,7 +164,7 @@ class BuilderBasedFactoryTest {
 				+ "   	 }\n"
 				+ "   }";
 
-		assertTrue( eFactory.create_instance(new JSONObject(inputJSon)) instanceof NewJunctionEvent);
+		assertTrue( eFactory.createInstance(new JSONObject(inputJSon)) instanceof NewJunctionEvent);
 	}
 
 	@Test
@@ -185,7 +185,7 @@ class BuilderBasedFactoryTest {
 				+ "   	  }\n"
 				+ "   	}";
 
-		assertTrue( eFactory.create_instance(new JSONObject(inputJSon)) instanceof NewCityRoadEvent);
+		assertTrue( eFactory.createInstance(new JSONObject(inputJSon)) instanceof NewCityRoadEvent);
 	}
 
 	@Test
@@ -206,7 +206,7 @@ class BuilderBasedFactoryTest {
 				+ "   	  }\n"
 				+ "   	}";
 
-		assertTrue( eFactory.create_instance(new JSONObject(inputJSon)) instanceof NewInterCityRoadEvent);
+		assertTrue( eFactory.createInstance(new JSONObject(inputJSon)) instanceof NewInterCityRoadEvent);
 	}
 
 	@Test
@@ -224,7 +224,7 @@ class BuilderBasedFactoryTest {
 				+ "      }\n"
 				+ "    }";
 
-		assertTrue( eFactory.create_instance(new JSONObject(inputJSon)) instanceof NewVehicleEvent);
+		assertTrue( eFactory.createInstance(new JSONObject(inputJSon)) instanceof NewVehicleEvent);
 	}
 
 	@Test
@@ -241,7 +241,7 @@ class BuilderBasedFactoryTest {
 				+ "  	  }\n"
 				+ "    }";
 
-		assertTrue( eFactory.create_instance(new JSONObject(inputJSon)) instanceof SetWeatherEvent);
+		assertTrue( eFactory.createInstance(new JSONObject(inputJSon)) instanceof SetWeatherEvent);
 	}
 
 	@Test
@@ -258,7 +258,7 @@ class BuilderBasedFactoryTest {
 				+ "      }\n"
 				+ "    }";
 
-		assertTrue( eFactory.create_instance(new JSONObject(inputJSon)) instanceof SetContClassEvent);
+		assertTrue( eFactory.createInstance(new JSONObject(inputJSon)) instanceof SetContClassEvent);
 	}
 
 	@Test
@@ -269,7 +269,7 @@ class BuilderBasedFactoryTest {
 
 		// in principle, for invalid input we throw an exception, but returning null is
 		// fine also
-		assertThrows(Exception.class, () -> eFactory.create_instance(new JSONObject(inputJSon)));
+		assertThrows(Exception.class, () -> eFactory.createInstance(new JSONObject(inputJSon)));
 	}
 
 	@Test
@@ -278,7 +278,7 @@ class BuilderBasedFactoryTest {
 
 		String inputJSon = "{}";
 
-		assertThrows(Exception.class, () -> eFactory.create_instance(new JSONObject(inputJSon)));
+		assertThrows(Exception.class, () -> eFactory.createInstance(new JSONObject(inputJSon)));
 	}
 
 
