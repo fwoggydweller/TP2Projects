@@ -37,7 +37,7 @@ public class NewJunctionEventBuilder extends Builder<Event> {
     protected Event createInstance(JSONObject data) {
         int time = data.getInt("time");
         String id = data.getString("id");
-        int xCoor = data.getJSONArray("coor").getInt(0); //I'm not afraid of the consequences
+        int xCoor = data.getJSONArray("coor").getInt(0);
         int yCoor = data.getJSONArray("coor").getInt(1);
         LightSwitchingStrategy lsStrat;
         DequeuingStrategy dqStrat;

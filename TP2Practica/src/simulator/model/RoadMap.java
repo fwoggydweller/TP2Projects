@@ -47,7 +47,7 @@ public class RoadMap {
 		int i = 0;
 		while(i < v.getItinerary().size()-1) {
 			if(!_roads.contains(v.getItinerary().get(i).roadTo(v.getItinerary().get(i+1)))){
-				throw new IllegalArgumentException("We cannot add the vehicle to the roadmap."); //Invalid itinerary
+				throw new IllegalArgumentException("We cannot add the vehicle to the roadmap, Invalid itinerary."); //Invalid itinerary
 			}
 			else {
 				i = i + 1;
