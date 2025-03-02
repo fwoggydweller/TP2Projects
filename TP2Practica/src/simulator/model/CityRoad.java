@@ -7,7 +7,7 @@ public class CityRoad extends Road{
 	}
 
 	@Override
-	void reduceTotalContamination() { //Checked
+	void reduceTotalContamination() { 
 		int aux = this.totalContamination;
 		if(this.weatherConditions.equals(Weather.WINDY) || this.weatherConditions.equals(Weather.STORM)) {
 			if(aux - 10 > 0) {
@@ -28,12 +28,12 @@ public class CityRoad extends Road{
 	}
 	
 	@Override
-	void updateSpeedLimit() { //Checked
+	void updateSpeedLimit() { 
 		setMaxSpeed(this.maximumSpeed);
 	}
 	
 	@Override
-	int calculateVehicleSpeed(Vehicle v) { //Checked
+	int calculateVehicleSpeed(Vehicle v) { 
 		return ((11-v.contamination_class)*this.currentSpeedLimit)/11;
 	}
 

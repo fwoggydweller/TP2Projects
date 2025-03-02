@@ -8,7 +8,7 @@ public class InterCityRoad extends Road{
 	}
 
 	@Override
-	void reduceTotalContamination() { //Checked
+	void reduceTotalContamination() { 
 		int x = 0;
 		if(this.weatherConditions == Weather.CLOUDY) x = 3;
 		else if(this.weatherConditions == Weather.SUNNY) x = 2;
@@ -19,7 +19,7 @@ public class InterCityRoad extends Road{
 	}
 
 	@Override
-	void updateSpeedLimit() { //Checked
+	void updateSpeedLimit() { 
 		if(this.totalContamination > this.contaminationAlarmLimit) {
 			this.currentSpeedLimit = this.maximumSpeed / 2;
 		}
@@ -27,7 +27,7 @@ public class InterCityRoad extends Road{
 	}
 
 	@Override
-	int calculateVehicleSpeed(Vehicle v) { //Checked
+	int calculateVehicleSpeed(Vehicle v) { 
 		return this.weatherConditions == Weather.STORM? (this.currentSpeedLimit * 8)/10 : this.currentSpeedLimit;
 	}
 

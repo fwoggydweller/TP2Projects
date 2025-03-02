@@ -18,7 +18,7 @@ public abstract class Road extends SimulatedObject {
 	int totalContamination;
 	List<Vehicle> vehicles;
 	
-	Road(String id, Junction srcJunc, Junction destJunc, int maxSpeed, int contLimit, int length, Weather weather){ //Checked
+	Road(String id, Junction srcJunc, Junction destJunc, int maxSpeed, int contLimit, int length, Weather weather){ 
 		super(id);
 		//We first check if the junctions are null, if they are not, then we join the road with it's origin and destination
 		if(srcJunc == null || destJunc == null) {
@@ -63,7 +63,7 @@ public abstract class Road extends SimulatedObject {
 		this.vehicles = new ArrayList<>();
 	}
 	
-	void enter(Vehicle v) { //Checked
+	void enter(Vehicle v) { 
 		if(v.getLocation()==0 && v.getSpeed() == 0) { //If it fits in the conditions, then it enters the road's vehicle list
 			this.vehicles.add(v);
 		}
@@ -71,7 +71,7 @@ public abstract class Road extends SimulatedObject {
 			throw new IllegalArgumentException("The vehicle can not be added, as it does not suit the requirements (current speed or location).");
 		}
 	}
-	void exit(Vehicle v) { //Checked
+	void exit(Vehicle v) { 
 		this.vehicles.remove(v); //We just remove v from the vehicle list
 	}
 	void setWeather(Weather w){
@@ -80,7 +80,7 @@ public abstract class Road extends SimulatedObject {
 			throw new IllegalArgumentException("Can't set the road's weather,as it's null.");
 		}
 	}
-	void addContamination(int c){ //Checked
+	void addContamination(int c){ 
 		if(c > -1) {
 			this.totalContamination = this.totalContamination + c;
 		}
@@ -151,7 +151,7 @@ public abstract class Road extends SimulatedObject {
 	abstract void reduceTotalContamination();
 	abstract void updateSpeedLimit();
 	abstract int calculateVehicleSpeed(Vehicle v);
-	void advance(int time){ //Checked
+	void advance(int time){ 
 		reduceTotalContamination();
 		updateSpeedLimit();
 		for (Vehicle v: vehicles){ //For each vehicle, we must change the speed with calculate Vehicle speed and then advance the vehicle
@@ -161,7 +161,7 @@ public abstract class Road extends SimulatedObject {
 		vehicles.sort((o1, o2) -> Integer.compare(o2.location, o1.location)); //We short the vehicles list with the location
 	}
 	
-	public JSONObject report() { //Checked
+	public JSONObject report() { 
 		JSONObject road = new JSONObject();
 		road.put("id", this._id);
 	    road.put("speedlimit", this.currentSpeedLimit);
