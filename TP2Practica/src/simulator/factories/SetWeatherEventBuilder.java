@@ -27,7 +27,7 @@ public class SetWeatherEventBuilder extends Builder<Event> {
     }
 
     @Override
-    protected Event createInstance(JSONObject data) {
+    protected Event create_instance(JSONObject data) {
          
     	int time = data.optInt("time", 1);
     	List<Pair<String,Weather>> ws = new ArrayList<Pair<String,Weather>>();

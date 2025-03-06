@@ -25,7 +25,7 @@ public class SetContClassEventBuilder extends Builder<Event> {
     }
 
     @Override
-    protected Event createInstance(JSONObject data) {
+    protected Event create_instance(JSONObject data) {
          
     	int time = data.optInt("time", 1);
     	//Pair<String, Integer> cs = new Pair<String,Integer>((String)data.getJSONArray("cs").get(0), (Integer)data.getJSONArray("cs").get(1));

@@ -34,15 +34,15 @@ public class NewJunctionEventBuilder extends Builder<Event> {
     }
 
     @Override
-    protected Event createInstance(JSONObject data) {
+    protected Event create_instance(JSONObject data) {
         int time = data.getInt("time");
         String id = data.getString("id");
         int xCoor = data.getJSONArray("coor").getInt(0);
         int yCoor = data.getJSONArray("coor").getInt(1);
         LightSwitchingStrategy lsStrat;
         DequeuingStrategy dqStrat;
-        lsStrat = lsS.createInstance(data.getJSONObject("ls_strategy"));
-        dqStrat = dqS.createInstance(data.getJSONObject("dq_strategy"));
+        lsStrat = lsS.create_instance(data.getJSONObject("ls_strategy"));
+        dqStrat = dqS.create_instance(data.getJSONObject("dq_strategy"));
         
         return new NewJunctionEvent(time, id, lsStrat, dqStrat, xCoor, yCoor);
     }
