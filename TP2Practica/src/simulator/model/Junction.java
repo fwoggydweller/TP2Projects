@@ -52,8 +52,7 @@ public class Junction extends SimulatedObject{
 			if(!l.isEmpty()) {
 				for(Vehicle v : this._dqs.dequeue(l) ) {
 					v.moveToNextRoad();
-					l.remove(v);
-				}
+					l.remove(v);				}
 			}
 		}
 		int aux = _lss.chooseNextGreen(_inRoads, _queues, _greenLightIndex, _lastSwitchingTime, time); // not sure if time is correct here
