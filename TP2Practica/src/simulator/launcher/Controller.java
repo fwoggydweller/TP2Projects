@@ -25,7 +25,7 @@ public class Controller {
     	JSONObject jo = new JSONObject(new JSONTokener(in));
     	JSONArray base = jo.getJSONArray("events"); //We save the list for traversing it later
     	for(Object e : base) {
-    		_sim.addEvent(_eventsFactory.createInstance((JSONObject)e));
+    		_sim.addEvent(_eventsFactory.create_instance((JSONObject)e));
     	}
     }
     public void run(int n, OutputStream out) {

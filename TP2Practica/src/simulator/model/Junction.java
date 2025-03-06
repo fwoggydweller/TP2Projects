@@ -47,11 +47,10 @@ public class Junction extends SimulatedObject{
 	
 	@Override
 	void advance(int time) {
-		if(this._greenLightIndex > -1 && !this._queues.isEmpty()) {
+		if(this._greenLightIndex > -1) {
 			List<Vehicle> l = _queues.get(_greenLightIndex);
 			if(!l.isEmpty()) {
-				this._dqs.dequeue(l);
-				for(Vehicle v : l) {
+				for(Vehicle v : this._dqs.dequeue(l) ) {
 					v.moveToNextRoad();
 					l.remove(v);
 				}
@@ -77,14 +76,13 @@ public class Junction extends SimulatedObject{
 		}
 		JSONArray queuesArray = new JSONArray();
 	    // Recorremos el mapa _queueByRoad
-	    for (Map.Entry<Road, List<Vehicle>> entry : this._queueByRoad.entrySet()) {
+	    for (Road r : this._inRoads) {
 	        JSONObject queueObj = new JSONObject();
-	        // Clave "road": usamos el id de la carretera
-	        queueObj.put("road", entry.getKey().getId());
 	        
-	        // Clave "vehicles": array de los identificadores de los vehículos en la cola
+	        queueObj.put("road", r.getId());
+	        
 	        JSONArray vehiclesArray = new JSONArray();
-	        for (Vehicle v : entry.getValue()) {
+	        for (Vehicle v : _queueByRoad.get(r)) {
 	            vehiclesArray.put(v.getId());
 	        }
 	        queueObj.put("vehicles", vehiclesArray);

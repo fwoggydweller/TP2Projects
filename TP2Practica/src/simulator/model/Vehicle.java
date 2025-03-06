@@ -72,7 +72,7 @@ public class Vehicle extends SimulatedObject{
 	public Road getRoad(){
 		return road;
 	}
-	void setSpeed(int s) throws IllegalArgumentException { //Checked
+	void setSpeed(int s) throws IllegalArgumentException { 
 		if(s>-1) {
 			if(this.status == VehicleStatus.TRAVELING) {
 				this.current_speed = minimum(s, this.maximum_speed);
@@ -85,7 +85,7 @@ public class Vehicle extends SimulatedObject{
 			throw new IllegalArgumentException("Speed can't be a negative number.");
 		}
 	}
-	void setContClass(int c) throws IllegalArgumentException { //Checked
+	void setContClass(int c) throws IllegalArgumentException { 
 		if(c>-1 && c<11) {
 			this.contamination_class = c;
 		}
@@ -103,8 +103,9 @@ public class Vehicle extends SimulatedObject{
 	}
 	
 	@Override
-	void advance(int time) { //Checked
+	void advance(int time) { 
 		if(this.status.equals(VehicleStatus.TRAVELING)) {
+
 			int oldLocation = this.location;
 			this.location = this.location+this.current_speed; //Location update
 			if(this.location > road.length) { //If it exceeds, it updates it to the road's length
@@ -115,6 +116,7 @@ public class Vehicle extends SimulatedObject{
 			int c = d *this.contamination_class; //Calculate the contamination produced
 			this.total_contamination = this.total_contamination+c; //Add it to the total contamination of the vehicle
 			this.road.addContamination(c); //Add it to the road's contamination
+
 			if(this.location == road.getLength()) { //If it's at the end of the road, we enter the junction
 				road.getDest().enter(this); //We enter in the junction queue
 				this.status = VehicleStatus.WAITING; //We change the status
@@ -127,13 +129,14 @@ public class Vehicle extends SimulatedObject{
 			return;
 		}
 	}
+	
 	void moveToNextRoad() {//Catches the current junction and the next one and uses roadTo() to calculate which road we should use
 		if(this.status == VehicleStatus.PENDING || this.status == VehicleStatus.WAITING) {
-			if(this.road == null || this.indexOfLastJunct == 0) { //If we are 
+			if(this.road == null && this.indexOfLastJunct == 0) { //If we are on the first junction
 				this.road = this.itinerary.get(indexOfLastJunct).roadTo(this.itinerary.get(indexOfLastJunct+1)); //We update the road
+				this.location = 0;
 				this.road.enter(this);
 				this.status = VehicleStatus.TRAVELING;
-				this.location = 0;
 			}
 			else { //If it's not, we update everything
 				this.road.exit(this);
@@ -141,6 +144,12 @@ public class Vehicle extends SimulatedObject{
 					this.status = VehicleStatus.ARRIVED;
 					this.current_speed = 0;
 					this.road = null;
+				}
+				else { //If it's not the last road
+					this.road = this.itinerary.get(indexOfLastJunct).roadTo(this.itinerary.get(indexOfLastJunct+1)); //We update the road
+					this.location = 0; //Set the location
+					this.road.enter(this); //We enter
+					this.status = VehicleStatus.TRAVELING; //Change the status
 				}
 			}
 		}

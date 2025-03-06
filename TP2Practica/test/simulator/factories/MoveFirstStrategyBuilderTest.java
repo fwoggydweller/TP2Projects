@@ -15,7 +15,7 @@ class MoveFirstStrategyBuilderTest {
 		MoveFirstStrategyBuilder eb = new MoveFirstStrategyBuilder();
 		
 		String dataJSon = "{}";
-		DequeuingStrategy o = eb.createInstance(new JSONObject(dataJSon));
+		DequeuingStrategy o = eb.create_instance(new JSONObject(dataJSon));
 		assertTrue( o instanceof MoveFirstStrategy );
 		
 	}
@@ -25,7 +25,7 @@ class MoveFirstStrategyBuilderTest {
 		MoveFirstStrategyBuilder eb = new MoveFirstStrategyBuilder();
 		
 		String dataJSon = "{}";
-		DequeuingStrategy o = eb.createInstance(new JSONObject(dataJSon));
+		DequeuingStrategy o = eb.create_instance(new JSONObject(dataJSon));
 		assertTrue( o instanceof MoveFirstStrategy );
 		
 	}

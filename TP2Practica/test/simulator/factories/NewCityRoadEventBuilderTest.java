@@ -38,8 +38,8 @@ class NewCityRoadEventBuilderTest {
 				+ "      	 \"dq_strategy\" : { \"type\" : \"move_first_dqs\",  \"data\" : {} }\n" + "   	 }";
 
 		NewJunctionEventBuilder jeb = new NewJunctionEventBuilder(lssFactory, dqsFactory);
-		ts.addEvent(jeb.createInstance(new JSONObject(dataJson1)));
-		ts.addEvent(jeb.createInstance(new JSONObject(dataJson2)));
+		ts.addEvent(jeb.create_instance(new JSONObject(dataJson1)));
+		ts.addEvent(jeb.create_instance(new JSONObject(dataJson2)));
 
 		return ts;
 	}
@@ -55,7 +55,7 @@ class NewCityRoadEventBuilderTest {
 				+ "           \"maxspeed\" : 120,\n" + "           \"weather\"  : \"SUNNY\"\n" + "   	  }";
 
 		NewCityRoadEventBuilder reb = new NewCityRoadEventBuilder();
-		ts.addEvent(reb.createInstance(new JSONObject(dataJson)));
+		ts.addEvent(reb.create_instance(new JSONObject(dataJson)));
 
 		ts.advance();
 
@@ -76,7 +76,7 @@ class NewCityRoadEventBuilderTest {
 				+ "           \"maxspeed\" : 120,\n" + "           \"weather\"  : \"SUNNY\"\n" + "   	  }";
 
 		NewCityRoadEventBuilder reb = new NewCityRoadEventBuilder();
-		assertThrows(Exception.class, () -> reb.createInstance(new JSONObject(dataJson)));
+		assertThrows(Exception.class, () -> reb.create_instance(new JSONObject(dataJson)));
 
 	}
 

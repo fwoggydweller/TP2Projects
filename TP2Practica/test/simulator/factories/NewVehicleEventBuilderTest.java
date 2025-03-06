@@ -39,8 +39,8 @@ class NewVehicleEventBuilderTest {
 				+ "      	 \"dq_strategy\" : { \"type\" : \"move_first_dqs\",  \"data\" : {} }\n" + "   	 }";
 
 		NewJunctionEventBuilder jeb = new NewJunctionEventBuilder(lssFactory, dqsFactory);
-		ts.addEvent(jeb.createInstance(new JSONObject(dataJson1)));
-		ts.addEvent(jeb.createInstance(new JSONObject(dataJson2)));
+		ts.addEvent(jeb.create_instance(new JSONObject(dataJson1)));
+		ts.addEvent(jeb.create_instance(new JSONObject(dataJson2)));
 
 		
 		String dataJson3 = "{\n"
@@ -50,7 +50,7 @@ class NewVehicleEventBuilderTest {
 				+ "           \"maxspeed\" : 120,\n" + "           \"weather\"  : \"SUNNY\"\n" + "   	  }";
 
 		NewCityRoadEventBuilder reb = new NewCityRoadEventBuilder();
-		ts.addEvent(reb.createInstance(new JSONObject(dataJson3)));
+		ts.addEvent(reb.create_instance(new JSONObject(dataJson3)));
 
 		return ts;
 
@@ -71,13 +71,14 @@ class NewVehicleEventBuilderTest {
 		
 		
 		NewVehicleEventBuilder eb = new NewVehicleEventBuilder();
-		Event e = eb.createInstance( new JSONObject(inputJson) );	
+		Event e = eb.create_instance( new JSONObject(inputJson) );	
 		
 		ts.addEvent(e);
 		
 		ts.advance();
 				
 		String s = "{\"time\":1,\"state\":{\"roads\":[{\"speedlimit\":120,\"co2\":261,\"weather\":\"SUNNY\",\"vehicles\":[\"v1\"],\"id\":\"r1\"}],\"vehicles\":[{\"distance\":87,\"road\":\"r1\",\"co2\":261,\"location\":87,\"id\":\"v1\",\"class\":3,\"speed\":87,\"status\":\"TRAVELING\"}],\"junctions\":[{\"green\":\"none\",\"queues\":[],\"id\":\"j1\"},{\"green\":\"r1\",\"queues\":[{\"road\":\"r1\",\"vehicles\":[]}],\"id\":\"j2\"}]}}";
+
 		assertTrue(new JSONObject(s).similar(ts.report()));
 	
 	}
@@ -96,7 +97,7 @@ class NewVehicleEventBuilderTest {
 		
 		
 		NewVehicleEventBuilder eb = new NewVehicleEventBuilder();
-		assertThrows(Exception.class, () -> eb.createInstance( new JSONObject(inputJson) ));	
+		assertThrows(Exception.class, () -> eb.create_instance( new JSONObject(inputJson) ));	
 	
 	}
 

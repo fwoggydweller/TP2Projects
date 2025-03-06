@@ -15,7 +15,7 @@ class MostCrowdedStrategyBuilderTest {
 		MostCrowdedStrategyBuilder eb = new MostCrowdedStrategyBuilder();
 		
 		String dataJSon = "{\"timeslot\" : 5}";
-		LightSwitchingStrategy o = eb.createInstance(new JSONObject(dataJSon));
+		LightSwitchingStrategy o = eb.create_instance(new JSONObject(dataJSon));
 
 		assertTrue( o instanceof MostCrowdedStrategy );
 		
@@ -26,7 +26,7 @@ class MostCrowdedStrategyBuilderTest {
 		MostCrowdedStrategyBuilder eb = new MostCrowdedStrategyBuilder();
 		
 		String dataJSon = "{}";
-		LightSwitchingStrategy o = eb.createInstance(new JSONObject(dataJSon));
+		LightSwitchingStrategy o = eb.create_instance(new JSONObject(dataJSon));
 		assertTrue( o instanceof MostCrowdedStrategy );
 		
 	}
@@ -36,7 +36,7 @@ class MostCrowdedStrategyBuilderTest {
 		MostCrowdedStrategyBuilder eb = new MostCrowdedStrategyBuilder();
 		
 		String dataJSon = "{}";
-		LightSwitchingStrategy o = eb.createInstance(new JSONObject(dataJSon));
+		LightSwitchingStrategy o = eb.create_instance(new JSONObject(dataJSon));
 		assertTrue( o instanceof MostCrowdedStrategy );
 		
 	}

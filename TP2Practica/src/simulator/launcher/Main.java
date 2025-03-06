@@ -112,7 +112,7 @@ public class Main {
 			_timeLimit = 5;
 		}
 		else {
-			_timeLimit = Integer.parseInt(line.getArgList().get(1));
+			_timeLimit = Integer.parseInt(_NumOfSteps);
 		}
 	}
 
@@ -154,7 +154,7 @@ public class Main {
 	}
 
 	private static void start(String[] args) throws IOException {
-		initFactories();
+		initFactories(); //Checked
 		parseArgs(args);
 		startBatchMode();
 	}

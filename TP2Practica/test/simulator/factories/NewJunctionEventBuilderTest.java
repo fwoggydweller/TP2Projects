@@ -36,7 +36,7 @@ class NewJunctionEventBuilderTest {
 				+ "      	 \"dq_strategy\" : { \"type\" : \"move_first_dqs\",  \"data\" : {} }\n" + "   	 }";
 
 		NewJunctionEventBuilder eb = new NewJunctionEventBuilder(lssFactory, dqsFactory);
-		Event e = eb.createInstance(new JSONObject(dataJson));
+		Event e = eb.create_instance(new JSONObject(dataJson));
 
 		ts.addEvent(e);
 
@@ -68,7 +68,7 @@ class NewJunctionEventBuilderTest {
 				+ "      	 \"dq_strategy\" : { \"type\" : \"move_first_dqs\",  \"data\" : {} }\n" + "   	 }";
 
 		NewJunctionEventBuilder eb = new NewJunctionEventBuilder(lssFactory, dqsFactory);
-		assertThrows(Exception.class, () -> eb.createInstance(new JSONObject(dataJson)));
+		assertThrows(Exception.class, () -> eb.create_instance(new JSONObject(dataJson)));
 	}
 
 	@Test
@@ -89,7 +89,7 @@ class NewJunctionEventBuilderTest {
 		String inputJson = "{}";
 
 		NewJunctionEventBuilder eb = new NewJunctionEventBuilder(lssFactory, dqsFactory);
-		assertThrows(Exception.class, () -> eb.createInstance(new JSONObject(inputJson)));
+		assertThrows(Exception.class, () -> eb.create_instance(new JSONObject(inputJson)));
 	}
 
 }
