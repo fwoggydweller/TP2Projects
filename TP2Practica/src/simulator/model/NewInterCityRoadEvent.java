@@ -25,4 +25,7 @@ public class NewInterCityRoadEvent extends Event {
 		InterCityRoad r = new InterCityRoad(id, map._junctionsMap.get(srcJunc), map._junctionsMap.get(destJunc), maxSpeed, contLimit, length, weather);
 		map.addRoad(r);
 	}
+	public String toString() {
+		return "New Inter City road with id: "+this.id+", length: "+ this.length+", max speed: " + this.maxSpeed + " and contamination limit: " + this.contLimit+".";
+	}
 }

@@ -1,4 +1,4 @@
-package simulator.launcher;
+package simulator.control;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -10,6 +10,7 @@ import org.json.JSONTokener;
 
 import simulator.factories.Factory;
 import simulator.model.Event;
+import simulator.model.TrafficSimObserver;
 import simulator.model.TrafficSimulator;
 
 public class Controller {
@@ -50,5 +51,19 @@ public class Controller {
     }
     public void reset() {
     	_sim.reset();
+    }
+    public void addObserver(TrafficSimObserver o){
+    	_sim.addObserver(o);
+    }
+    public void removeObserver(TrafficSimObserver o) {
+    	_sim.removeObserver(o);
+    }
+    public void addEvent(Event e) {
+    	_sim.addEvent(e);
+    }
+    public void run(int n){
+    	for(int i = 0; i < n; i++) {
+    		_sim.advance();
+    	}
     }
 }

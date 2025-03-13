@@ -1,15 +1,18 @@
 package simulator.model;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class TrafficSimulator {
+public class TrafficSimulator implements Observable<TrafficSimObserver>{
 	RoadMap _roadMap;
     Queue<Event> _events;
+    private List<TrafficSimObserver> observers = new ArrayList<>();
     int _time;
 
     public TrafficSimulator() {
@@ -21,12 +24,18 @@ public class TrafficSimulator {
     	this._roadMap = new RoadMap();
     	this._events = new PriorityQueue<>();
     	_time = 0;
+    	for(TrafficSimObserver o : this.observers) {
+    		o.onReset(_roadMap, _events, _time);
+    	}
     }
     public void addEvent(Event e) {
     	if(e.getTime() < this._time) {
     		throw new IllegalArgumentException("You can't add an event with less time that the current time");
     	}
     	_events.add(e);
+    	for(TrafficSimObserver o : this.observers) {
+    		o.onEventAdded(_roadMap, _events, e, _time);
+    	}
     }
     
     public void advance() {
@@ -49,6 +58,9 @@ public class TrafficSimulator {
     	for(Road r: this._roadMap.getRoads()) {
     		r.advance(_time);
     	}
+    	for(TrafficSimObserver o : this.observers) {
+    		o.onAdvance(_roadMap, _events, _time);
+    	}
     }
     public JSONObject report() {
     	JSONObject roadMap = new JSONObject();
@@ -56,4 +68,13 @@ public class TrafficSimulator {
 	    roadMap.put("state", this._roadMap.report());
 	    return roadMap;
     }
+	@Override
+	public void addObserver(TrafficSimObserver o) {
+		this.observers.add(o);
+		o.onRegister(_roadMap, _events, _time);
+	}
+	@Override
+	public void removeObserver(TrafficSimObserver o) {
+		this.observers.remove(o);
+	}
 }

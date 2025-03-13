@@ -44,6 +44,18 @@ public class Junction extends SimulatedObject{
 		if(yCoor >= 0) y = yCoor;
 		else throw new IllegalArgumentException();
 	}
+	public int getX() {
+		return this.x;
+	}
+	public int getY() {
+		return this.y;
+	}
+	public int getGreenLightIndex() {
+		return this._greenLightIndex;
+	}
+	public List<Road> getInRoads() {
+		return this._inRoads;
+	}
 	
 	@Override
 	void advance(int time) {

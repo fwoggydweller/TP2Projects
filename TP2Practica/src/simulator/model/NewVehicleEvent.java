@@ -26,4 +26,7 @@ public class NewVehicleEvent extends Event {
 		map.addVehicle(v);
 		v.moveToNextRoad();
 	}
+	public String toString() {
+		return "New Vehicle with id: " + this.id + ", max speed: " + this.maxSpeed + " and contamination class: " + this.contClass+".";
+	}
 }

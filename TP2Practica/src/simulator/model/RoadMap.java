@@ -72,13 +72,13 @@ public class RoadMap {
 		return _junctionsMap.get(id);
 	}
 
-	List<Vehicle> getVehicles(){
+	public List<Vehicle> getVehicles(){
 		return Collections.unmodifiableList(_vehicles);
 	}
-	List<Road> getRoads(){
+	public List<Road> getRoads(){
 		return Collections.unmodifiableList(_roads);
 	}
-	List<Junction> getJunctions(){
+	public List<Junction> getJunctions(){
 		return Collections.unmodifiableList(_junctions);
 	}
 
