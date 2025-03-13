@@ -155,7 +155,7 @@ public class Main {
 	}
 
 	private static void start(String[] args) throws IOException {
-		initFactories(); //Checked
+		initFactories(); 
 		parseArgs(args);
 		startBatchMode();
 	}
