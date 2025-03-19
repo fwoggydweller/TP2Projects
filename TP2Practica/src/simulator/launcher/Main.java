@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.SwingUtilities;
+
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
@@ -34,6 +37,7 @@ import simulator.model.DequeuingStrategy;
 import simulator.model.Event;
 import simulator.model.LightSwitchingStrategy;
 import simulator.model.TrafficSimulator;
+import simulator.view.MainWindow;
 
 public class Main {
 
@@ -43,7 +47,7 @@ public class Main {
 	private static String _NumOfSteps = null;
 	private static Factory<Event> _eventsFactory = null;
 
-	private static void parseArgs(String[] args) {
+	private static void parseArgs(String[] args) throws IOException {
 
 		// define the valid command line options
 		//
@@ -54,10 +58,12 @@ public class Main {
 		CommandLineParser parser = new DefaultParser();
 		try {
 			CommandLine line = parser.parse(cmdLineOptions, args);
-			parseHelpOption(line, cmdLineOptions);
-			parseInFileOption(line);
-			parseOutFileOption(line);
-			parseNumOfStepsOption(line);
+			//parseHelpOption(line, cmdLineOptions);
+			parseModeOption(line);
+			//parseInFileOption(line);
+			//parseOutFileOption(line);
+			//parseNumOfStepsOption(line);
+			//parseModeOption(line);
 
 			// if there are some remaining arguments, then something wrong is
 			// provided in the command line!
@@ -85,6 +91,7 @@ public class Main {
 				Option.builder("o").longOpt("output").hasArg().desc("Output file, where reports are written.").build());
 		cmdLineOptions.addOption(Option.builder("h").longOpt("help").desc("Print this message").build());
 		cmdLineOptions.addOption(Option.builder("t").hasArg().desc("specify the number of steps to simulate").build());
+		cmdLineOptions.addOption(Option.builder("m").longOpt("mode").hasArg().desc("choose if we want the GUI mode or the console mode").build());
 
 		return cmdLineOptions;
 	}
@@ -93,7 +100,7 @@ public class Main {
 		if (line.hasOption("h")) {
 			HelpFormatter formatter = new HelpFormatter();
 			formatter.printHelp(Main.class.getCanonicalName(), cmdLineOptions, true);
-			System.exit(0);
+			//System.exit(0);
 		}
 	}
 
@@ -106,6 +113,28 @@ public class Main {
 
 	private static void parseOutFileOption(CommandLine line) throws ParseException {
 		_outFile = line.getOptionValue("o");
+	}
+	private static void parseModeOption(CommandLine line) throws ParseException, IOException {
+		if(line.getOptionValue("m").toLowerCase().equals(" gui") || line.getOptionValue("mode").toLowerCase().equals(" gui")) {
+			startGUIMode();
+		}
+		else if (line.getOptionValue("m").toLowerCase().equals(" console") || line.getOptionValue("mode").toLowerCase().equals(" console")) {
+			startBatchMode();
+		}else {
+			
+		}
+	}
+	
+	private static void startGUIMode() {
+		System.out.println("A");
+		TrafficSimulator sim = new TrafficSimulator();
+		Controller ctrl = new Controller(sim, _eventsFactory);
+		SwingUtilities.invokeLater(new Runnable() {	
+			@Override
+			public void run() {
+				new MainWindow(ctrl);
+			}
+		}); 
 	}
 	private static void parseNumOfStepsOption(CommandLine line) throws ParseException {
 		_NumOfSteps = line.getOptionValue("t");
@@ -157,7 +186,6 @@ public class Main {
 	private static void start(String[] args) throws IOException {
 		initFactories(); 
 		parseArgs(args);
-		startBatchMode();
 	}
 
 	// example command lines:
@@ -169,6 +197,8 @@ public class Main {
 
 	public static void main(String[] args) {
 		try {
+			args = new String[] {
+				 "-m gui"};
 			start(args);
 		} catch (Exception e) {
 			e.printStackTrace();

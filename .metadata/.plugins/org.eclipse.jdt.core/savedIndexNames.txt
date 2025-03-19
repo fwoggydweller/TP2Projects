@@ -1,22 +1,2 @@
 INDEX VERSION 1.134+C:\Users\andre\Desktop\TP2\TP2Projects\.metadata\.plugins\org.eclipse.jdt.core
-209786840.index
-2142917865.index
-2020323679.index
-1428652881.index
-3914959571.index
-1958844186.index
-587096428.index
-3879464356.index
-656280402.index
-1391359291.index
-631553370.index
-4285843106.index
-972404772.index
-426672704.index
-100352864.index
-2318380794.index
-3960478220.index
 1865797976.index
-3620035632.index
-2424169551.index
-1238949317.index
