@@ -3,6 +3,7 @@ package simulator.control;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -12,6 +13,7 @@ import simulator.factories.Factory;
 import simulator.model.Event;
 import simulator.model.TrafficSimObserver;
 import simulator.model.TrafficSimulator;
+import simulator.model.Vehicle;
 
 public class Controller {
     private TrafficSimulator _sim;
@@ -21,7 +23,12 @@ public class Controller {
         _sim = sim;
         _eventsFactory = eventsFactory;
     }
-
+    public TrafficSimulator getSimulator() {
+    	return _sim;
+    }
+    public Factory<Event> getEvents() {
+    	return _eventsFactory;
+    }
     public void loadEvents(InputStream in){
     	JSONObject jo = new JSONObject(new JSONTokener(in));
     	JSONArray base = jo.getJSONArray("events"); //We save the list for traversing it later
@@ -49,6 +56,7 @@ public class Controller {
     	p.println("]");
     	p.println("}");
     }
+    
     public void reset() {
     	_sim.reset();
     }
@@ -66,4 +74,7 @@ public class Controller {
     		_sim.advance();
     	}
     }
+    public String[] getVehiclesID() {
+		return this._sim.getVehiclesID();
+	}
 }

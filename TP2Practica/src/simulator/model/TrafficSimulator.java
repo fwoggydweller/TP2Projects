@@ -77,4 +77,12 @@ public class TrafficSimulator implements Observable<TrafficSimObserver>{
 	public void removeObserver(TrafficSimObserver o) {
 		this.observers.remove(o);
 	}
+	public String[] getVehiclesID() {
+		List<Vehicle> _vehicles = this._roadMap.getVehicles();
+		String[] vID = new String[_vehicles.size()];
+		for (int i = 0; i < _vehicles.size(); i++) {
+	        vID[i] = _vehicles.get(i).getId();
+	    }
+		return vID;
+	}
 }

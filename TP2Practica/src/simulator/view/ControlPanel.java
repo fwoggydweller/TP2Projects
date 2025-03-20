@@ -11,6 +11,8 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
 import java.io.InputStream;
 
 import simulator.control.Controller;
@@ -50,8 +52,11 @@ public class ControlPanel extends JPanel{
 		});
 		this.add(loadEventsFileButton);
 		//Change contamination button
-		JButton changeContaminationClass = new JButton("Change Contamination Class");
-		changeContaminationClass.addActionListener(null);
+		JButton changeContaminationClass = new JButton();
+		changeContaminationClass.setIcon(new ImageIcon("resources/icons/st_medium_507x507-pad_600x600_f8f8f8-removebg-preview (1).png"));
+		changeContaminationClass.addActionListener((e)->{
+			ChangeCO2ClassDialog ChangeCO2Dialog = new ChangeCO2ClassDialog((JFrame) SwingUtilities.getWindowAncestor(this), _ctrl.getVehiclesID());
+		});
 		this.add(changeContaminationClass);
 		//Change weather button
 		JButton changeWeather = new JButton("Change Weather");
