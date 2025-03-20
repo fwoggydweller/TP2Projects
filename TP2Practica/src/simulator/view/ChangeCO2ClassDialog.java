@@ -1,5 +1,7 @@
 package simulator.view;
 
-public class ChangeCO2ClassDialog {
+import javax.swing.JDialog;
 
+public class ChangeCO2ClassDialog extends JDialog {
+	
 }

@@ -17,6 +17,7 @@ import simulator.control.Controller;
 
 public class ControlPanel extends JPanel{
 	JFileChooser fc;
+	ChangeWeatherDialog cw;
 	private Controller _ctrl;
 	ControlPanel(Controller c){
 		super();
@@ -55,7 +56,11 @@ public class ControlPanel extends JPanel{
 		this.add(changeContaminationClass);
 		//Change weather button
 		JButton changeWeather = new JButton("Change Weather");
-		changeWeather.addActionListener(null);
+		ImageIcon cwImg = new ImageIcon("resources/icons/cat-wet (1).jpg");
+		changeWeather.setIcon(cwImg);
+		changeWeather.addActionListener(e->{
+			cw = new ChangeWeatherDialog();	
+		});
 		this.add(changeWeather);
 		//Run button
 		JButton run = new JButton("Run");
