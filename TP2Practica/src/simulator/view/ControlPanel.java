@@ -24,13 +24,13 @@ public class ControlPanel extends JPanel{
 		initGUI();
 	}
 	private void initGUI() {
-		JPanel controlPanel = new JPanel(); //Main window
-		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.X_AXIS)); //It will be presented as a box layout with all of the buttons
+		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS)); //It will be presented as a box layout with all of the buttons
 		
 		//We add all of the buttons
 		//Load button
-		JButton loadEventsFileButton = new JButton("Load Events File");
-		loadEventsFileButton.setIcon( new ImageIcon("resources/icons/st_small_507x507-pad_600x600_f8f8f8.u1-removebg-preview.png") );
+		JButton loadEventsFileButton = new JButton();
+		ImageIcon img = new ImageIcon("resources/icons/st_small_507x507-pad_600x600_f8f8f8.u1-removebg-preview (1).png");
+		loadEventsFileButton.setIcon(img);
 		loadEventsFileButton.addActionListener((e)->{
 			fc = new JFileChooser();
 			int returnVal = fc.showOpenDialog(this);
@@ -48,26 +48,28 @@ public class ControlPanel extends JPanel{
 				System.out.println("Could not execute the load");
 			}
 		});
-		controlPanel.add(loadEventsFileButton);
+		this.add(loadEventsFileButton);
 		//Change contamination button
 		JButton changeContaminationClass = new JButton("Change Contamination Class");
 		changeContaminationClass.addActionListener(null);
-		controlPanel.add(changeContaminationClass);
+		this.add(changeContaminationClass);
 		//Change weather button
 		JButton changeWeather = new JButton("Change Weather");
 		changeWeather.addActionListener(null);
-		controlPanel.add(changeWeather);
+		this.add(changeWeather);
 		//Run button
 		JButton run = new JButton("Run");
 		run.addActionListener(null);
-		controlPanel.add(run);
+		this.add(run);
 		//Stop button
 		JButton stop = new JButton("Stop");
 		stop.addActionListener(null);
-		controlPanel.add(stop);
+		this.add(stop);
 		//ticks button
 		JButton ticks = new JButton("Ticks");
 		ticks.addActionListener(null);
-		controlPanel.add(loadEventsFileButton);
+		this.add(loadEventsFileButton);
+		
+		this.setVisible(true);
 	}
 }
