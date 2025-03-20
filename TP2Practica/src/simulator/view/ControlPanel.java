@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -14,11 +15,11 @@ import java.io.InputStream;
 
 import simulator.control.Controller;
 
-public class ControlPanel extends JFrame{
+public class ControlPanel extends JPanel{
 	JFileChooser fc;
 	private Controller _ctrl;
 	ControlPanel(Controller c){
-		super("Traffic sim");
+		super();
 		this._ctrl = c;
 		initGUI();
 	}
@@ -29,7 +30,9 @@ public class ControlPanel extends JFrame{
 		//We add all of the buttons
 		//Load button
 		JButton loadEventsFileButton = new JButton("Load Events File");
+		loadEventsFileButton.setIcon( new ImageIcon("resources/icons/st_small_507x507-pad_600x600_f8f8f8.u1-removebg-preview.png") );
 		loadEventsFileButton.addActionListener((e)->{
+			fc = new JFileChooser();
 			int returnVal = fc.showOpenDialog(this);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File le = fc.getSelectedFile();
@@ -45,25 +48,26 @@ public class ControlPanel extends JFrame{
 				System.out.println("Could not execute the load");
 			}
 		});
-		
+		controlPanel.add(loadEventsFileButton);
 		//Change contamination button
 		JButton changeContaminationClass = new JButton("Change Contamination Class");
 		changeContaminationClass.addActionListener(null);
-		
+		controlPanel.add(changeContaminationClass);
 		//Change weather button
 		JButton changeWeather = new JButton("Change Weather");
 		changeWeather.addActionListener(null);
-		
+		controlPanel.add(changeWeather);
 		//Run button
 		JButton run = new JButton("Run");
 		run.addActionListener(null);
-		
+		controlPanel.add(run);
 		//Stop button
 		JButton stop = new JButton("Stop");
 		stop.addActionListener(null);
-		
+		controlPanel.add(stop);
 		//ticks button
 		JButton ticks = new JButton("Ticks");
 		ticks.addActionListener(null);
+		controlPanel.add(loadEventsFileButton);
 	}
 }
