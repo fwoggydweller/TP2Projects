@@ -12,24 +12,29 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class ChangeCO2ClassDialog extends JDialog{
 	private int _status = 0;
 	private String[] comboBOne;
 	private String[] comboBTwo = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+	private JSONObject Event;
 	public ChangeCO2ClassDialog(Frame f, String[] vh) {
 		super(f, true);
 		comboBOne = vh;
 		initGUI();
 	}
 	public void initGUI() {
+
 		setTitle("Change contamination class");
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout( new BoxLayout( mainPanel, BoxLayout.Y_AXIS) );
-		JTextArea text = new JTextArea("Schedule an event to change the CO2 class of a vehicle after a given number of simulation ticks from now.");
-		text.setLineWrap(true);
-		text.setWrapStyleWord(true);
-		text.setEditable(false);
-		mainPanel.add(text);
+		JPanel textPanel = new JPanel();
+		textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.X_AXIS));
+		JLabel text = new JLabel("<html>Schedule an event to change the CO2 class of a vehicle after a given number of simulation ticks from now.</html>");
+		textPanel.add(text);
+		mainPanel.add(textPanel);
 		JPanel selector = new JPanel();
 		selector.setLayout( new BoxLayout( selector, BoxLayout.X_AXIS) );
 		JLabel one = new JLabel("Vehicle: ");
@@ -49,18 +54,42 @@ public class ChangeCO2ClassDialog extends JDialog{
 		action.setLayout( new BoxLayout( action, BoxLayout.X_AXIS) );
 		JButton cancel = new JButton("Cancel");
 		cancel.addActionListener((e) ->{
+			_status = 2;
 			setVisible(false);
 		});
-		
 		action.add(cancel);
 		JButton ok = new JButton("OK");
 		ok.addActionListener((e) ->{
-			
+			if(textThree.getText() == null || textOne.getSelectedItem() == null || textTwo.getSelectedItem() == null) {
+				
+			}
+			else {
+				_status = 1;
+				JSONObject changeWeatherJSON = new JSONObject();
+				changeWeatherJSON.put("type", "set_cont_class");
+				JSONObject data = new JSONObject();
+				JSONObject time = new JSONObject();
+				data.put("time", textThree.getText());
+				JSONArray info = new JSONArray();
+				JSONObject vehicleCO2Pair = new JSONObject();
+				vehicleCO2Pair.put("vehicle",(String) textOne.getSelectedItem());
+				vehicleCO2Pair.put("class", (String)textTwo.getSelectedItem());
+				info.put(vehicleCO2Pair);
+				data.put("info", info);
+				Event = changeWeatherJSON;
+				setVisible(false);
+			}
 		});
 		action.add(ok);
 		mainPanel.add(action);
 		setContentPane(mainPanel);
 		this.setSize(375, 125);
-	    setVisible(true);
+	    setVisible(false);
+	}
+	public int getStatus() {
+		return this._status;
+	}
+	public JSONObject getInfo() {
+		return Event;
 	}
 }

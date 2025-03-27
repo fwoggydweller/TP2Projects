@@ -1,6 +1,8 @@
 package simulator.view;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,6 +14,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+
+import org.json.JSONObject;
 
 import java.io.InputStream;
 
@@ -55,8 +59,25 @@ public class ControlPanel extends JPanel{
 		//Change contamination button
 		JButton changeContaminationClass = new JButton();
 		changeContaminationClass.setIcon(new ImageIcon("resources/icons/st_medium_507x507-pad_600x600_f8f8f8-removebg-preview (1).png"));
-		changeContaminationClass.addActionListener((e)->{
-			ChangeCO2ClassDialog ChangeCO2Dialog = new ChangeCO2ClassDialog((JFrame) SwingUtilities.getWindowAncestor(this), _ctrl.getVehiclesID());
+		ChangeCO2ClassDialog ChangeCO2Dialog = new ChangeCO2ClassDialog((JFrame) SwingUtilities.getWindowAncestor(this), _ctrl.getVehiclesID());
+		changeContaminationClass.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ChangeCO2Dialog.setVisible(true);
+				int status = ChangeCO2Dialog.getStatus();
+				if(status == 1) {
+					JSONObject CO2Info = ChangeCO2Dialog.getInfo();
+					if(CO2Info != null) {
+						_ctrl.buildEvent(CO2Info);
+					}
+				}
+				else if(status == 2) {
+
+				}
+				
+			}
+			
 		});
 		this.add(changeContaminationClass);
 		//Change weather button
