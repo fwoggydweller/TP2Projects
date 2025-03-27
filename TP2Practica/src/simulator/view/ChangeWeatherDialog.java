@@ -72,7 +72,7 @@ public class ChangeWeatherDialog extends JDialog {
 			info.put(infObject);
 			data.put("info", info);
 			JWeather.put("data", data);
-			
+			_ctrl.buildEvent(JWeather);
 			
 		});
 		action.add(ok);

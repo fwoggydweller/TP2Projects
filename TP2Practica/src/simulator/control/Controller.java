@@ -69,6 +69,9 @@ public class Controller {
     public void addEvent(Event e) {
     	_sim.addEvent(e);
     }
+    public void buildEvent(JSONObject o) {
+    	_sim.addEvent(_eventsFactory.create_instance(o));
+    }
     public void run(int n){
     	for(int i = 0; i < n; i++) {
     		_sim.advance();
