@@ -85,4 +85,13 @@ public class TrafficSimulator implements Observable<TrafficSimObserver>{
 	    }
 		return vID;
 	}
+	public String[] getRoadsID() {
+		// TODO Auto-generated method stub
+		List<Road> _roads = this._roadMap.getRoads();
+		String[] rID = new String[_roads.size()];
+		for (int i = 0; i < _roads.size(); i++) {
+	        rID[i] = _roads.get(i).getId();
+	    }
+		return rID;
+	}
 }

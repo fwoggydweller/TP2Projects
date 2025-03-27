@@ -77,4 +77,7 @@ public class Controller {
     public String[] getVehiclesID() {
 		return this._sim.getVehiclesID();
 	}
+    public String[] getRoadsID() {
+		return this._sim.getRoadsID();
+	}
 }

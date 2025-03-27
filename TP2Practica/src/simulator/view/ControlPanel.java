@@ -64,7 +64,7 @@ public class ControlPanel extends JPanel{
 		ImageIcon cwImg = new ImageIcon("resources/icons/cat-wet (1).jpg");
 		changeWeather.setIcon(cwImg);
 		changeWeather.addActionListener(e->{
-			cw = new ChangeWeatherDialog();	
+			cw = new ChangeWeatherDialog((JFrame) SwingUtilities.getWindowAncestor(this), _ctrl);
 		});
 		this.add(changeWeather);
 		//Run button
