@@ -42,6 +42,7 @@ public class MapComponent extends JPanel implements TrafficSimObserver {
 	MapComponent(Controller ctrl) {
 		initGUI();
 		ctrl.addObserver(this);
+		_map = ctrl.getRoadmap();			
 	}
 
 	private void initGUI() {
