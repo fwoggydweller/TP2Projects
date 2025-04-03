@@ -82,12 +82,13 @@ public class ControlPanel extends JPanel implements TrafficSimObserver{
 		//Change contamination button
 		changeContaminationClass = new JButton();
 		changeContaminationClass.setIcon(new ImageIcon("resources/icons/st_medium_507x507-pad_600x600_f8f8f8-removebg-preview (1).png"));
-		ChangeCO2ClassDialog ChangeCO2Dialog = new ChangeCO2ClassDialog((JFrame) SwingUtilities.getWindowAncestor(this), _ctrl.getVehiclesID());
+		ChangeCO2ClassDialog ChangeCO2Dialog = new ChangeCO2ClassDialog((JFrame) SwingUtilities.getWindowAncestor(this), this._ctrl.getVehiclesID());
 		changeContaminationClass.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ChangeCO2Dialog.setVisible(true);
+				ChangeCO2Dialog.UpdateVehicles(_ctrl.getVehiclesID()); 
+		        ChangeCO2Dialog.setVisible(true);
 				int status = ChangeCO2Dialog.getStatus();
 				if(status == 1) {
 					JSONObject CO2Info = ChangeCO2Dialog.getInfo();

@@ -32,11 +32,11 @@ public class ChangeWeatherDialog extends JDialog {
 		setTitle("Change Weather");
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout( new BoxLayout( mainPanel, BoxLayout.Y_AXIS) );
-		JTextArea text = new JTextArea("Schedule an event to change the weather of a road after a given number of simulation ticks from now.");
-		text.setLineWrap(true);
-		text.setWrapStyleWord(true);
-		text.setEditable(false);
-		mainPanel.add(text);
+		JPanel textPanel = new JPanel();
+		textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.X_AXIS));
+		JLabel text = new JLabel("<html>Schedule an event to change the weather of a road after a given number of simulation ticks from now.</html>");
+		textPanel.add(text);
+		mainPanel.add(textPanel);
 		JPanel selector = new JPanel();
 		selector.setLayout( new BoxLayout( selector, BoxLayout.X_AXIS) );
 		JLabel one = new JLabel("Road: ");

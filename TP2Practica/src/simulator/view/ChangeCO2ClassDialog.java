@@ -2,8 +2,10 @@ package simulator.view;
 
 import java.awt.BorderLayout;
 import java.awt.Frame;
+import java.util.Collection;
 
 import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -16,14 +18,17 @@ import javax.swing.JSpinner;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class ChangeCO2ClassDialog extends JDialog{
+import simulator.model.RoadMap;
+import simulator.model.TrafficSimObserver;
+
+public class ChangeCO2ClassDialog extends JDialog implements TrafficSimObserver{
 	private int _status = 0;
-	private String[] comboBOne;
+	private JComboBox textOne;
 	private String[] comboBTwo = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
 	private JSONObject Event;
 	public ChangeCO2ClassDialog(Frame f, String[] vh) {
 		super(f, true);
-		comboBOne = vh;
+		textOne = new JComboBox(vh);
 		initGUI();
 	}
 	public void initGUI() {
@@ -39,7 +44,6 @@ public class ChangeCO2ClassDialog extends JDialog{
 		JPanel selector = new JPanel();
 		selector.setLayout( new BoxLayout( selector, BoxLayout.X_AXIS) );
 		JLabel one = new JLabel("Vehicle: ");
-		JComboBox textOne = new JComboBox(comboBOne);
 		JLabel two = new JLabel("CO2 class: ");
 		JComboBox textTwo = new JComboBox(comboBTwo);
 		JPanel TicksBox = new JPanel();
@@ -90,10 +94,33 @@ public class ChangeCO2ClassDialog extends JDialog{
 		this.setSize(375, 125);
 	    setVisible(false);
 	}
+	public void UpdateVehicles(String[] vehiclesId) {
+		this.textOne.setModel(new DefaultComboBoxModel<>(vehiclesId));
+	}
 	public int getStatus() {
 		return this._status;
 	}
 	public JSONObject getInfo() {
 		return Event;
+	}
+	@Override
+	public void onAdvance(RoadMap map, Collection<simulator.model.Event> events, int time) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void onEventAdded(RoadMap map, Collection<simulator.model.Event> events, simulator.model.Event e, int time) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void onReset(RoadMap map, Collection<simulator.model.Event> events, int time) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void onRegister(RoadMap map, Collection<simulator.model.Event> events, int time) {
+		// TODO Auto-generated method stub
+		
 	}
 }
