@@ -94,4 +94,7 @@ public class TrafficSimulator implements Observable<TrafficSimObserver>{
 	    }
 		return rID;
 	}
+	public RoadMap getRoadMap() {
+		return this._roadMap;
+	}
 }

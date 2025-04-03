@@ -118,7 +118,6 @@ public class ControlPanel extends JPanel{
 		TicksBox.add(ticks);
 		TicksBox.add(three);
 		this.add(TicksBox);
-
 		this.setVisible(true);
 	}
 

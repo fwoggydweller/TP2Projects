@@ -11,6 +11,7 @@ import org.json.JSONTokener;
 
 import simulator.factories.Factory;
 import simulator.model.Event;
+import simulator.model.RoadMap;
 import simulator.model.TrafficSimObserver;
 import simulator.model.TrafficSimulator;
 import simulator.model.Vehicle;
@@ -83,4 +84,7 @@ public class Controller {
     public String[] getRoadsID() {
 		return this._sim.getRoadsID();
 	}
+    public RoadMap getRoadmap() {
+    	return _sim.getRoadMap();
+    }
 }
