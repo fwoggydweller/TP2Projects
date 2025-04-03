@@ -25,10 +25,14 @@ import javax.swing.event.ChangeListener;
 import org.json.JSONObject;
 
 import java.io.InputStream;
+import java.util.Collection;
 
 import simulator.control.Controller;
+import simulator.model.Event;
+import simulator.model.RoadMap;
+import simulator.model.TrafficSimObserver;
 
-public class ControlPanel extends JPanel{
+public class ControlPanel extends JPanel implements TrafficSimObserver{
 	JFileChooser fc;
 	ChangeWeatherDialog cw;
 	private JButton loadEventsFileButton;
@@ -40,6 +44,7 @@ public class ControlPanel extends JPanel{
 	ControlPanel(Controller c){
 		super();
 		this._ctrl = c;
+		_ctrl.addObserver(this);
 		initGUI();
 	}
 	private void initGUI() {
@@ -115,7 +120,9 @@ public class ControlPanel extends JPanel{
 		this.add(run);
 		//Stop button
 		JButton stop = new JButton("Stop");
-		stop.addActionListener(null);
+		stop.addActionListener(e ->{
+			this._stopped = false;	
+		});
 		this.add(stop);
 		//ticks button
 		JPanel TicksBox = new JPanel();
@@ -142,6 +149,7 @@ public class ControlPanel extends JPanel{
 				this.changeContaminationClass.setEnabled(false);
 				this.changeWeather.setEnabled(false);
 				this.loadEventsFileButton.setEnabled(false);
+				Thread.sleep(100);//changeable
 				_ctrl.run(1);
 	         	SwingUtilities.invokeLater(() -> run_sim(n - 1));
 			} catch (Exception e) {
@@ -157,5 +165,25 @@ public class ControlPanel extends JPanel{
 			this.loadEventsFileButton.setEnabled(true);
 			_stopped = false;
 		}
+	}
+	@Override
+	public void onAdvance(RoadMap map, Collection<Event> events, int time) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void onEventAdded(RoadMap map, Collection<Event> events, Event e, int time) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void onReset(RoadMap map, Collection<Event> events, int time) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void onRegister(RoadMap map, Collection<Event> events, int time) {
+		// TODO Auto-generated method stub
+		
 	}
 }
