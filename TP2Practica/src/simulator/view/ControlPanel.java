@@ -50,6 +50,7 @@ public class ControlPanel extends JPanel{
 		loadEventsFileButton.addActionListener((e)->{
 			if(!_stopped) {
 				fc = new JFileChooser();
+				fc.setCurrentDirectory(new File("resources/examples"));
 				int returnVal = fc.showOpenDialog(this);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File le = fc.getSelectedFile();
@@ -118,6 +119,9 @@ public class ControlPanel extends JPanel{
 		TicksBox.setLayout(new BoxLayout(TicksBox, BoxLayout.X_AXIS));
 		JLabel ticks = new JLabel("Ticks: ");
 		JSpinner three = new JSpinner();
+		three.addChangeListener(e -> {
+			this.numTicks= (int) three.getValue();
+		});
 		
 		three.setPreferredSize(loadEventsFileButton.getPreferredSize());  
 
@@ -135,13 +139,11 @@ public class ControlPanel extends JPanel{
 				_ctrl.run(1);
 	         	SwingUtilities.invokeLater(() -> run_sim(n - 1));
 			} catch (Exception e) {
-				// TODO show error message
 				_stopped = false;
-				// TODO enable the toolbar
+				throw new IllegalArgumentException("Error when running");
 			}
 		} else {
 			_stopped = false;
-	                // TODO enable the toolbar
 		}
 	}
 }
