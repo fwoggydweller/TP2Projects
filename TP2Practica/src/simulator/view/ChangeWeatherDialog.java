@@ -8,6 +8,7 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -43,7 +44,7 @@ public class ChangeWeatherDialog extends JDialog {
 		JLabel two = new JLabel("Weather: ");
 		JComboBox textTwo = new JComboBox(comboBTwo);
 		JLabel three = new JLabel("Ticks: ");
-		JTextField textThree = new JTextField();
+		JSpinner textThree = new JSpinner();
 		selector.add(one);
 		selector.add(textOne);
 		selector.add(two);
@@ -64,7 +65,7 @@ public class ChangeWeatherDialog extends JDialog {
 			JSONObject JWeather = new JSONObject( );
 			JWeather.put("type", "set_weather");
 			JSONObject data = new JSONObject( );
-			data.put("time", Integer.parseInt(textThree.getText()));
+			data.put("time", (textThree.getValue()));
 			JSONArray info = new JSONArray();
 			JSONObject infObject = new JSONObject();
 			infObject.put("road", textOne.getSelectedItem());

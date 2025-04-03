@@ -45,6 +45,7 @@ public class ControlPanel extends JPanel{
 		loadEventsFileButton.setIcon(img);
 		loadEventsFileButton.addActionListener((e)->{
 			fc = new JFileChooser();
+			fc.setCurrentDirectory(new File("resources/examples"));
 			int returnVal = fc.showOpenDialog(this);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File le = fc.getSelectedFile();
