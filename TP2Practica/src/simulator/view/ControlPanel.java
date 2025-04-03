@@ -31,6 +31,9 @@ import simulator.control.Controller;
 public class ControlPanel extends JPanel{
 	JFileChooser fc;
 	ChangeWeatherDialog cw;
+	private JButton loadEventsFileButton;
+	private JButton changeWeather;
+	private JButton changeContaminationClass;
 	private Controller _ctrl;
 	private boolean _stopped = false;
 	private int numTicks = 0;
@@ -44,7 +47,7 @@ public class ControlPanel extends JPanel{
 		
 		//We add all of the buttons
 		//Load button
-		JButton loadEventsFileButton = new JButton();
+		loadEventsFileButton = new JButton();
 		ImageIcon img = new ImageIcon("resources/icons/st_small_507x507-pad_600x600_f8f8f8.u1-removebg-preview (1).png");
 		loadEventsFileButton.setIcon(img);
 		loadEventsFileButton.addActionListener((e)->{
@@ -72,7 +75,7 @@ public class ControlPanel extends JPanel{
 		});
 		this.add(loadEventsFileButton);
 		//Change contamination button
-		JButton changeContaminationClass = new JButton();
+		changeContaminationClass = new JButton();
 		changeContaminationClass.setIcon(new ImageIcon("resources/icons/st_medium_507x507-pad_600x600_f8f8f8-removebg-preview (1).png"));
 		ChangeCO2ClassDialog ChangeCO2Dialog = new ChangeCO2ClassDialog((JFrame) SwingUtilities.getWindowAncestor(this), _ctrl.getVehiclesID());
 		changeContaminationClass.addActionListener(new ActionListener(){
@@ -96,7 +99,7 @@ public class ControlPanel extends JPanel{
 		});
 		this.add(changeContaminationClass);
 		//Change weather button
-		JButton changeWeather = new JButton();
+		changeWeather = new JButton();
 		ImageIcon cwImg = new ImageIcon("resources/icons/cat-wet (1).jpg");
 		changeWeather.setIcon(cwImg);
 		changeWeather.addActionListener(e->{
@@ -136,13 +139,22 @@ public class ControlPanel extends JPanel{
 	private void run_sim(int n) {
 		if (n > 0 && _stopped) {
 			try {
+				this.changeContaminationClass.setEnabled(false);
+				this.changeWeather.setEnabled(false);
+				this.loadEventsFileButton.setEnabled(false);
 				_ctrl.run(1);
 	         	SwingUtilities.invokeLater(() -> run_sim(n - 1));
 			} catch (Exception e) {
 				_stopped = false;
+				this.changeContaminationClass.setEnabled(true);
+				this.changeWeather.setEnabled(true);
+				this.loadEventsFileButton.setEnabled(true);
 				throw new IllegalArgumentException("Error when running");
 			}
 		} else {
+			this.changeContaminationClass.setEnabled(true);
+			this.changeWeather.setEnabled(true);
+			this.loadEventsFileButton.setEnabled(true);
 			_stopped = false;
 		}
 	}
