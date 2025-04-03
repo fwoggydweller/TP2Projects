@@ -58,6 +58,9 @@ public class TrafficSimulator implements Observable<TrafficSimObserver>{
     	for(Road r: this._roadMap.getRoads()) {
     		r.advance(_time);
     	}
+    	for(Vehicle v: this._roadMap.getVehicles()) {
+    		v.advance(_time);
+    	}
     	for(TrafficSimObserver o : this.observers) {
     		o.onAdvance(_roadMap, _events, _time);
     	}
