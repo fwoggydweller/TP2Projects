@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JSpinner;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -41,14 +42,17 @@ public class ChangeCO2ClassDialog extends JDialog{
 		JComboBox textOne = new JComboBox(comboBOne);
 		JLabel two = new JLabel("CO2 class: ");
 		JComboBox textTwo = new JComboBox(comboBTwo);
-		JLabel three = new JLabel("Ticks: ");
-		JTextField textThree = new JTextField();
+		JPanel TicksBox = new JPanel();
+		TicksBox.setLayout(new BoxLayout(TicksBox, BoxLayout.X_AXIS));
+		JLabel ticks = new JLabel("Ticks: ");
+		JSpinner three = new JSpinner();
+		TicksBox.add(ticks);
+		TicksBox.add(three);
 		selector.add(one);
 		selector.add(textOne);
 		selector.add(two);
 		selector.add(textTwo);
-		selector.add(three);
-		selector.add(textThree);
+		selector.add(TicksBox);
 		mainPanel.add(selector);
 		JPanel action = new JPanel();
 		action.setLayout( new BoxLayout( action, BoxLayout.X_AXIS) );
@@ -60,7 +64,7 @@ public class ChangeCO2ClassDialog extends JDialog{
 		action.add(cancel);
 		JButton ok = new JButton("OK");
 		ok.addActionListener((e) ->{
-			if(textThree.getText() == null || textOne.getSelectedItem() == null || textTwo.getSelectedItem() == null) {
+			if(three.getValue() == null || textOne.getSelectedItem() == null || textTwo.getSelectedItem() == null) {
 				
 			}
 			else {
@@ -69,7 +73,7 @@ public class ChangeCO2ClassDialog extends JDialog{
 				changeWeatherJSON.put("type", "set_cont_class");
 				JSONObject data = new JSONObject();
 				JSONObject time = new JSONObject();
-				data.put("time", textThree.getText());
+				data.put("time", three.getValue());
 				JSONArray info = new JSONArray();
 				JSONObject vehicleCO2Pair = new JSONObject();
 				vehicleCO2Pair.put("vehicle",(String) textOne.getSelectedItem());

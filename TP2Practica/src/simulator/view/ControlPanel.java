@@ -1,6 +1,7 @@
 package simulator.view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -12,7 +13,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.SwingUtilities;
 
 import org.json.JSONObject;
@@ -25,6 +28,8 @@ public class ControlPanel extends JPanel{
 	JFileChooser fc;
 	ChangeWeatherDialog cw;
 	private Controller _ctrl;
+	private boolean _stopped;
+	private int numTicks = 0;
 	ControlPanel(Controller c){
 		super();
 		this._ctrl = c;
@@ -81,7 +86,7 @@ public class ControlPanel extends JPanel{
 		});
 		this.add(changeContaminationClass);
 		//Change weather button
-		JButton changeWeather = new JButton("Change Weather");
+		JButton changeWeather = new JButton();
 		ImageIcon cwImg = new ImageIcon("resources/icons/cat-wet (1).jpg");
 		changeWeather.setIcon(cwImg);
 		changeWeather.addActionListener(e->{
@@ -90,17 +95,46 @@ public class ControlPanel extends JPanel{
 		this.add(changeWeather);
 		//Run button
 		JButton run = new JButton("Run");
-		run.addActionListener(null);
+		run.addActionListener(e -> {
+			run_sim(this.numTicks);
+		});
 		this.add(run);
 		//Stop button
 		JButton stop = new JButton("Stop");
 		stop.addActionListener(null);
 		this.add(stop);
 		//ticks button
-		JButton ticks = new JButton("Ticks");
-		ticks.addActionListener(null);
-		this.add(loadEventsFileButton);
-		
+		JPanel TicksBox = new JPanel();
+		TicksBox.setLayout(new BoxLayout(TicksBox, BoxLayout.X_AXIS));
+		JLabel ticks = new JLabel("Ticks: ");
+		JSpinner three = new JSpinner();
+		three.addChangeListener(e ->{
+			this.numTicks = (int) three.getValue();
+		});
+		three.setPreferredSize(loadEventsFileButton.getPreferredSize());  
+
+		three.setMaximumSize(loadEventsFileButton.getMaximumSize());  
+		three.setMinimumSize(loadEventsFileButton.getMinimumSize());  
+		TicksBox.add(ticks);
+		TicksBox.add(three);
+		this.add(TicksBox);
+
 		this.setVisible(true);
+	}
+
+	private void run_sim(int n) {
+		if (n > 0 && !_stopped) {
+			try {
+				_ctrl.run(1);
+	         		SwingUtilities.invokeLater(() -> run_sim(n - 1));
+			} catch (Exception e) {
+				// TODO show error message
+				_stopped = true;
+				// TODO enable the toolbar
+			}
+		} else {
+			_stopped = true;
+	                // TODO enable the toolbar
+		}
 	}
 }
