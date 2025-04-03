@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -17,6 +19,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.json.JSONObject;
 
@@ -28,7 +32,7 @@ public class ControlPanel extends JPanel{
 	JFileChooser fc;
 	ChangeWeatherDialog cw;
 	private Controller _ctrl;
-	private boolean _stopped;
+	private boolean _stopped = false;
 	private int numTicks = 0;
 	ControlPanel(Controller c){
 		super();
@@ -44,20 +48,25 @@ public class ControlPanel extends JPanel{
 		ImageIcon img = new ImageIcon("resources/icons/st_small_507x507-pad_600x600_f8f8f8.u1-removebg-preview (1).png");
 		loadEventsFileButton.setIcon(img);
 		loadEventsFileButton.addActionListener((e)->{
-			fc = new JFileChooser();
-			int returnVal = fc.showOpenDialog(this);
-			if (returnVal == JFileChooser.APPROVE_OPTION) {
-				File le = fc.getSelectedFile();
-				try (InputStream i = new FileInputStream(le)) { 
-		            System.out.println("Loading: " + le.getName());
-		            _ctrl.reset();  // 
-		            _ctrl.loadEvents(i);  
-		        } catch (Exception e1) {
-					e1.printStackTrace();
+			if(!_stopped) {
+				fc = new JFileChooser();
+				int returnVal = fc.showOpenDialog(this);
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File le = fc.getSelectedFile();
+					try (InputStream i = new FileInputStream(le)) { 
+			            System.out.println("Loading: " + le.getName());
+			            _ctrl.reset();  // 
+			            _ctrl.loadEvents(i);  
+			        } catch (Exception e1) {
+						e1.printStackTrace();
+					}
+				}
+				else {
+					System.out.println("Could not execute the load");
 				}
 			}
 			else {
-				System.out.println("Could not execute the load");
+				loadEventsFileButton.setEnabled(_stopped);
 			}
 		});
 		this.add(loadEventsFileButton);
@@ -96,6 +105,7 @@ public class ControlPanel extends JPanel{
 		//Run button
 		JButton run = new JButton("Run");
 		run.addActionListener(e -> {
+			_stopped = true;
 			run_sim(this.numTicks);
 		});
 		this.add(run);
@@ -108,9 +118,7 @@ public class ControlPanel extends JPanel{
 		TicksBox.setLayout(new BoxLayout(TicksBox, BoxLayout.X_AXIS));
 		JLabel ticks = new JLabel("Ticks: ");
 		JSpinner three = new JSpinner();
-		three.addChangeListener(e ->{
-			this.numTicks = (int) three.getValue();
-		});
+		
 		three.setPreferredSize(loadEventsFileButton.getPreferredSize());  
 
 		three.setMaximumSize(loadEventsFileButton.getMaximumSize());  
@@ -123,17 +131,17 @@ public class ControlPanel extends JPanel{
 	}
 
 	private void run_sim(int n) {
-		if (n > 0 && !_stopped) {
+		if (n > 0 && _stopped) {
 			try {
 				_ctrl.run(1);
-	         		SwingUtilities.invokeLater(() -> run_sim(n - 1));
+	         	SwingUtilities.invokeLater(() -> run_sim(n - 1));
 			} catch (Exception e) {
 				// TODO show error message
-				_stopped = true;
+				_stopped = false;
 				// TODO enable the toolbar
 			}
 		} else {
-			_stopped = true;
+			_stopped = false;
 	                // TODO enable the toolbar
 		}
 	}
