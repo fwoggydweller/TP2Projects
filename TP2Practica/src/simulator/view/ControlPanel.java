@@ -112,7 +112,9 @@ public class ControlPanel extends JPanel{
 		this.add(run);
 		//Stop button
 		JButton stop = new JButton("Stop");
-		stop.addActionListener(null);
+		stop.addActionListener(e ->{
+			this._stopped = false;	
+		});
 		this.add(stop);
 		//ticks button
 		JPanel TicksBox = new JPanel();
