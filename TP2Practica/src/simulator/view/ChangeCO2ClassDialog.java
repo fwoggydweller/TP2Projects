@@ -84,6 +84,7 @@ public class ChangeCO2ClassDialog extends JDialog implements TrafficSimObserver{
 				vehicleCO2Pair.put("class", (String)textTwo.getSelectedItem());
 				info.put(vehicleCO2Pair);
 				data.put("info", info);
+				changeWeatherJSON.put("data", data);
 				Event = changeWeatherJSON;
 				setVisible(false);
 			}

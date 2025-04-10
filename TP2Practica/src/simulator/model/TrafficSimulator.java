@@ -100,4 +100,7 @@ public class TrafficSimulator implements Observable<TrafficSimObserver>{
 	public RoadMap getRoadMap() {
 		return this._roadMap;
 	}
+	public int getTime() {
+		return this._time;
+	}
 }

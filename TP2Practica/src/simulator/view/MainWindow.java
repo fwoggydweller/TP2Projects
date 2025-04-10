@@ -55,6 +55,7 @@ public class MainWindow extends JFrame{
 		// TODO add a map for MapByRoadComponent
 		// ...
 		
+		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.pack();
 		this.setVisible(true);
