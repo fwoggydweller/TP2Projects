@@ -15,10 +15,10 @@ public abstract class Event implements Comparable<Event> {
         }
     }
 
-    int getTime() {
+    public int getTime() {
         return _time;
     }
-    long getTimeStamp() {
+    public long getTimeStamp() {
         return _time_stamp;
     }
 
