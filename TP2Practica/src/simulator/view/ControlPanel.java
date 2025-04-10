@@ -1,6 +1,8 @@
 package simulator.view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,9 +12,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -38,6 +42,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver{
 	private JButton loadEventsFileButton;
 	private JButton changeWeather;
 	private JButton changeContaminationClass;
+	private JButton offButton;
 	private Controller _ctrl;
 	private boolean _stopped = false;
 	private int numTicks = 0;
@@ -141,6 +146,38 @@ public class ControlPanel extends JPanel implements TrafficSimObserver{
 		TicksBox.add(ticks);
 		TicksBox.add(three);
 		this.add(TicksBox);
+		
+		//Off button
+		offButton = new JButton("Exit");
+		this.add( Box.createRigidArea( new Dimension(500,0) ));
+		JDialog exitDialog = new JDialog((JFrame) SwingUtilities.getWindowAncestor(this), "Confirm Exit", true);
+		exitDialog.setSize(300, 100);
+		JLabel exitDialogText = new JLabel("<html>Are you sure you want to exit?</html>");
+		
+		JButton exitDialogYes = new JButton("Confirm");
+		exitDialogYes.addActionListener(e -> {
+			System.exit(0);
+		});
+		JButton exitDialogNo = new JButton("Cancel");
+		exitDialogNo.addActionListener(e -> {
+			exitDialog.setVisible(false);
+		});
+		JPanel exitDialogPanel = new JPanel();
+		JPanel exitDialogButtonPanel = new JPanel();
+		exitDialogPanel.setLayout(new BoxLayout(exitDialogPanel, BoxLayout.Y_AXIS));
+		exitDialogButtonPanel.setLayout(new BoxLayout(exitDialogButtonPanel, BoxLayout.X_AXIS));
+		exitDialogButtonPanel.add(exitDialogYes);
+		exitDialogButtonPanel.add( Box.createRigidArea( new Dimension(100,0) ));
+		exitDialogButtonPanel.add(exitDialogNo);
+		exitDialogText.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		exitDialogPanel.add(exitDialogText);
+		exitDialogPanel.add(exitDialogButtonPanel);
+		exitDialog.add(exitDialogPanel);
+		
+		offButton.addActionListener(e -> {
+			exitDialog.setVisible(true);
+		});
+		this.add(offButton);
 		this.setVisible(true);
 	}
 
@@ -150,6 +187,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver{
 				this.changeContaminationClass.setEnabled(false);
 				this.changeWeather.setEnabled(false);
 				this.loadEventsFileButton.setEnabled(false);
+				this.offButton.setEnabled(false);
 				Thread.sleep(100);//changeable
 				_ctrl.run(1);
 	         	SwingUtilities.invokeLater(() -> run_sim(n - 1));
@@ -158,12 +196,14 @@ public class ControlPanel extends JPanel implements TrafficSimObserver{
 				this.changeContaminationClass.setEnabled(true);
 				this.changeWeather.setEnabled(true);
 				this.loadEventsFileButton.setEnabled(true);
+				this.offButton.setEnabled(true);
 				throw new IllegalArgumentException("Error when running");
 			}
 		} else {
 			this.changeContaminationClass.setEnabled(true);
 			this.changeWeather.setEnabled(true);
 			this.loadEventsFileButton.setEnabled(true);
+			this.offButton.setEnabled(true);
 			_stopped = false;
 		}
 	}
