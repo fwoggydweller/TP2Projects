@@ -56,6 +56,9 @@ public class Junction extends SimulatedObject{
 	public List<Road> getInRoads() {
 		return this._inRoads;
 	}
+	public Map<Junction, Road> getOutRoads(){
+		return this._outRoadByJunction;
+	}
 	
 	@Override
 	void advance(int time) {

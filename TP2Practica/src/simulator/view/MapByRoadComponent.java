@@ -80,6 +80,8 @@ public class MapByRoadComponent extends JPanel implements TrafficSimObserver{
 			Color roadColor = new Color(roadColorValue, roadColorValue, roadColorValue);
 			g.setColor(roadColor);
 			g.drawLine(50,  (i+1)*50, this.getWidth()-100, (i+1)*50);
+			g.setColor(_JUNCTION_LABEL_COLOR);
+			g.drawString(_map.getRoads().get(i).getId(), 15, ((i+1)*50)+5);
 		}
 	}
 
@@ -89,13 +91,36 @@ public class MapByRoadComponent extends JPanel implements TrafficSimObserver{
 			Vehicle v = _map.getVehicles().get(i);
 			if(v.getStatus()!= VehicleStatus.ARRIVED) {
 				g.setColor(Color.GREEN);
-				g.fillOval((50+(int)(((this.getWidth()-100) - 50)* ((double) v.getLocation()/(double)v.getRoad().getLength()))), (_map.getRoads().indexOf(v.getRoad())+1)*50, 14, 14);
+				g.fillOval((50+(int)(((this.getWidth()-100) - 50)* ((double) v.getLocation()/(double)v.getRoad().getLength()))), ((_map.getRoads().indexOf(v.getRoad())+1)*50)-6, 14, 14);
+				g.setColor(_JUNCTION_LABEL_COLOR);
+				g.drawString(_map.getVehicles().get(i).getId(), (50+(int)(((this.getWidth()-100) - 50)* ((double) v.getLocation()/(double)v.getRoad().getLength()))), ((_map.getRoads().indexOf(v.getRoad())+1)*50)-10);
 			}
 		}
 	}
 
 	private void drawJunctions(Graphics g) {
-		
+		//The first one
+		for(int i = 0; i < _map.getRoads().size(); i++) {
+			g.setColor(_JUNCTION_COLOR);
+			g.fillOval(45,  ((i+1)*50)-6, 14, 14);
+			g.setColor(_JUNCTION_LABEL_COLOR);
+			g.drawString(_map.getRoads().get(i).getSrc().getId(), 45, ((i+1)*50)-10);
+		}
+		//The second one, with the green/red light switch
+		for(int i = 0; i < _map.getRoads().size(); i++) {
+			if(_map.getRoads().get(i).getDest().getGreenLightIndex() == i ||  _map.getRoads().get(i).getDest().getOutRoads().size() == 0) {
+				g.setColor(_GREEN_LIGHT_COLOR);
+				g.fillOval(this.getWidth()-100,  ((i+1)*50)-6, 14, 14);
+				g.setColor(_JUNCTION_LABEL_COLOR);
+				g.drawString(_map.getRoads().get(i).getDest().getId(), this.getWidth()-100, ((i+1)*50)-10);
+			}
+			else {
+				g.setColor(_RED_LIGHT_COLOR);
+				g.fillOval(this.getWidth()-100,  ((i+1)*50)-6, 14, 14);
+				g.setColor(_JUNCTION_LABEL_COLOR);
+				g.drawString(_map.getRoads().get(i).getDest().getId(), this.getWidth()-100, ((i+1)*50)-10);
+			}
+		}
 	}
 
 	// this method is used to update the preffered and actual size of the component,
