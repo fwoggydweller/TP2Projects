@@ -87,8 +87,10 @@ public class MapByRoadComponent extends JPanel implements TrafficSimObserver{
 
 		for(int i = 0; i < _map.getVehicles().size(); i++) {
 			Vehicle v = _map.getVehicles().get(i);
-			g.setColor(Color.GREEN);
-			g.fillOval((50+(int)(((this.getWidth()-100) - 50)* ((double) v.getLocation()/(double)v.getRoad().getLength()))), (i+1)*50, 14, 14);
+			if(v.getStatus()!= VehicleStatus.ARRIVED) {
+				g.setColor(Color.GREEN);
+				g.fillOval((50+(int)(((this.getWidth()-100) - 50)* ((double) v.getLocation()/(double)v.getRoad().getLength()))), (_map.getRoads().indexOf(v.getRoad())+1)*50, 14, 14);
+			}
 		}
 	}
 
