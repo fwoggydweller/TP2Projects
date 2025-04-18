@@ -108,7 +108,7 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 	@Override
 	public void onReset(RoadMap map, Collection<Event> events, int time) {
 		// TODO Auto-generated method stub
-		
+		reset();
 	}
 
 	@Override
