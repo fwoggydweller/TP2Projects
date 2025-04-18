@@ -178,6 +178,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver{
 			exitDialog.setVisible(true);
 		});
 		this.add(offButton);
+		
 		this.setVisible(true);
 	}
 

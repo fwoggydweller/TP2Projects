@@ -11,8 +11,10 @@ import java.io.IOException;
 import java.util.Collection;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.border.*;
 
 import simulator.control.Controller;
 import simulator.model.Event;
@@ -22,6 +24,7 @@ import simulator.model.RoadMap;
 import simulator.model.TrafficSimObserver;
 import simulator.model.Vehicle;
 import simulator.model.VehicleStatus;
+import simulator.model.Weather;
 
 public class MapByRoadComponent extends JPanel implements TrafficSimObserver{
 	
@@ -43,7 +46,13 @@ public class MapByRoadComponent extends JPanel implements TrafficSimObserver{
 		initGUI();
 		ctrl.addObserver(this);
 		_map = ctrl.getRoadmap();			
-	}	private void initGUI() {
+	}
+	
+	private void initGUI() {
+		Border bordeGrueso = new LineBorder(Color.BLACK, 2);
+        TitledBorder bordeConTitulo = BorderFactory.createTitledBorder(bordeGrueso, "Map by Road");
+        this.setBorder(bordeConTitulo);
+
 		_car = loadImage("car_front.png");
 	}
 
@@ -83,8 +92,39 @@ public class MapByRoadComponent extends JPanel implements TrafficSimObserver{
 			g.setColor(_JUNCTION_LABEL_COLOR);
 			g.drawString(_map.getRoads().get(i).getId(), 15, ((i+1)*50)+5);
 		}
+		for(int i = 0; i < _map.getRoads().size(); i++) {
+			Road r = _map.getRoads().get(i);
+			Image Weather = chooseWeather(r.getWeather());
+			Image CO2 = chooseCO2(r.getTotalCO2(), r.getContLimit());
+			g.drawImage(CO2, this.getWidth() - 50, (i + 1) * 50 - 10, this);
+			g.drawImage(Weather,this.getWidth() - 100 + 20, (i + 1) * 50-10, this);
+		}
 	}
 
+	private Image chooseWeather(Weather w) {
+		if(w.equals(Weather.CLOUDY)) {
+			return loadImage("cloud.png");
+		}
+		else if(w.equals(Weather.RAINY)) {
+			return loadImage("rain.png");
+		}
+		else if(w.equals(Weather.STORM)) {
+			return loadImage("storm.png");
+		}
+		else if(w.equals(Weather.SUNNY)) {
+			return loadImage("sun.png");
+		}
+		else {
+			return loadImage("wind.png");
+		}
+	}
+	
+	private Image chooseCO2(int CO2Total, int CO2Limit) {
+		int c = (int)Math.floor(Math.min((double)CO2Total/(1.0+(double)CO2Limit), 1.0)/0.19);
+		String image = "cont_"+c+".png";
+		return loadImage(image);
+	}
+	
 	private void drawVehicles(Graphics g) {
 
 		for(int i = 0; i < _map.getVehicles().size(); i++) {
@@ -196,6 +236,7 @@ public class MapByRoadComponent extends JPanel implements TrafficSimObserver{
 
 	@Override
 	public void onEventAdded(RoadMap map, Collection<Event> events, Event e, int time) {
+		
 		update(map);
 	}
 
