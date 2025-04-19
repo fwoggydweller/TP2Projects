@@ -33,7 +33,7 @@ public class StatusBar extends JPanel implements TrafficSimObserver{
 		Border b = BorderFactory.createLoweredBevelBorder();
 		this.setBorder(b);
 		JLabel timeText = new JLabel("Time:");
-		currTime = new JLabel(" " + _ctrl.getSimulator().getTime());
+		currTime = new JLabel(" 0");
 		JLabel EventAddedText = new JLabel("Event added");
 		EventText = new JLabel("()");
 		this.add(timeText);
