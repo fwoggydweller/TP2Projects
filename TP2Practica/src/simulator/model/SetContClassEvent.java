@@ -17,4 +17,8 @@ public class SetContClassEvent extends Event{
 			map.getVehicle(e.getFirst()).setContClass(e.getSecond());
 		}
 	}
+	@Override
+	public String toString() {
+		return "Change CO2 class: [(" + cs.get(0).getFirst()+ ","+cs.get(0).getSecond() + "), (" + cs.get(1).getFirst()+","+cs.get(1).getSecond()+")]";
+	}
 }

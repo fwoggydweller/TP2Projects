@@ -18,4 +18,8 @@ public class SetWeatherEvent extends Event{
 			map.getRoad(e.getFirst()).setWeather(e.getSecond());
 		}
 	}
+	@Override
+	public String toString() {
+		return "Change Weather: [(" + ws.get(0).getFirst() + "," + ws.get(0).getSecond()+  "), (" + ws.get(1).getFirst() +  ws.get(1).getSecond()+ "," +")]";
+	}
 }
