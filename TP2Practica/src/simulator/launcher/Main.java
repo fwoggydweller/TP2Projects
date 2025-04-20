@@ -121,12 +121,11 @@ public class Main {
 		else if (line.getOptionValue("m").toLowerCase().equals(" console") || line.getOptionValue("mode").toLowerCase().equals(" console")) {
 			startBatchMode();
 		}else {
-			
+			startGUIMode(); //By default
 		}
 	}
 	
 	private static void startGUIMode() {
-		System.out.println("A");
 		TrafficSimulator sim = new TrafficSimulator();
 		Controller ctrl = new Controller(sim, _eventsFactory);
 		SwingUtilities.invokeLater(new Runnable() {	

@@ -58,7 +58,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver{
 		//We add all of the buttons
 		//Load button
 		loadEventsFileButton = new JButton();
-		ImageIcon img = new ImageIcon("resources/icons/st_small_507x507-pad_600x600_f8f8f8.u1-removebg-preview (1).png");
+		ImageIcon img = new ImageIcon("resources/icons/open.png");
 		loadEventsFileButton.setIcon(img);
 		loadEventsFileButton.addActionListener((e)->{
 			if(!_stopped) {
@@ -86,7 +86,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver{
 		this.add(loadEventsFileButton);
 		//Change contamination button
 		changeContaminationClass = new JButton();
-		changeContaminationClass.setIcon(new ImageIcon("resources/icons/st_medium_507x507-pad_600x600_f8f8f8-removebg-preview (1).png"));
+		changeContaminationClass.setIcon(new ImageIcon("resources/icons/co2class.png"));
 		ChangeCO2ClassDialog ChangeCO2Dialog = new ChangeCO2ClassDialog((JFrame) SwingUtilities.getWindowAncestor(this), this._ctrl.getVehiclesID());
 		changeContaminationClass.addActionListener(new ActionListener(){
 
@@ -111,21 +111,25 @@ public class ControlPanel extends JPanel implements TrafficSimObserver{
 		this.add(changeContaminationClass);
 		//Change weather button
 		changeWeather = new JButton();
-		ImageIcon cwImg = new ImageIcon("resources/icons/cat-wet (1).jpg");
+		ImageIcon cwImg = new ImageIcon("resources/icons/weather.png");
 		changeWeather.setIcon(cwImg);
 		changeWeather.addActionListener(e->{
 			cw = new ChangeWeatherDialog((JFrame) SwingUtilities.getWindowAncestor(this), _ctrl);
 		});
 		this.add(changeWeather);
 		//Run button
-		JButton run = new JButton("Run");
+		JButton run = new JButton();
+		ImageIcon runImg = new ImageIcon("resources/icons/run.png");
+		run.setIcon(runImg);
 		run.addActionListener(e -> {
 			_stopped = true;
 			run_sim(this.numTicks);
 		});
 		this.add(run);
 		//Stop button
-		JButton stop = new JButton("Stop");
+		JButton stop = new JButton();
+		ImageIcon stopImg = new ImageIcon("resources/icons/stop.png");
+		stop.setIcon(stopImg);
 		stop.addActionListener(e ->{
 			this._stopped = false;	
 		});
@@ -148,7 +152,9 @@ public class ControlPanel extends JPanel implements TrafficSimObserver{
 		this.add(TicksBox);
 		
 		//Off button
-		offButton = new JButton("Exit");
+		offButton = new JButton();
+		ImageIcon offImg = new ImageIcon("resources/icons/exit.png");
+		offButton.setIcon(runImg);
 		this.add( Box.createRigidArea( new Dimension(500,0) ));
 		JDialog exitDialog = new JDialog((JFrame) SwingUtilities.getWindowAncestor(this), "Confirm Exit", true);
 		exitDialog.setSize(300, 100);
