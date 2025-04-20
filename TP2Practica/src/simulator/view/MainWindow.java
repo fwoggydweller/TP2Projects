@@ -1,15 +1,20 @@
 package simulator.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 import simulator.control.Controller;
 
@@ -23,6 +28,7 @@ public class MainWindow extends JFrame{
 	}
 
 	private void initGUI() {
+		Border bordeGrueso = new LineBorder(Color.BLACK, 2);
 		JPanel mainPanel = new JPanel(new BorderLayout());
 		this.setContentPane(mainPanel);
 		
@@ -42,29 +48,39 @@ public class MainWindow extends JFrame{
 
 		// tables
 		JPanel eventsView = createViewPanel(new JTable(new EventsTableModel(_ctrl)), "Events");
+        TitledBorder bordeConTitulo1 = BorderFactory.createTitledBorder(bordeGrueso, "Events");
+		eventsView.setBorder(bordeConTitulo1);
 		eventsView.setPreferredSize(new Dimension(500, 200));
-		tablesPanel.add(eventsView);
+		JScrollPane scroller1 = new JScrollPane(eventsView);
+		tablesPanel.add(scroller1);
 		
-		/*JPanel vehiclesView = createViewPanel(new JTable(new VehiclesTableModel(_ctrl)), "Events");
+		JPanel vehiclesView = createViewPanel(new JTable(new VehiclesTableModel(_ctrl)), "Vehicles");
+        TitledBorder bordeConTitulo2 = BorderFactory.createTitledBorder(bordeGrueso, "Vehicles");
+		vehiclesView.setBorder(bordeConTitulo2);
 		vehiclesView.setPreferredSize(new Dimension(500, 200));
-		tablesPanel.add(eventsView);*/
+		JScrollPane scroller2 = new JScrollPane(vehiclesView);
+		tablesPanel.add(scroller2);
 		
-		JPanel roadsView = createViewPanel(new JTable(new RoadsTableModel(_ctrl)), "Events");
+		JPanel roadsView = createViewPanel(new JTable(new RoadsTableModel(_ctrl)), "Roads");
+        TitledBorder bordeConTitulo3 = BorderFactory.createTitledBorder(bordeGrueso, "Roads");
+		roadsView.setBorder(bordeConTitulo3);
 		roadsView.setPreferredSize(new Dimension(500, 200));
-		tablesPanel.add(roadsView);
+		JScrollPane scroller3 = new JScrollPane(roadsView);
+		tablesPanel.add(scroller3);
 		
-		/*JPanel junctionsView = createViewPanel(new JTable(new JunctionsTableModel(_ctrl)), "Events");
+		JPanel junctionsView = createViewPanel(new JTable(new JunctionsTableModel(_ctrl)), "Junctions");
+        TitledBorder bordeConTitulo4 = BorderFactory.createTitledBorder(bordeGrueso, "Junctions");
+		junctionsView.setBorder(bordeConTitulo4);
 		junctionsView.setPreferredSize(new Dimension(500, 200));
-		tablesPanel.add(junctionsView);*/
-		// TODO add other tables
-		// ...
-
+		JScrollPane scroller4 = new JScrollPane(junctionsView);
+		tablesPanel.add(scroller4);
+		
+		
 		// maps
 		JPanel mapView = createViewPanel(new MapComponent(_ctrl), "Map");
 		mapView.setPreferredSize(new Dimension(500, 400));
 		mapsPanel.add(mapView);
-		// TODO add a map for MapByRoadComponent
-		// ...
+		
 		JPanel MapByRoadView = createViewPanel(new MapByRoadComponent(_ctrl), "Map By Road");
 		MapByRoadView.setPreferredSize(new Dimension(500, 400));
 		mapsPanel.add(MapByRoadView);
@@ -77,7 +93,6 @@ public class MainWindow extends JFrame{
 
 	private JPanel createViewPanel(JComponent c, String title) {
 		JPanel p = new JPanel( new BorderLayout() );
-                // TODO add a framed border to p with title
 		p.add(new JScrollPane(c));
 		return p;
 	}
