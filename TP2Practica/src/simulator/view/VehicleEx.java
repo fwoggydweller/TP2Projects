@@ -12,11 +12,11 @@ public class VehicleEx {
 	int CO2Class;
 	int currSpeed;
 	int distance;
-	VehicleStatus status;
+	String status;
 	String itinerary;
 	
 
-	public VehicleEx(String ID, VehicleStatus status, String itinerary, int CO2Class, int maxSpeed, int currentSpeed, int totalCO2Emitted, int distanceTraveled) {// "#", "Length", "Weather", "Max speed", "Current speed limit", "Total CO2", "CO2 limit"}
+	public VehicleEx(String ID, String status, String itinerary, int CO2Class, int maxSpeed, int currentSpeed, int totalCO2Emitted, int distanceTraveled) {// "#", "Length", "Weather", "Max speed", "Current speed limit", "Total CO2", "CO2 limit"}
 		
 		this.ID = ID;
 		this.maxSpeed = maxSpeed;
@@ -45,7 +45,7 @@ public class VehicleEx {
 	public int getDistance() {
 		return distance;
 	}
-	public VehicleStatus getStatus() {
+	public String getStatus() {
 		return status;
 	}
 	public String getItinerary() {

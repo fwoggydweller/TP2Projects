@@ -172,4 +172,10 @@ public class Vehicle extends SimulatedObject{
 	    }
 	    return car;
 	}
+	public int getTotalDistance() {
+		return this.total_travel_distance;
+	}
+	public int getJunctionIndex() {
+		return this.indexOfLastJunct;
+	}
 }

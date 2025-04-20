@@ -11,8 +11,12 @@ import java.io.IOException;
 import java.util.Collection;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 import simulator.control.Controller;
 import simulator.model.Event;
@@ -42,7 +46,10 @@ public class MapComponent extends JPanel implements TrafficSimObserver {
 	MapComponent(Controller ctrl) {
 		initGUI();
 		ctrl.addObserver(this);
-		_map = ctrl.getRoadmap();			
+		_map = ctrl.getRoadmap();
+		Border bordeGrueso = new LineBorder(Color.BLACK, 2);
+        TitledBorder bordeConTitulo = BorderFactory.createTitledBorder(bordeGrueso, "Map");
+        this.setBorder(bordeConTitulo);
 	}
 
 	private void initGUI() {
