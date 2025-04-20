@@ -96,7 +96,10 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 	@Override
 	public void onAdvance(RoadMap map, Collection<Event> events, int time) {
 		// TODO Auto-generated method stub
-		
+		reset();
+		for(Event e: events) {
+			addEvent(new EventEx(e.getTime(), e.toString()));
+		}
 	}
 
 	@Override
