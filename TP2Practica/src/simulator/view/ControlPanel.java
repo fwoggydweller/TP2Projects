@@ -154,7 +154,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver{
 		//Off button
 		offButton = new JButton();
 		ImageIcon offImg = new ImageIcon("resources/icons/exit.png");
-		offButton.setIcon(runImg);
+		offButton.setIcon(offImg);
 		this.add( Box.createRigidArea( new Dimension(500,0) ));
 		JDialog exitDialog = new JDialog((JFrame) SwingUtilities.getWindowAncestor(this), "Confirm Exit", true);
 		exitDialog.setSize(300, 100);

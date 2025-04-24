@@ -46,6 +46,7 @@ public class Main {
 	private static String _outFile = null;
 	private static String _NumOfSteps = null;
 	private static Factory<Event> _eventsFactory = null;
+	private static boolean guiModeOn;
 
 	private static void parseArgs(String[] args) throws IOException {
 
@@ -58,12 +59,11 @@ public class Main {
 		CommandLineParser parser = new DefaultParser();
 		try {
 			CommandLine line = parser.parse(cmdLineOptions, args);
-			//parseHelpOption(line, cmdLineOptions);
+			parseHelpOption(line, cmdLineOptions);
 			parseModeOption(line);
-			//parseInFileOption(line);
-			//parseOutFileOption(line);
-			//parseNumOfStepsOption(line);
-			//parseModeOption(line);
+			parseInFileOption(line);
+			parseOutFileOption(line);
+			parseNumOfStepsOption(line);
 
 			// if there are some remaining arguments, then something wrong is
 			// provided in the command line!
@@ -106,22 +106,27 @@ public class Main {
 
 	private static void parseInFileOption(CommandLine line) throws ParseException {
 		_inFile = line.getOptionValue("i");
-		if (_inFile == null) {
+		if (_inFile == null && !guiModeOn) {
 			throw new ParseException("An events file is missing");
 		}
 	}
 
 	private static void parseOutFileOption(CommandLine line) throws ParseException {
-		_outFile = line.getOptionValue("o");
+		if(!guiModeOn) {
+			_outFile = line.getOptionValue("o");
+		}
 	}
 	private static void parseModeOption(CommandLine line) throws ParseException, IOException {
 		if(line.getOptionValue("m").toLowerCase().equals(" gui") || line.getOptionValue("mode").toLowerCase().equals(" gui")) {
 			startGUIMode();
+			guiModeOn = true;
 		}
 		else if (line.getOptionValue("m").toLowerCase().equals(" console") || line.getOptionValue("mode").toLowerCase().equals(" console")) {
 			startBatchMode();
+			guiModeOn = false;
 		}else {
 			startGUIMode(); //By default
+			guiModeOn = true;
 		}
 	}
 	
