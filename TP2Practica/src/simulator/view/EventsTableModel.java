@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import extra.jtable.EventEx;
 import simulator.control.Controller;
 import simulator.model.Event;
 import simulator.model.RoadMap;
