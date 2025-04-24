@@ -117,15 +117,23 @@ public class Main {
 		}
 	}
 	private static void parseModeOption(CommandLine line) throws ParseException, IOException {
-		if(line.getOptionValue("m").toLowerCase().equals(" gui") || line.getOptionValue("mode").toLowerCase().equals(" gui")) {
+		String mode = line.getOptionValue("m");
+		if (mode == null) mode = line.getOptionValue("mode");
+
+		if (mode != null) {
+			mode = mode.toLowerCase().trim(); //For deleting the blank spaces
+			if (mode.equals("gui")) {
+				startGUIMode();
+				guiModeOn = true;
+			} else if (mode.equals("console")) {
+				startBatchMode();
+				guiModeOn = false;
+			} else {
+				throw new ParseException("Invalid mode: " + mode);
+			}
+		} else {
+			// Default
 			startGUIMode();
-			guiModeOn = true;
-		}
-		else if (line.getOptionValue("m").toLowerCase().equals(" console") || line.getOptionValue("mode").toLowerCase().equals(" console")) {
-			startBatchMode();
-			guiModeOn = false;
-		}else {
-			startGUIMode(); //By default
 			guiModeOn = true;
 		}
 	}
@@ -202,7 +210,10 @@ public class Main {
 	public static void main(String[] args) {
 		try {
 			args = new String[] {
-				 "-m gui"};
+					"-i resources/examples/ex1.json",
+					"-i resources/examples/ex1.json -t 300",
+					"-i resources/examples/ex1.json -o resources/tmp/ex1.out.json",
+					"--help"};
 			start(args);
 		} catch (Exception e) {
 			e.printStackTrace();
