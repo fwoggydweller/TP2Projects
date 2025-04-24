@@ -1,13 +1,13 @@
 package simulator.view;
 
-public class EventEx {
+public class EventData {
 
 	private Integer _time;// tiempo en el que se produce el evento
-	private String _priority;// respecto de otros eventos
+	private String _description;// respecto de otros eventos
 
-	public EventEx(Integer time, String prioridad) {
+	public EventData(Integer time, String description) {
 		_time = time;
-		_priority = prioridad;
+		_description = description;
 
 	}
 
@@ -17,7 +17,7 @@ public class EventEx {
 	}
 
 	public String getDescript() {
-		return _priority;
+		return _description;
 
 	}
 

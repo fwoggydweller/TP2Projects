@@ -75,6 +75,13 @@ public class MainWindow extends JFrame{
 		JScrollPane scroller4 = new JScrollPane(junctionsView);
 		tablesPanel.add(scroller4);
 		
+		JPanel contStatsView = createViewPanel(new JTable(new ContaminationStatsTable(_ctrl)), "ContaminationStats");
+        TitledBorder bordeConTitulo5 = BorderFactory.createTitledBorder(bordeGrueso, "ContaminationStats");
+		contStatsView.setBorder(bordeConTitulo5);
+		contStatsView.setPreferredSize(new Dimension(500, 200));
+		JScrollPane scroller5 = new JScrollPane(contStatsView);
+		tablesPanel.add(scroller5);
+		
 		
 		// maps
 		JPanel mapView = createViewPanel(new MapComponent(_ctrl), "Map");

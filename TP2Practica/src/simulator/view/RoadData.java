@@ -2,7 +2,7 @@ package simulator.view;
 
 import simulator.model.Weather;
 
-public class RoadEx {
+public class RoadData {
 
 	int length;
 	Weather weather;
@@ -12,7 +12,7 @@ public class RoadEx {
 	int CO2Limit;
 	String ID;
 
-	public RoadEx( String ID, int length, Weather weather, int maxSpeed, int currentSpeedlimit, int totalCO2, int CO2Limit) {// "#", "Length", "Weather", "Max speed", "Current speed limit", "Total CO2", "CO2 limit"}
+	public RoadData( String ID, int length, Weather weather, int maxSpeed, int currentSpeedlimit, int totalCO2, int CO2Limit) {// "#", "Length", "Weather", "Max speed", "Current speed limit", "Total CO2", "CO2 limit"}
 		
 		this.ID = ID;
 		this.length = length;

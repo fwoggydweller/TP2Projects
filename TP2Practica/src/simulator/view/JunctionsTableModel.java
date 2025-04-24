@@ -19,7 +19,7 @@ public class JunctionsTableModel extends AbstractTableModel implements TrafficSi
 	private Controller _ctrl;
 	private static final long serialVersionUID = 1L;
 
-	private List<JunctionEx> _junctions;
+	private List<JunctionData> _junctions;
 	private String[] _colNames = { "#", "ID", "Green lit road", "Incoming queues" };//junction’s identifier, the identifier of the incoming road with green light (NONE if all red), and the queues of its incoming roads where each queue is of the form “r1:[v2,v4]” (queue of r1 has vehicles v2 and v4).
 
 	public JunctionsTableModel(Controller ctrl) {
@@ -28,7 +28,7 @@ public class JunctionsTableModel extends AbstractTableModel implements TrafficSi
 		_ctrl.addObserver(this);
 	}
 
-	public void addJunction(JunctionEx e) {
+	public void addJunction(JunctionData e) {
 		_junctions.add(e);
 		// observar que si no refresco la tabla no se carga
 		// La tabla es la represantación visual de una estructura de datos,
@@ -123,18 +123,22 @@ public class JunctionsTableModel extends AbstractTableModel implements TrafficSi
 	}
 	
 	void getInfo(RoadMap map) {
+		String green = "";
+		String que = "";
+		List<Vehicle> queue;
 		for(Junction j : map.getJunctions()) {
-			String green = j.getGreenLightIndex() == -1? "NONE" : j.getInRoads().get(j.getGreenLightIndex()).getId();
-			String que = "";
+			green = j.getGreenLightIndex() == -1? "NONE" : j.getInRoads().get(j.getGreenLightIndex()).getId();
+			que = "";
 			for(Road r: j.getInRoads()) {
 				que = que.concat(r.getId() + ":[");
-				for(int i = 0; i < r.getVehicles().size(); i++) {
-					que = que.concat(r.getVehicles().get(i).getId());
-					if(i != r.getVehicles().size() - 1) que = que.concat(",");
+				queue = j.getQueueByRoad(r);
+				for(int i = 0; i <  queue.size(); i++) {
+					que = que.concat(queue.get(i).getId());
+					if(i != queue.size() - 1) que = que.concat(",");
 				}
 				que = que.concat("] ");
 			}
-			addJunction(new JunctionEx(j.getId(), green, que));//
+			addJunction(new JunctionData(j.getId(), green, que));//
 		}
 	}
 }

@@ -15,7 +15,7 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 	private Controller _ctrl;
 	private static final long serialVersionUID = 1L;
 
-	private List<EventEx> _events;
+	private List<EventData> _events;
 	private String[] _colNames = { "#", "Time", "Priority" };
 
 	public EventsTableModel(Controller ctrl) {
@@ -24,7 +24,7 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 		_ctrl.addObserver(this);
 	}
 
-	public void addEvent(EventEx e) {
+	public void addEvent(EventData e) {
 		_events.add(e);
 		// observar que si no refresco la tabla no se carga
 		// La tabla es la represantación visual de una estructura de datos,
@@ -97,14 +97,14 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 		// TODO Auto-generated method stub
 		reset();
 		for(Event e: events) {
-			addEvent(new EventEx(e.getTime(), e.toString()));
+			addEvent(new EventData(e.getTime(), e.toString()));
 		}
 	}
 
 	@Override
 	public void onEventAdded(RoadMap map, Collection<Event> events, Event e, int time) {
 		// TODO Auto-generated method stub
-		addEvent(new EventEx(e.getTime(), e.toString()));
+		addEvent(new EventData(e.getTime(), e.toString()));
 	}
 
 	@Override

@@ -3,7 +3,7 @@ package simulator.view;
 import simulator.model.VehicleStatus;
 import simulator.model.Weather;
 
-public class VehicleEx {
+public class VehicleData {
 
 
 	String ID;
@@ -16,7 +16,7 @@ public class VehicleEx {
 	String itinerary;
 	
 
-	public VehicleEx(String ID, String status, String itinerary, int CO2Class, int maxSpeed, int currentSpeed, int totalCO2Emitted, int distanceTraveled) {// "#", "Length", "Weather", "Max speed", "Current speed limit", "Total CO2", "CO2 limit"}
+	public VehicleData(String ID, String status, String itinerary, int CO2Class, int maxSpeed, int currentSpeed, int totalCO2Emitted, int distanceTraveled) {// "#", "Length", "Weather", "Max speed", "Current speed limit", "Total CO2", "CO2 limit"}
 		
 		this.ID = ID;
 		this.maxSpeed = maxSpeed;

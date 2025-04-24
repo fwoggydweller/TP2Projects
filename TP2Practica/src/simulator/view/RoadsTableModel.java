@@ -16,7 +16,7 @@ public class RoadsTableModel extends AbstractTableModel implements TrafficSimObs
 	private Controller _ctrl;
 	private static final long serialVersionUID = 1L;
 
-	private List<RoadEx> _roads;
+	private List<RoadData> _roads;
 	private String[] _colNames = { "#", "ID", "Length", "Weather", "Max speed", "Current speed limit", "Total CO2", "CO2 limit"};//its length, its weather, its maximum speed, its current speed limit, its total CO2, and its CO2 limit.
 
 	public RoadsTableModel(Controller ctrl) {
@@ -25,7 +25,7 @@ public class RoadsTableModel extends AbstractTableModel implements TrafficSimObs
 		_ctrl.addObserver(this);
 	}
 
-	public void addRoad(RoadEx e) {
+	public void addRoad(RoadData e) {
 		_roads.add(e);
 		// observar que si no refresco la tabla no se carga
 		// La tabla es la represantación visual de una estructura de datos,
@@ -113,7 +113,7 @@ public class RoadsTableModel extends AbstractTableModel implements TrafficSimObs
 		// TODO Auto-generated method stub
 		reset();
 		for(Road r : map.getRoads()) {
-			addRoad(new RoadEx(r.getId(), r.getLength(), r.getWeather(), r.getMaxSpeed(), r.getSpeedLimit(), r.getTotalCO2(), r.getContLimit()));
+			addRoad(new RoadData(r.getId(), r.getLength(), r.getWeather(), r.getMaxSpeed(), r.getSpeedLimit(), r.getTotalCO2(), r.getContLimit()));
 		}
 	}
 
@@ -132,7 +132,7 @@ public class RoadsTableModel extends AbstractTableModel implements TrafficSimObs
 	public void onRegister(RoadMap map, Collection<Event> events, int time) {
 		// TODO Auto-generated method stub
 		for(Road r : map.getRoads()) {
-			addRoad(new RoadEx(r.getId(), r.getLength(), r.getWeather(), r.getMaxSpeed(), r.getSpeedLimit(), r.getTotalCO2(), r.getContLimit()));
+			addRoad(new RoadData(r.getId(), r.getLength(), r.getWeather(), r.getMaxSpeed(), r.getSpeedLimit(), r.getTotalCO2(), r.getContLimit()));
 		}
 	}
 }

@@ -18,7 +18,7 @@ public class VehiclesTableModel extends AbstractTableModel implements TrafficSim
 	private Controller _ctrl;
 	private static final long serialVersionUID = 1L;
 
-	private List<VehicleEx> _vehicles;
+	private List<VehicleData> _vehicles;
 	private String[] _colNames = { "#", "ID", "Status", "Itinerary", "CO2 class", "Max Speed", "Current Speed", "Total CO2 Emitted", "Distance Traveled" };//identifier, its status, its itinerary, its CO2 class, its maximum speed, its current speed, its total CO2 emitted and the total distance traveled.
 
 	public VehiclesTableModel(Controller ctrl) {
@@ -27,7 +27,7 @@ public class VehiclesTableModel extends AbstractTableModel implements TrafficSim
 		_ctrl.addObserver(this);
 	}
 
-	public void addVehicle(VehicleEx e) {
+	public void addVehicle(VehicleData e) {
 		_vehicles.add(e);
 		// observar que si no refresco la tabla no se carga
 		// La tabla es la represantación visual de una estructura de datos,
@@ -144,7 +144,7 @@ public class VehiclesTableModel extends AbstractTableModel implements TrafficSim
 			else if (s == VehicleStatus.WAITING)
 				i = "Waiting:" + v.getItinerary().get(v.getJunctionIndex());
 			else i = s.toString();
-			addVehicle(new VehicleEx(v.getId(), i , v.getItinerary().toString() , v.getContClass(), v.getMaxSpeed(), v.getSpeed(), v.getTotalCO2(), v.getTotalDistance()));//
+			addVehicle(new VehicleData(v.getId(), i , v.getItinerary().toString() , v.getContClass(), v.getMaxSpeed(), v.getSpeed(), v.getTotalCO2(), v.getTotalDistance()));//
 		}
 	}
 }

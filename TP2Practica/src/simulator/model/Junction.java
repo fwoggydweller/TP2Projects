@@ -127,5 +127,8 @@ public class Junction extends SimulatedObject{
 	Road roadTo(Junction j){
 		return _outRoadByJunction.get(j); // unique keys
 	}
+	public List getQueueByRoad(Road r) {
+		return _queueByRoad.get(r);
+	}
 }
 

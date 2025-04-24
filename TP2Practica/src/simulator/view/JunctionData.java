@@ -3,7 +3,7 @@ package simulator.view;
 import simulator.model.VehicleStatus;
 import simulator.model.Weather;
 
-public class JunctionEx {
+public class JunctionData {
 
 
 	String ID;
@@ -11,7 +11,7 @@ public class JunctionEx {
 	String incomingQueues;
 	
 
-	public JunctionEx(String ID, String greenLitRoad, String incomingQueues) {
+	public JunctionData(String ID, String greenLitRoad, String incomingQueues) {
 		this.ID = ID;
 		greenRoad = greenLitRoad;
 		this.incomingQueues = incomingQueues;
