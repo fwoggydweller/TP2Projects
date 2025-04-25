@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.JSpinner;
 
 import org.json.JSONArray;
@@ -49,7 +50,8 @@ public class ChangeCO2ClassDialog extends JDialog implements TrafficSimObserver{
 		JPanel TicksBox = new JPanel();
 		TicksBox.setLayout(new BoxLayout(TicksBox, BoxLayout.X_AXIS));
 		JLabel ticks = new JLabel("Ticks: ");
-		JSpinner three = new JSpinner();
+		SpinnerNumberModel model = new SpinnerNumberModel(1, 1, null, 1);
+		JSpinner three = new JSpinner(model);
 		TicksBox.add(ticks);
 		TicksBox.add(three);
 		selector.add(one);

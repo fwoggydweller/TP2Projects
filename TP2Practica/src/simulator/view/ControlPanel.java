@@ -22,6 +22,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JToolBar;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -36,7 +38,7 @@ import simulator.model.Event;
 import simulator.model.RoadMap;
 import simulator.model.TrafficSimObserver;
 
-public class ControlPanel extends JPanel implements TrafficSimObserver{
+public class ControlPanel extends JToolBar implements TrafficSimObserver{
 	JFileChooser fc;
 	ChangeWeatherDialog cw;
 	private JButton loadEventsFileButton;
@@ -138,13 +140,13 @@ public class ControlPanel extends JPanel implements TrafficSimObserver{
 		JPanel TicksBox = new JPanel();
 		TicksBox.setLayout(new BoxLayout(TicksBox, BoxLayout.X_AXIS));
 		JLabel ticks = new JLabel("Ticks: ");
-		JSpinner three = new JSpinner();
+		SpinnerNumberModel sModel = new SpinnerNumberModel(1, 1, null, 1);
+		JSpinner three = new JSpinner(sModel);
 		three.addChangeListener(e -> {
 			this.numTicks= (int) three.getValue();
 		});
 		
 		three.setPreferredSize(loadEventsFileButton.getPreferredSize());  
-
 		three.setMaximumSize(loadEventsFileButton.getMaximumSize());  
 		three.setMinimumSize(loadEventsFileButton.getMinimumSize());  
 		TicksBox.add(ticks);

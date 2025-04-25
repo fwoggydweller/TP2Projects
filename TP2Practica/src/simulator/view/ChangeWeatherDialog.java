@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -44,7 +45,8 @@ public class ChangeWeatherDialog extends JDialog {
 		JLabel two = new JLabel("Weather: ");
 		JComboBox textTwo = new JComboBox(comboBTwo);
 		JLabel three = new JLabel("Ticks: ");
-		JSpinner textThree = new JSpinner();
+		SpinnerNumberModel model = new SpinnerNumberModel(1, 1, null, 1);
+		JSpinner textThree = new JSpinner(model);
 		selector.add(one);
 		selector.add(textOne);
 		selector.add(two);
