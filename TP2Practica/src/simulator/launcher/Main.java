@@ -209,11 +209,6 @@ public class Main {
 
 	public static void main(String[] args) {
 		try {
-			args = new String[] {
-					"-i resources/examples/ex1.json",
-					"-i resources/examples/ex1.json -t 300",
-					"-i resources/examples/ex1.json -o resources/tmp/ex1.out.json",
-					"--help"};
 			start(args);
 		} catch (Exception e) {
 			e.printStackTrace();

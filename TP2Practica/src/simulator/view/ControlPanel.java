@@ -47,7 +47,7 @@ public class ControlPanel extends JToolBar implements TrafficSimObserver{
 	private JButton offButton;
 	private Controller _ctrl;
 	private boolean _stopped = false;
-	private int numTicks = 0;
+	private int numTicks = 1;
 	ControlPanel(Controller c){
 		super();
 		this._ctrl = c;

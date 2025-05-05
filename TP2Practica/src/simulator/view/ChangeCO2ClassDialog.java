@@ -108,22 +108,21 @@ public class ChangeCO2ClassDialog extends JDialog implements TrafficSimObserver{
 	}
 	@Override
 	public void onAdvance(RoadMap map, Collection<simulator.model.Event> events, int time) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 	@Override
 	public void onEventAdded(RoadMap map, Collection<simulator.model.Event> events, simulator.model.Event e, int time) {
-		// TODO Auto-generated method stub
 		
 	}
 	@Override
 	public void onReset(RoadMap map, Collection<simulator.model.Event> events, int time) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 	@Override
 	public void onRegister(RoadMap map, Collection<simulator.model.Event> events, int time) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 }
