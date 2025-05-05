@@ -140,7 +140,7 @@ public class ControlPanel extends JToolBar implements TrafficSimObserver{
 		JPanel TicksBox = new JPanel();
 		TicksBox.setLayout(new BoxLayout(TicksBox, BoxLayout.X_AXIS));
 		JLabel ticks = new JLabel("Ticks: ");
-		SpinnerNumberModel sModel = new SpinnerNumberModel(1, 1, null, 1);
+		SpinnerNumberModel sModel = new SpinnerNumberModel(numTicks, 1, null, 1);
 		JSpinner three = new JSpinner(sModel);
 		three.addChangeListener(e -> {
 			this.numTicks= (int) three.getValue();
