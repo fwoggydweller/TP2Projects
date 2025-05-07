@@ -1,6 +1,7 @@
 package simulator.view;
 
 import java.awt.Frame;
+import java.util.Collection;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -17,8 +18,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import simulator.control.Controller;
+import simulator.model.Event;
+import simulator.model.RoadMap;
+import simulator.model.TrafficSimObserver;
 
-public class ChangeWeatherDialog extends JDialog {
+public class ChangeWeatherDialog extends JDialog implements TrafficSimObserver{
 	private int _status = 0;
 	private String[] comboBOne;
 	private String[] comboBTwo = {"SUNNY", "CLOUDY", "RAINY", "WINDY", "STORM"};
@@ -27,6 +31,7 @@ public class ChangeWeatherDialog extends JDialog {
 		super(f, true);
 		comboBOne = _ctrl.getRoadsID();
 		this._ctrl = _ctrl;
+		_ctrl.addObserver(this);
 		initGUI();
 	}
 	public void initGUI() {
@@ -84,5 +89,25 @@ public class ChangeWeatherDialog extends JDialog {
 		setContentPane(mainPanel);
 		this.setSize(375, 125);
 	    setVisible(true);
+	}
+	@Override
+	public void onAdvance(RoadMap map, Collection<Event> events, int time) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void onEventAdded(RoadMap map, Collection<Event> events, Event e, int time) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void onReset(RoadMap map, Collection<Event> events, int time) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void onRegister(RoadMap map, Collection<Event> events, int time) {
+		// TODO Auto-generated method stub
+		
 	}
 }

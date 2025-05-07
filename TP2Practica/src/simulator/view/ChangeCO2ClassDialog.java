@@ -5,6 +5,7 @@ import java.awt.Frame;
 import java.util.Collection;
 
 import javax.swing.BoxLayout;
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -19,18 +20,23 @@ import javax.swing.JSpinner;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import simulator.control.Controller;
+import simulator.model.Event;
 import simulator.model.RoadMap;
 import simulator.model.TrafficSimObserver;
+import simulator.model.Vehicle;
 
 public class ChangeCO2ClassDialog extends JDialog implements TrafficSimObserver{
+	private RoadMap ra;
+	private DefaultComboBoxModel<String> model;
 	private int _status = 0;
-	private JComboBox textOne;
 	private String[] comboBTwo = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
 	private JSONObject Event;
-	public ChangeCO2ClassDialog(Frame f, String[] vh) {
+	private JComboBox<String> textOne;
+	public ChangeCO2ClassDialog(Frame f, Controller c) {
 		super(f, true);
-		textOne = new JComboBox(vh);
 		initGUI();
+		c.addObserver(this);
 	}
 	public void initGUI() {
 
@@ -44,6 +50,8 @@ public class ChangeCO2ClassDialog extends JDialog implements TrafficSimObserver{
 		mainPanel.add(textPanel);
 		JPanel selector = new JPanel();
 		selector.setLayout( new BoxLayout( selector, BoxLayout.X_AXIS) );
+		model = new DefaultComboBoxModel<String>();
+		textOne = new JComboBox<String>(model);
 		JLabel one = new JLabel("Vehicle: ");
 		JLabel two = new JLabel("CO2 class: ");
 		JComboBox textTwo = new JComboBox(comboBTwo);
@@ -97,9 +105,6 @@ public class ChangeCO2ClassDialog extends JDialog implements TrafficSimObserver{
 		this.setSize(375, 125);
 	    setVisible(false);
 	}
-	public void UpdateVehicles(String[] vehiclesId) {
-		this.textOne.setModel(new DefaultComboBoxModel<>(vehiclesId));
-	}
 	public int getStatus() {
 		return this._status;
 	}
@@ -109,7 +114,6 @@ public class ChangeCO2ClassDialog extends JDialog implements TrafficSimObserver{
 	@Override
 	public void onAdvance(RoadMap map, Collection<simulator.model.Event> events, int time) {
 		
-		
 	}
 	@Override
 	public void onEventAdded(RoadMap map, Collection<simulator.model.Event> events, simulator.model.Event e, int time) {
@@ -118,11 +122,18 @@ public class ChangeCO2ClassDialog extends JDialog implements TrafficSimObserver{
 	@Override
 	public void onReset(RoadMap map, Collection<simulator.model.Event> events, int time) {
 		
-		
 	}
 	@Override
 	public void onRegister(RoadMap map, Collection<simulator.model.Event> events, int time) {
 		
+	}
+	public void open(RoadMap roadmap) {
 		
+		this.ra = roadmap;
+		model.removeAllElements();
+		for(Vehicle v:ra.getVehicles()) {
+			model.addElement(v.getId());
+		}
+		this.setVisible(true);
 	}
 }

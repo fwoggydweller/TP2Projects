@@ -20,7 +20,7 @@ public class TicksVehicleTable extends AbstractTableModel implements TrafficSimO
 
 	private HashMap<Integer, ArrayList<VehicleWithSpeedData>> _updVehicles;
 	private HashMap<Integer, ArrayList<VehicleWithSpeedData>> _nonUpdVehicles;
-	private String[] _colNames = { "Ticks", "Vehicles" };//identifier, its status, its itinerary, its CO2 class, its maximum speed, its current speed, its total CO2 emitted and the total distance traveled.
+	private String[] _colNames = { "Ticks", "Vehicles" };
 	private int value = 0;
 	
 	public TicksVehicleTable(Controller ctrl) {

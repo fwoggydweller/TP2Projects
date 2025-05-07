@@ -123,17 +123,17 @@ public class Main {
 		if (mode != null) {
 			mode = mode.toLowerCase().trim(); //For deleting the blank spaces
 			if (mode.equals("gui")) {
-				startGUIMode();
+			//	startGUIMode();
 				guiModeOn = true;
 			} else if (mode.equals("console")) {
-				startBatchMode();
+			//	startBatchMode();
 				guiModeOn = false;
 			} else {
 				throw new ParseException("Invalid mode: " + mode);
 			}
 		} else {
 			// Default
-			startGUIMode();
+			//startGUIMode();
 			guiModeOn = true;
 		}
 	}
@@ -198,6 +198,11 @@ public class Main {
 	private static void start(String[] args) throws IOException {
 		initFactories(); 
 		parseArgs(args);
+		if (guiModeOn)
+			startGUIMode();
+		else {
+			startBatchMode();
+		}
 	}
 
 	// example command lines:

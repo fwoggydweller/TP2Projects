@@ -33,8 +33,11 @@ public class VehicleSpeedHistoryDialog extends JDialog implements TrafficSimObse
 		setTitle("Vehicle Speed History");
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout( new BoxLayout( mainPanel, BoxLayout.Y_AXIS) );
+		JPanel textPanel = new JPanel();
+		textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.X_AXIS));
 		JLabel text = new JLabel("<html>Select a speed limit and press update to see which vehicle exceeds the speed on each tick.</html>");
-		mainPanel.add(text);
+		textPanel.add(text);
+		mainPanel.add(textPanel);
 		JPanel spinner = new JPanel();
 		spinner.setLayout(new BoxLayout(spinner, BoxLayout.X_AXIS));
 		JLabel spinnerText = new JLabel("Speed Limit:");
@@ -62,6 +65,7 @@ public class VehicleSpeedHistoryDialog extends JDialog implements TrafficSimObse
 		mainPanel.add(Buttons);
 		
 		mainPanel.add(TableView);
+		this.setSize(375, 500);
 		this.add(mainPanel);
 		this.setVisible(false);
 		}

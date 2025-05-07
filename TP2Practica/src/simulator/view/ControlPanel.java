@@ -90,13 +90,12 @@ public class ControlPanel extends JToolBar implements TrafficSimObserver{
 		//Change contamination button
 		changeContaminationClass = new JButton();
 		changeContaminationClass.setIcon(new ImageIcon("resources/icons/co2class.png"));
-		ChangeCO2ClassDialog ChangeCO2Dialog = new ChangeCO2ClassDialog((JFrame) SwingUtilities.getWindowAncestor(this), this._ctrl.getVehiclesID());
+		ChangeCO2ClassDialog ChangeCO2Dialog = new ChangeCO2ClassDialog((JFrame) SwingUtilities.getWindowAncestor(this), this._ctrl);
 		changeContaminationClass.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ChangeCO2Dialog.UpdateVehicles(_ctrl.getVehiclesID()); 
-		        ChangeCO2Dialog.setVisible(true);
+		        ChangeCO2Dialog.open(_ctrl.getRoadmap());
 				int status = ChangeCO2Dialog.getStatus();
 				if(status == 1) {
 					JSONObject CO2Info = ChangeCO2Dialog.getInfo();
