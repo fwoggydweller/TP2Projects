@@ -120,22 +120,7 @@ public class ControlPanel extends JToolBar implements TrafficSimObserver{
 		});
 		this.add(changeWeather);
 		
-		VehicleSpeed = new JButton("Vehicle Speed Log");
-		VehicleSpeedHistoryDialog vSHD = new VehicleSpeedHistoryDialog((JFrame) SwingUtilities.getWindowAncestor(this), _ctrl);
-		VehicleSpeed.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				vSHD.setVisible(true);
-				int status = vSHD.getStatus();
-				if(status == 1) {
-
-				}
-			}
-			
-			
-		});
-		this.add(VehicleSpeed);
+		
 		//Run button
 		JButton run = new JButton();
 		ImageIcon runImg = new ImageIcon("resources/icons/run.png");

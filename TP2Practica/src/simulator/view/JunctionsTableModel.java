@@ -20,7 +20,7 @@ public class JunctionsTableModel extends AbstractTableModel implements TrafficSi
 	private static final long serialVersionUID = 1L;
 
 	private List<JunctionData> _junctions;
-	private String[] _colNames = { "#", "ID", "Green lit road", "Incoming queues" };//junction’s identifier, the identifier of the incoming road with green light (NONE if all red), and the queues of its incoming roads where each queue is of the form “r1:[v2,v4]” (queue of r1 has vehicles v2 and v4).
+	private String[] _colNames = { "#", "ID", "Green lit road", "Incoming queues" };
 
 	public JunctionsTableModel(Controller ctrl) {
 		_junctions = new ArrayList<>();
@@ -30,11 +30,8 @@ public class JunctionsTableModel extends AbstractTableModel implements TrafficSi
 
 	public void addJunction(JunctionData e) {
 		_junctions.add(e);
-		// observar que si no refresco la tabla no se carga
-		// La tabla es la represantación visual de una estructura de datos,
-		// en este caso de un ArrayList, hay que notificar los cambios.
 
-		// We need to notify changes, otherwise the table does not refresh.
+		// We need to notify changes, otherwise, it does not refresh.
 		fireTableDataChanged();
 	}
 
@@ -48,8 +45,6 @@ public class JunctionsTableModel extends AbstractTableModel implements TrafficSi
 		return false;
 	}
 
-	// si no pongo esto no coge el nombre de las columnas
-	//
 	// this is for the column header
 	@Override
 	public String getColumnName(int col) {
@@ -57,27 +52,20 @@ public class JunctionsTableModel extends AbstractTableModel implements TrafficSi
 	}
 
 	@Override
-	// método obligatorio, probad a quitarlo, no compila
-	//
+
 	// this is for the number of columns
 	public int getColumnCount() {
 		return _colNames.length;
 	}
 
 	@Override
-	// método obligatorio
-	//
-	// the number of row, like those in the events list
+
+	// the number of row, like those in the list
 	public int getRowCount() {
 		return _junctions == null ? 0 : _junctions.size();
 	}
 
 	@Override
-	// método obligatorio
-	// así es como se va a cargar la tabla desde el ArrayList
-	// el índice del arrayList es el número de fila pq en este ejemplo
-	// quiero enumerarlos.
-	//
 	// returns the value of a particular cell
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Object s = null;
