@@ -17,15 +17,30 @@ import simulator.model.VehicleStatus;
 public class TicksVehicleTable extends AbstractTableModel implements TrafficSimObserver{
 	private Controller _ctrl;
 	private static final long serialVersionUID = 1L;
-
-	private HashMap<Integer, ArrayList<VehicleWithSpeedData>> _updVehicles;
-	private HashMap<Integer, ArrayList<VehicleWithSpeedData>> _nonUpdVehicles;
+static class Info {
+	int time;
+	ArrayList<VehicleWithSpeedData> _data;
+	public Info(int t, ArrayList<VehicleWithSpeedData> d) {
+		time = t;
+		_data = d;
+	}
+	public int getTime() {
+		return time;
+	}
+	public ArrayList<VehicleWithSpeedData> getVehicleList(){
+		return _data;
+	}
+}
+	
+	
+	private ArrayList<Info> _updVehicles;
+	private ArrayList<Info> _nonUpdVehicles;
 	private String[] _colNames = { "Ticks", "Vehicles" };
 	private int value = 0;
 	
 	public TicksVehicleTable(Controller ctrl) {
-		_updVehicles = new HashMap<Integer, ArrayList<VehicleWithSpeedData>>();
-		_nonUpdVehicles = new HashMap<Integer, ArrayList<VehicleWithSpeedData>>();
+		_updVehicles = new ArrayList<Info>();
+		_nonUpdVehicles = new ArrayList<Info>();
 		_ctrl = ctrl;
 		_ctrl.addObserver(this);
 	}
@@ -53,9 +68,9 @@ public class TicksVehicleTable extends AbstractTableModel implements TrafficSimO
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		if(columnIndex == 0) {
-			return rowIndex+1;
+			return _updVehicles.get(rowIndex).getTime();
 		}else {
-				ArrayList<VehicleWithSpeedData> l =_updVehicles.get(columnIndex);
+				ArrayList<VehicleWithSpeedData> l =_updVehicles.get(rowIndex).getVehicleList();
 				ArrayList<String> id = new ArrayList<String>();
 				for(VehicleWithSpeedData v:l) {
 					id.add(v.getId());
@@ -67,6 +82,7 @@ public class TicksVehicleTable extends AbstractTableModel implements TrafficSimO
 	@Override
 	public void onAdvance(RoadMap map, Collection<Event> events, int time) {
 		newEntry(map, time);
+		fireTableDataChanged();
 	}
 
 	@Override
@@ -96,20 +112,23 @@ public class TicksVehicleTable extends AbstractTableModel implements TrafficSimO
 			if(v.getSpeed() >= this.value) {
 				vehicle1.add(new VehicleWithSpeedData(v.getId(),v.getSpeed()));
 			}
+			else {
+				vehicle1.add(new VehicleWithSpeedData("",0));
+			}
 		}
-		this._nonUpdVehicles.put(time, vehicle2);
-		this._updVehicles.put(time, vehicle1);
+		this._nonUpdVehicles.add(new Info(time, vehicle2));
+		this._updVehicles.add(new Info(time, vehicle1));
 	}
 	private void Update() {
 		for(int i = 0; i < this._nonUpdVehicles.size(); i++) {
 			ArrayList<VehicleWithSpeedData> vehicle1 = new ArrayList<VehicleWithSpeedData>();
 			if(_nonUpdVehicles.get(i) != null) {
-				for(VehicleWithSpeedData v : _nonUpdVehicles.get(i)) {
+				for(VehicleWithSpeedData v : _nonUpdVehicles.get(i).getVehicleList()) {
 					if(v.getSpeed()>this.value) {
 						vehicle1.add(new VehicleWithSpeedData(v.getId(),v.getSpeed()));
 					}
 				}
-				this._updVehicles.put(i, vehicle1);
+				this._updVehicles.add(new Info(i+1, vehicle1));
 			}
 		}
 	}

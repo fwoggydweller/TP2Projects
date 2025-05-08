@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import simulator.control.Controller;
 import simulator.model.Event;
+import simulator.model.Road;
 import simulator.model.RoadMap;
 import simulator.model.TrafficSimObserver;
 import simulator.model.Vehicle;
@@ -32,8 +33,10 @@ public class ChangeWeatherDialog extends JDialog implements TrafficSimObserver{
 	public ChangeWeatherDialog(Frame f, Controller _ctrl) {
 		super(f, true);
 		this._ctrl = _ctrl;
-		_ctrl.addObserver(this);;
 		initGUI();
+		_ctrl.addObserver(this);
+	    setVisible(true);
+
 	}
 	public void initGUI() {
 		setTitle("Change Weather");
@@ -46,6 +49,9 @@ public class ChangeWeatherDialog extends JDialog implements TrafficSimObserver{
 		mainPanel.add(textPanel);
 		JPanel selector = new JPanel();
 		selector.setLayout( new BoxLayout( selector, BoxLayout.X_AXIS) );
+
+		comboBOne = new DefaultComboBoxModel<String>();
+
 		JLabel one = new JLabel("Road: ");
 		JComboBox textOne = new JComboBox(comboBOne);
 		JLabel two = new JLabel("Weather: ");
@@ -89,7 +95,6 @@ public class ChangeWeatherDialog extends JDialog implements TrafficSimObserver{
 		mainPanel.add(action);
 		setContentPane(mainPanel);
 		this.setSize(375, 125);
-	    setVisible(true);
 	}
 	@Override
 	public void onAdvance(RoadMap map, Collection<Event> events, int time) {
@@ -109,8 +114,8 @@ public class ChangeWeatherDialog extends JDialog implements TrafficSimObserver{
 	@Override
 	public void onRegister(RoadMap map, Collection<Event> events, int time) {
 		// TODO Auto-generated method stub
-		comboBOne = new DefaultComboBoxModel<String>();
-		for(Vehicle v:map.getVehicles()) {
+		comboBOne.removeAllElements();
+		for(Road v:map.getRoads()) {
 			comboBOne.addElement(v.getId());
 		}
 	}
