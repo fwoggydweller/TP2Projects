@@ -4,6 +4,7 @@ import java.awt.Frame;
 import java.util.Collection;
 
 import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -21,17 +22,17 @@ import simulator.control.Controller;
 import simulator.model.Event;
 import simulator.model.RoadMap;
 import simulator.model.TrafficSimObserver;
+import simulator.model.Vehicle;
 
 public class ChangeWeatherDialog extends JDialog implements TrafficSimObserver{
 	private int _status = 0;
-	private String[] comboBOne;
+	private DefaultComboBoxModel<String> comboBOne;
 	private String[] comboBTwo = {"SUNNY", "CLOUDY", "RAINY", "WINDY", "STORM"};
 	private Controller _ctrl;
 	public ChangeWeatherDialog(Frame f, Controller _ctrl) {
 		super(f, true);
-		comboBOne = _ctrl.getRoadsID();
 		this._ctrl = _ctrl;
-		_ctrl.addObserver(this);
+		_ctrl.addObserver(this);;
 		initGUI();
 	}
 	public void initGUI() {
@@ -108,6 +109,9 @@ public class ChangeWeatherDialog extends JDialog implements TrafficSimObserver{
 	@Override
 	public void onRegister(RoadMap map, Collection<Event> events, int time) {
 		// TODO Auto-generated method stub
-		
+		comboBOne = new DefaultComboBoxModel<String>();
+		for(Vehicle v:map.getVehicles()) {
+			comboBOne.addElement(v.getId());
+		}
 	}
 }

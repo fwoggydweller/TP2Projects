@@ -78,12 +78,6 @@ public class Controller {
     		_sim.advance();
     	}
     }
-    public String[] getVehiclesID() {
-		return this._sim.getVehiclesID();
-	}
-    public String[] getRoadsID() {
-		return this._sim.getRoadsID();
-	}
     public RoadMap getRoadmap() {
     	return _sim.getRoadMap();
     }
