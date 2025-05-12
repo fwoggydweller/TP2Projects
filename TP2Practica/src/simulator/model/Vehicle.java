@@ -17,6 +17,7 @@ public class Vehicle extends SimulatedObject{
 	int total_contamination;
 	int total_travel_distance;
 	int indexOfLastJunct;
+	int numOfTickWithBadWeather;
 	
 	Vehicle(String id, int maxSpeed, int contClass, List<Junction> itinerary) { 
 		  super(id);
@@ -47,6 +48,7 @@ public class Vehicle extends SimulatedObject{
 		  this.itinerary = Collections.unmodifiableList(new ArrayList<>(itinerary));
 		  this.road = null;
 		  this.indexOfLastJunct = 0;
+		  this.numOfTickWithBadWeather = 0;
 	}
 	public int getLocation() {
 		return location;
@@ -105,7 +107,9 @@ public class Vehicle extends SimulatedObject{
 	@Override
 	void advance(int time) { 
 		if(this.status.equals(VehicleStatus.TRAVELING)) {
-
+			if(road.getWeather().equals(Weather.WINDY)||road.getWeather().equals(Weather.RAINY)||road.getWeather().equals(Weather.STORM)) {
+				this.numOfTickWithBadWeather++;
+			}
 			int oldLocation = this.location;
 			this.location = this.location+this.current_speed; //Location update
 			if(this.location > road.length) { //If it exceeds, it updates it to the road's length
@@ -177,5 +181,8 @@ public class Vehicle extends SimulatedObject{
 	}
 	public int getJunctionIndex() {
 		return this.indexOfLastJunct;
+	}
+	public int getNumOfTickWithBadWeather() {
+		return this.numOfTickWithBadWeather;
 	}
 }

@@ -54,7 +54,7 @@ public class ChangeCO2ClassDialog extends JDialog implements TrafficSimObserver{
 		textOne = new JComboBox<String>(model);
 		JLabel one = new JLabel("Vehicle: ");
 		JLabel two = new JLabel("CO2 class: ");
-		JComboBox textTwo = new JComboBox(comboBTwo);
+		JComboBox<String> textTwo = new JComboBox<String>(comboBTwo);
 		JPanel TicksBox = new JPanel();
 		TicksBox.setLayout(new BoxLayout(TicksBox, BoxLayout.X_AXIS));
 		JLabel ticks = new JLabel("Ticks: ");

@@ -42,13 +42,14 @@ public class ControlPanel extends JToolBar implements TrafficSimObserver{
 	JFileChooser fc;
 	ChangeWeatherDialog cw;
 	private JButton loadEventsFileButton;
+	private JButton costCalculator;
 	private JButton changeWeather;
 	private JButton changeContaminationClass;
 	private JButton offButton;
 	private Controller _ctrl;
 	private boolean _stopped = false;
 	private int numTicks = 1;
-	private JButton VehicleSpeed;
+
 	ControlPanel(Controller c){
 		super();
 		this._ctrl = c;
@@ -111,6 +112,8 @@ public class ControlPanel extends JToolBar implements TrafficSimObserver{
 			
 		});
 		this.add(changeContaminationClass);
+		
+		
 		//Change weather button
 		changeWeather = new JButton();
 		ImageIcon cwImg = new ImageIcon("resources/icons/weather.png");
@@ -120,6 +123,19 @@ public class ControlPanel extends JToolBar implements TrafficSimObserver{
 		});
 		this.add(changeWeather);
 		
+		
+		//Cost calculator button
+		costCalculator = new JButton("Cost");
+		CostCalculatorDialog CostDialog = new CostCalculatorDialog(this._ctrl, (JFrame) SwingUtilities.getWindowAncestor(this));
+		costCalculator.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+		        CostDialog.open(_ctrl.getRoadmap());
+			}
+			
+		});
+		this.add(costCalculator);
 		
 		//Run button
 		JButton run = new JButton();

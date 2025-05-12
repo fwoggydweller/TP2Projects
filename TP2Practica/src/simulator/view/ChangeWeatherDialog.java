@@ -53,9 +53,9 @@ public class ChangeWeatherDialog extends JDialog implements TrafficSimObserver{
 		comboBOne = new DefaultComboBoxModel<String>();
 
 		JLabel one = new JLabel("Road: ");
-		JComboBox textOne = new JComboBox(comboBOne);
+		JComboBox<String> textOne = new JComboBox<String>(comboBOne);
 		JLabel two = new JLabel("Weather: ");
-		JComboBox textTwo = new JComboBox(comboBTwo);
+		JComboBox<String> textTwo = new JComboBox<String>(comboBTwo);
 		JLabel three = new JLabel("Ticks: ");
 		SpinnerNumberModel model = new SpinnerNumberModel(1, 1, null, 1);
 		JSpinner textThree = new JSpinner(model);
