@@ -124,18 +124,7 @@ public class ControlPanel extends JToolBar implements TrafficSimObserver{
 		this.add(changeWeather);
 		
 		
-		//Cost calculator button
-		costCalculator = new JButton("Cost");
-		CostCalculatorDialog CostDialog = new CostCalculatorDialog(this._ctrl, (JFrame) SwingUtilities.getWindowAncestor(this));
-		costCalculator.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-		        CostDialog.open(_ctrl.getRoadmap());
-			}
-			
-		});
-		this.add(costCalculator);
+		
 		
 		//Run button
 		JButton run = new JButton();

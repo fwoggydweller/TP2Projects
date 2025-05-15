@@ -38,9 +38,9 @@ import simulator.model.Event;
 import simulator.model.LightSwitchingStrategy;
 import simulator.model.TrafficSimulator;
 import simulator.view.MainWindow;
+import simulator.view.VehicleSpeedViewer;
 
 public class Main {
-
 	static int _timeLimit;
 	private static String _inFile = null;
 	private static String _outFile = null;
@@ -105,7 +105,7 @@ public class Main {
 	}
 
 	private static void parseInFileOption(CommandLine line) throws ParseException {
-		_inFile = line.getOptionValue("i");
+		_inFile = line.getOptionValue("i").trim();
 		if (_inFile == null && !guiModeOn) {
 			throw new ParseException("An events file is missing");
 		}
@@ -154,7 +154,7 @@ public class Main {
 			_timeLimit = 5;
 		}
 		else {
-			_timeLimit = Integer.parseInt(_NumOfSteps);
+			_timeLimit = Integer.parseInt(_NumOfSteps.trim());
 		}
 	}
 
@@ -193,9 +193,11 @@ public class Main {
 		c.loadEvents(I);
 		I.close();
 		c.run(_timeLimit, O);
+
 	}
 
 	private static void start(String[] args) throws IOException {
+		
 		initFactories(); 
 		parseArgs(args);
 		if (guiModeOn)
@@ -214,6 +216,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		try {
+			args = new String[] {"-m console", "-i resources/examples/ex1.json", "-t 500"};
 			start(args);
 		} catch (Exception e) {
 			e.printStackTrace();
