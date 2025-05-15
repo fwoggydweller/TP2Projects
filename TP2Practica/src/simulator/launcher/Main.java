@@ -38,7 +38,6 @@ import simulator.model.Event;
 import simulator.model.LightSwitchingStrategy;
 import simulator.model.TrafficSimulator;
 import simulator.view.MainWindow;
-import simulator.view.VehicleSpeedViewer;
 
 public class Main {
 	static int _timeLimit;
@@ -105,7 +104,10 @@ public class Main {
 	}
 
 	private static void parseInFileOption(CommandLine line) throws ParseException {
-		_inFile = line.getOptionValue("i").trim();
+		_inFile = line.getOptionValue("i");
+		if(!guiModeOn) {
+			_inFile = _inFile.trim();
+		}
 		if (_inFile == null && !guiModeOn) {
 			throw new ParseException("An events file is missing");
 		}
@@ -113,7 +115,7 @@ public class Main {
 
 	private static void parseOutFileOption(CommandLine line) throws ParseException {
 		if(!guiModeOn) {
-			_outFile = line.getOptionValue("o");
+			_outFile = line.getOptionValue("o").trim();
 		}
 	}
 	private static void parseModeOption(CommandLine line) throws ParseException, IOException {
@@ -154,7 +156,10 @@ public class Main {
 			_timeLimit = 5;
 		}
 		else {
-			_timeLimit = Integer.parseInt(_NumOfSteps.trim());
+			if(!guiModeOn) {
+				_NumOfSteps = _NumOfSteps.trim();
+			}
+			_timeLimit = Integer.parseInt(_NumOfSteps);
 		}
 	}
 
@@ -209,14 +214,14 @@ public class Main {
 
 	// example command lines:
 	//
-	// -i resources/examples/ex1.json
-	// -i resources/examples/ex1.json -t 300
-	// -i resources/examples/ex1.json -o resources/tmp/ex1.out.json
-	// --help
+	// "-i resources/examples/ex1.json"
+	// "-i resources/examples/ex1.json" "-t 300"
+	// "-i resources/examples/ex1.json" "-o resources/tmp/ex1.out.json"
+	// "--help"
 
 	public static void main(String[] args) {
 		try {
-			args = new String[] {"-m console", "-i resources/examples/ex1.json", "-t 500"};
+
 			start(args);
 		} catch (Exception e) {
 			e.printStackTrace();
